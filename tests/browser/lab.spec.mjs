@@ -9,7 +9,7 @@ test("homepage has real functional lab, truthful planned cards and source links"
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Engineering you can");
   await expect(page.getByRole("link", { name: /Try CSS Studio/i })).toBeVisible();
   await expect(page.getByText("Not available yet")).toHaveCount(3);
-  await expect(page.getByRole("link", { name: /Read the Opalubka case study/i })).toHaveAttribute("href", /case-studies\/opalubka\//);
+  await expect(page.getByRole("link", { name: /Read Opalubka case/i })).toHaveAttribute("href", /case-studies\/opalubka\//);
   await page.getByRole("link", { name: /Try CSS Studio/i }).click();
   await expect(page).toHaveURL(locationOf("labs/css-studio/"));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("CSS Studio.");
