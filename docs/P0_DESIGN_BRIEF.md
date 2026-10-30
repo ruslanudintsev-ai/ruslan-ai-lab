@@ -67,7 +67,7 @@ Top navigation: **Experiments · Case studies · Engineering approach · GitHub*
 │ RUSLAN / AI LAB          [Menu] │
 ├─────────────────────────────────┤
 │ AI-assisted engineering        │
-│                                   
+│
 │ Build. Test. Show evidence.    │
 │ Working experiments and        │
 │ reproducible case studies.     │
