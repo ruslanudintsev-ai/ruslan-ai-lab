@@ -43,7 +43,7 @@ button:disabled { cursor: not-allowed; }
 .button-secondary:hover { background: #eaf1ed; }
 .fine-print { font-size: .76rem; line-height: 1.65; color: #53636b; margin: 0; }
 .hero-graphic { width: 100%; padding: 20px; background: #e7eeeb; border: 1px solid #cedad4; border-radius: 17px; box-shadow: 16px 18px 0 #e3ebe6; }
-.diagram-top, .diagram-bottom { font: 700 .64rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .04em; display: flex; justify-content: space-between; gap: 9px; color: #516d67; }
+.diagram-top, .diagram-bottom { flex-wrap: wrap; font: 700 .64rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .04em; display: flex; justify-content: space-between; gap: 9px; color: #516d67; }
 .diagram-grid { display: grid; grid-template-columns: 1fr 1.2fr; grid-template-rows: minmax(100px, 1fr) minmax(100px, 1fr); gap: 13px; margin-block: 22px; aspect-ratio: 1.22; }
 .diagram-block { position: relative; border: 1px solid #87a89c; border-radius: 7px; overflow: hidden; background-color: #f9fcf9; }
 .diagram-block span { position: absolute; top: 13px; left: 15px; color: #42675d; font: 700 .7rem ui-monospace, monospace; }
@@ -53,7 +53,7 @@ button:disabled { cursor: not-allowed; }
 .diagram-block-b::after { content: ""; position: absolute; inset: 22% 17%; border: 1px solid #81c8ba; border-radius: 70px 15px 70px 15px; transform: rotate(-12deg); }
 .diagram-block-c { background: radial-gradient(circle at 50% 55%, #90c7b7 0 20%, transparent 21% 35%, #c0dcd0 36% 38%, transparent 39%), #f9fcf9; }
 .diagram-block-d { background: repeating-linear-gradient(0deg,#d1e3d8 0 1px,transparent 1px 21px), repeating-linear-gradient(90deg,#d1e3d8 0 1px,#f9fcf9 1px 21px); }
-.diagram-bottom { align-items: center; font-size: .63rem; }
+.diagram-bottom { align-items: center; flex-wrap: wrap; font-size: .63rem; }
 .diagram-bottom span { font-size: 1rem; color: #146b67; }
 .section-separator { border-top: 1px solid #d6dfdc; display: flex; justify-content: space-between; gap: 15px; padding-top: 13px; color: #5c6c70; font: 700 .7rem ui-monospace, monospace; letter-spacing: .04em; }
 .home-feature, .evidence-section, .planned-section { padding-block: 50px 110px; }

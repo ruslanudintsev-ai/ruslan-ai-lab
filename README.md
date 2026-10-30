@@ -1,41 +1,45 @@
 # Ruslan AI Lab
 
-**An interactive digital engineering portfolio and web technology playground.**
+**Status:** working **P1 source candidate in a Draft PR**, not a published website. A distinct engineering portfolio for interactive, inspectable experiments and verifiable AI-assisted work.
 
-This repository is the foundation for a portfolio focused on practical web engineering: small experiments that visitors can try, inspect, and trace back to their source code.
+The first implemented experiment is **CSS Studio**: bounded accent/radius/column/gap/motion controls update a local preview and deterministic, selectable CSS. Reset and copy-with-fallback work without a backend. The homepage and case study are rendered as static Astro pages. Canvas/3D/workflow demos are **planned, not available**.
 
-> **Project status:** foundation and planning. The demonstrations below are planned; they are not live features yet.
+## Technical approach
 
-## Direction
+- **Astro 7 + strict TypeScript**, static output and a tiny progressive-enhancement browser script.
+- Native accessible controls, keyboard focus and reduced-motion fallback; no React, WebGL, remote scripts, trackers, forms, or personal-data collection.
+- **English first**; the RU translation is a later content milestone, not a nonworking language toggle.
+- Built-in pages: `/`, `/labs/css-studio/`, `/case-studies/opalubka/`, `/404.html`.
+- Planned GitHub Pages project prefix: `/ruslan-ai-lab/` (a locally tested **fixture**, not proof of a real deployed URL).
 
-- Astro, strict TypeScript, semantic HTML, and modern CSS for a lightweight foundation.
-- Small, focused interactive experiments with accessible keyboard controls and reduced-motion fallbacks.
-- Optional 3D experiments loaded only when requested, with a static fallback.
-- AI workflow examples clearly labeled as simulations unless a live integration is verified.
-- Public evidence and source links for each finished case study; no invented client results or performance claims.
+## Reproduce the candidate locally
 
-## Planned experiments
+Requires **Node.js 24** and npm.
 
-- **CSS Studio:** edit design tokens and layout settings and inspect the resulting CSS.
-- **Canvas Lab:** explore a small deterministic animation or physics experiment.
-- **3D Playground:** adjust camera, light, and materials, with a non-WebGL fallback.
-- **AI Workflow Simulator:** explore a sample task → pull request → checks → review → release flow, clearly marked as a demo.
-- **Engineering case studies:** document real projects, decisions, checks, and limitations.
+```bash
+npm ci
+npm run check
+npm test
+npm run dev
+```
 
-These are roadmap ideas, not promises of current functionality. Each experiment will be added only with its own implementation, tests, accessibility review, and source link.
+To build/test the project subpath rather than root:
 
-## Principles
+```bash
+DEMO_BASE_PATH=/ruslan-ai-lab/ npm run build
+DEMO_BASE_PATH=/ruslan-ai-lab/ node scripts/check-build.mjs
+```
 
-- Mobile-first layouts, keyboard support, semantic markup, and `prefers-reduced-motion` handling.
-- No collection of contact details, API keys, or other visitor secrets.
-- No third-party media or fonts without a documented rights basis.
-- Keep the initial page lightweight; defer large assets and interactive code until needed.
-- Clearly distinguish verified live data from static examples and simulations.
+The read-only GitHub Actions quality workflow compiles the project under `/ruslan-ai-lab/`, serves it on localhost, runs real Playwright and axe tests, and archives exact-SHA static and screenshot evidence. It **does not publish** GitHub Pages. CI results are evidence for the particular run, not guarantees of current live uptime, accessibility, or field speed.
 
-## Related project
+## Source and documentation
 
-[Opalubka](https://github.com/ruslanudintsev-ai/opalubka) remains a separate project and case study. This repository does not replace or modify it.
+- [Design P0](docs/P0_DESIGN_BRIEF.md): selected **B — Precision Editorial Workbench**, original responsive wireframes
+- [Architecture ADR](docs/P0_ARCHITECTURE_ADR.md): Astro, strict TypeScript, safe deterministic CSS, evidence boundaries
+- [MVP acceptance](docs/P1_MVP_ACCEPTANCE.md): manual and automated gates
+- [Rights/assets provenance](docs/RIGHTS_AND_ASSETS.md): local original design assets and third-party exclusions
+- [Opalubka](https://github.com/ruslanudintsev-ai/opalubka): **separate repository**, used only as a sourced case study and never modified by this project
 
-## Languages
+**Ownership and AI attribution:** the owner specifies goals/constraints and reviews release decisions; AI-assisted tools may generate implementation code and documentation. Do not claim exclusive authorship of all code or simulate live integrations. The repository's standalone outbound code license **has not yet been selected by its owner**; this public source is not an automatic license grant. Third-party dependencies remain under their own licenses.
 
-The initial project documentation is in English and Russian will be added as the first bilingual content milestone.
+**Owner gate:** P1 code is on a Draft PR. NO MERGE / NO DEPLOY / NO DNS / NO PAID SERVICES / NO OPALUBKA CHANGES without separate approval.
