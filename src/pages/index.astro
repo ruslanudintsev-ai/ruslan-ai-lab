@@ -1,0 +1,49 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+const base = import.meta.env.BASE_URL;
+---
+<SiteLayout title="Interactive engineering portfolio" description="Ruslan AI Lab: practical interactive web experiments, transparent AI-assisted engineering, original source and verifiable case studies.">
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-led" aria-hidden="true"></span> INDEPENDENT ENGINEERING WORKBENCH / 2026</p>
+        <h1>Engineering you can <em>try</em> — and verify.</h1>
+        <p class="hero-lead">Small, practical web experiments. Readable source code. Tests you can inspect. A transparent, AI-assisted approach to building on the web.</p>
+        <div class="actions"><a class="button button-primary" href={base + "labs/css-studio/"}>Try CSS Studio <span aria-hidden="true">↗</span></a><a class="button button-secondary" href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab" target="_blank" rel="noopener noreferrer">Explore source <span aria-hidden="true">↗</span></a></div>
+        <p class="fine-print">No sign-up · No tracking · No paid integrations</p>
+      </div>
+      <div class="hero-graphic" role="img" aria-label="Original abstract engineering layout illustration made from CSS grid shapes">
+        <div class="diagram-top"><span>FIG. 001 / SYSTEM DESIGN</span><span>STATIC / NO WEBGL</span></div>
+        <div class="diagram-grid" aria-hidden="true">
+          <div class="diagram-block diagram-block-a"><span>01</span></div>
+          <div class="diagram-block diagram-block-b"><span>02</span></div>
+          <div class="diagram-block diagram-block-c"><span>03</span></div>
+          <div class="diagram-block diagram-block-d"><span>04</span></div>
+        </div>
+        <div class="diagram-bottom">CONSTRAINTS <span>→</span> IMPLEMENTATION <span>→</span> EVIDENCE</div>
+      </div>
+    </section>
+    <div class="section-separator"><span>001 / INTERACTIVE LAB</span><span>USE IT. INSPECT IT.</span></div>
+    <section class="home-feature" aria-labelledby="lab-heading">
+      <div class="feature-head"><div><p class="eyebrow">ONE FUNCTIONAL EXPERIMENT</p><h2 id="lab-heading">CSS Studio <span class="heading-accent">/</span></h2></div><p>Adjust design tokens, see the result immediately, and take the generated CSS with you. No sandbox backend or hidden API.</p></div>
+      <div class="feature-grid">
+        <div class="feature-abstract" aria-hidden="true">
+          <div class="abstract-card"><div class="abstract-stripe"></div><div class="abstract-copy"></div><div class="abstract-copy short"></div><div class="abstract-buttons"><span></span><span></span></div></div>
+          <div class="abstract-controls"><i></i><i></i><i></i></div>
+        </div>
+        <div class="feature-detail"><span class="lab-number">LAB / 001</span><h3>From token to interface.</h3><p>Five bounded controls. Deterministic output. Keyboard-friendly native inputs. Built as a real, inspectable client-side experiment.</p><a href={base + "labs/css-studio/"} class="text-link">Open the working lab <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+    <div class="section-separator"><span>002 / PROOF OVER PROMISES</span><span>REAL SOURCE. REAL HISTORY.</span></div>
+    <section class="evidence-section" aria-labelledby="evidence-heading">
+      <div class="feature-head"><div><p class="eyebrow">ENGINEERING CASE STUDIES</p><h2 id="evidence-heading">The work behind<br />the work.</h2></div><p>What changed, why it changed, what the tests show — and what still needs independent verification.</p></div>
+      <article class="case-row"><div class="case-symbol" aria-hidden="true">O<span>1</span></div><div><p class="eyebrow">CASE 001 / ASTRO INTEGRATION</p><h3>Opalubka</h3><p>A separate static demo that moved from a legacy HTML concept toward tested Astro. Includes review history, licensing decisions, and a real GitHub Pages build issue.</p></div><a class="case-open" href={base + "case-studies/opalubka/"} aria-label="Read the Opalubka case study">Read case ↗</a></article>
+    </section>
+    <div class="section-separator"><span>003 / THE ROADMAP</span><span>NOT LIVE FEATURES</span></div>
+    <section class="planned-section" aria-labelledby="next-heading"><h2 id="next-heading">Next on the workbench.</h2><div class="planned-grid">
+      <article class="planned-card"><span class="planned-index">02 / PLANNED</span><h3>Canvas Lab</h3><p>Deterministic animation and small browser-native physics experiments.</p><span class="planned-state">Not available yet</span></article>
+      <article class="planned-card"><span class="planned-index">03 / PLANNED</span><h3>3D Playground</h3><p>Optional WebGL experiments with a reliable lightweight fallback.</p><span class="planned-state">Not available yet</span></article>
+      <article class="planned-card"><span class="planned-index">04 / PLANNED</span><h3>AI Workflow Simulator</h3><p>A labeled simulation of issue → agent → PR → checks → review → release.</p><span class="planned-state">Not available yet</span></article>
+    </div></section>
+  </div>
+</SiteLayout>
