@@ -28,15 +28,19 @@ if (form && preview && code && reset && copy && status && help) {
     });
   }
 
+  // Capture narrowed non-null references for the nested render callback.
+  const livePreview: HTMLElement = preview;
+  const liveCode: HTMLTextAreaElement = code;
+  const liveStatus: HTMLElement = status;
   function render(state: StudioState): void {
     const css = generateCss(state);
-    preview.style.setProperty("--studio-accent", state.accent);
-    preview.style.setProperty("--studio-radius", state.radiusPx + "px");
-    preview.style.setProperty("--studio-gap", state.gapPx + "px");
-    preview.style.setProperty("--studio-columns", String(state.columns));
-    preview.style.setProperty("--studio-duration", state.motion === "subtle" ? "160ms" : "0ms");
-    code.value = css;
-    status.textContent = "";
+    livePreview.style.setProperty("--studio-accent", state.accent);
+    livePreview.style.setProperty("--studio-radius", state.radiusPx + "px");
+    livePreview.style.setProperty("--studio-gap", state.gapPx + "px");
+    livePreview.style.setProperty("--studio-columns", String(state.columns));
+    livePreview.style.setProperty("--studio-duration", state.motion === "subtle" ? "160ms" : "0ms");
+    liveCode.value = css;
+    liveStatus.textContent = "";
   }
 
   for (const element of Object.values(controls)) {

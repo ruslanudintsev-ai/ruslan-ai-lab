@@ -56,7 +56,10 @@ test("clipboard unavailable falls back to genuinely selectable generated text", 
   await expect(page.getByRole("status")).toContainText("Clipboard unavailable");
   const code = page.locator("[data-studio-code]");
   await expect(code).toBeFocused();
-  const selection = await code.evaluate(element => element.value.slice(element.selectionStart, element.selectionEnd));
+  const selection = await code.evaluate(element => {
+    if (!(element instanceof HTMLTextAreaElement)) throw new Error("Generated code is not a textarea");
+    return element.value.slice(element.selectionStart, element.selectionEnd);
+  });
   expect(selection).toContain("--studio-accent: #146B67;");
 });
 
