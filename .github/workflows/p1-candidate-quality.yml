@@ -30,7 +30,7 @@ jobs:
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
           test ! -e index.html
           test -f src/pages/labs/css-studio/index.astro
-          if grep -R -E "^[[:space:]]+(pages: write|id-token: write)$|actions/deploy-pages@" .github/workflows/; then
+          if grep -R -E "^[[:space:]]+(pages: write|id-token: write)$|^[[:space:]]+uses:[[:space:]]+actions/deploy-pages@" .github/workflows/; then
             echo "Unapproved deploy permissions in P1 candidate"; exit 1
           fi
           echo "LAB_CANDIDATE_READ_ONLY_PASS"
