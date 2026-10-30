@@ -1,0 +1,87 @@
+name: Ruslan AI Lab / P1 read-only candidate QA
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lab-p1-qa-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  exact-sha-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    env:
+      DEMO_BASE_PATH: /ruslan-ai-lab/
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      TEST_SITE_URL: http://127.0.0.1:8769/ruslan-ai-lab/
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - name: Verify source pin and future release restrictions
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test ! -e index.html
+          test -f src/pages/labs/css-studio/index.astro
+          if grep -R -E "^[[:space:]]+(pages: write|id-token: write)$|actions/deploy-pages@" .github/workflows/; then
+            echo "Unapproved deploy permissions in P1 candidate"; exit 1
+          fi
+          echo "LAB_CANDIDATE_READ_ONLY_PASS"
+      - name: Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install exact locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Typecheck and deterministic unit tests
+        run: |
+          npm run check
+          npm test
+      - name: Build compiled nested static site
+        run: |
+          npm run build
+          node scripts/check-build.mjs
+      - name: Chromium and OS dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Serve compiled output under /ruslan-ai-lab/
+        run: |
+          root="$RUNNER_TEMP/ruslan-lab-site"
+          mkdir -p "$root/ruslan-ai-lab"
+          cp -a dist/. "$root/ruslan-ai-lab/"
+          python3 -m http.server 8769 --bind 127.0.0.1 --directory "$root" > /tmp/ruslan-ai-lab-site.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl -fs -o /dev/null "$TEST_SITE_URL"; then break; fi
+            sleep 1
+          done
+          curl -fs -o /dev/null "$TEST_SITE_URL"
+      - name: Real browser interactions, accessibility and five viewport evidence
+        run: npm run test:e2e
+      - name: Stamp NON-DEPLOYED build evidence
+        if: success()
+        run: |
+          printf 'SOURCE_SHA=%s\nBASE_URL=%s\nDEPLOYED=NO\n' "$SOURCE_SHA" "$DEMO_BASE_PATH" > dist/BUILD_PROVENANCE.txt
+          test -s dist/BUILD_PROVENANCE.txt
+      - name: Archive candidate only (NEVER deploy)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-p1-candidate-${{ env.SOURCE_SHA }}
+          path: dist/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Archive browser screenshots and traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-p1-browser-evidence-${{ env.SOURCE_SHA }}
+          path: test-results/
+          retention-days: 14
+          if-no-files-found: warn
