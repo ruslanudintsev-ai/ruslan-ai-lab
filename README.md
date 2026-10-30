@@ -30,7 +30,7 @@ DEMO_BASE_PATH=/ruslan-ai-lab/ npm run build
 DEMO_BASE_PATH=/ruslan-ai-lab/ node scripts/check-build.mjs
 ```
 
-The read-only GitHub Actions quality workflow compiles the project under `/ruslan-ai-lab/`, serves it on localhost, runs real Playwright and axe tests, and archives exact-SHA static and screenshot evidence. It **does not publish** GitHub Pages. CI results are evidence for the particular run, not guarantees of current live uptime, accessibility, or field speed.
+The read-only GitHub Actions quality workflow compiles the project under `/ruslan-ai-lab/`, serves it on localhost, runs real Playwright and axe tests, and archives exact-SHA static and screenshot evidence (Astro may inline very small, local client scripts instead of emitting a separate JS file). It **does not publish** GitHub Pages. CI results are evidence for the particular run, not guarantees of current live uptime, accessibility, or field speed.
 
 ## Source and documentation
 
