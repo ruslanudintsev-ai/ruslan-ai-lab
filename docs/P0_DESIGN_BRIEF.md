@@ -4,6 +4,10 @@
 **Date:** 2026-10-30. **Owner-facing choice:** visual concept A or B (recommendation below).
 **Scope:** distinct from [Opalubka](https://github.com/ruslanudintsev-ai/opalubka); no code, settings, or deployment changes to that project.
 
+## P0 owner-delegated direction — 2026-10-30
+
+The owner asked the assistant to choose the design and continue the work directly. **Selected: B — Precision Editorial Workbench**, English-first and one real **CSS Studio** experiment for the initial candidate. This is authorization to prepare implementation on a **separate Draft PR**, not to merge, deploy, alter Opalubka or choose a license on the owner's behalf. Dark mode and other labs remain later milestones.
+
 ## Product thesis
 
 A professional engineering **workbench that can be inspected** — not a futuristic gallery of effects. An engineering manager, developer or prospective collaborator should understand in **10 seconds** what the owner does, try **one working interaction in under a minute**, and reach **real source/CI/review evidence** without invented KPIs.
