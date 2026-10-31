@@ -4,6 +4,17 @@ import AxeBuilder from "@axe-core/playwright";
 const root = process.env.TEST_SITE_URL || "http://127.0.0.1:8769/ruslan-ai-lab/";
 const url = new URL("labs/canvas/", root).toString();
 
+test("homepage and header navigate to the real Canvas Lab under nested base", async ({ page }) => {
+  await page.goto(root);
+  await page.getByRole("link", { name: /Try Canvas Lab/ }).click();
+  await expect(page).toHaveURL(url);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Canvas Lab.");
+  await page.getByRole("link", { name: "Lab home" }).click();
+  await expect(page).toHaveURL(root);
+  await page.getByRole("link", { name: "Canvas Lab", exact: true }).click();
+  await expect(page).toHaveURL(url);
+});
+
 test("Canvas Lab starts paused, renders a canvas, and has bounded enabled controls", async ({ page }) => {
   await page.goto(url);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Canvas Lab.");
