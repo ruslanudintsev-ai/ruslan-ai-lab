@@ -35,7 +35,13 @@ if (root && list && status && reset && save && clear && help) {
         board.append(card);
       }
       board.dataset.order = order.join(",");
-      focus?.focus();
+      // Keep keyboard focus on a usable control when the moved button
+      // becomes disabled at the first or last position.
+      if (focus instanceof HTMLButtonElement && focus.disabled) {
+        focus.parentElement?.querySelector<HTMLButtonElement>("button:not(:disabled)")?.focus();
+      } else {
+        focus?.focus();
+      }
     }
 
     board.addEventListener("click", event => {
