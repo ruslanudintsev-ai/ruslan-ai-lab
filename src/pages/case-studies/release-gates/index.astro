@@ -1,0 +1,42 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+const base = import.meta.env.BASE_URL;
+---
+<SiteLayout title="From spec to owner-gated release — engineering case study" description="Evidence-backed AI-assisted engineering workflow from planned scope and reviewable PRs to exact-SHA CI, owner approval, and the published five-lab GitHub Pages release.">
+  <div class="shell page-pad case-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={base}>Lab home</a><span aria-hidden="true">/</span> Release governance case</nav>
+    <header class="inner-hero">
+      <p class="eyebrow">CASE STUDY / 003 · DELIVERY CONTROLS · 31 OCT 2026</p>
+      <h1>From specification to a controlled release<span class="heading-accent">.</span></h1>
+      <p>Five native-web experiments became a published portfolio through staged scope, inspectable PRs, automated checks and a separate human decision to release the exact source revision.</p>
+    </header>
+    <div class="case-layout">
+      <article class="prose-case">
+        <h2>The problem</h2>
+        <p>Working code and a passing CI run are not the same as a public release. The project needed a way to develop independent labs without accidentally exposing draft source, inventing live agent integrations or publishing unreviewed builds.</p>
+        <h2>How work was separated</h2>
+        <p>A source-backed P0 design and P1 MVP led to CSS Studio, Canvas Lab, 3D Playground and a local AI Workflow Simulator. P4 added Browser APIs with accessible reorder controls and explicit localStorage Save, separate Clear and Reset, and an honest no-JavaScript fallback. Each feature had its own PR, tests, and verifiable GitHub record.</p>
+        <p><strong>The Workflow Simulator is an educational local demo.</strong> The real engineering history lives in GitHub PRs and Actions runs. No autonomous production agent, connected issue API, paid model or automatic production release is implied.</p>
+        <h2>The release boundary</h2>
+        <p>The owner reviewed and merged Browser APIs PR #17 into <code>main</code> at exact SHA <code>1c13d0d3f965efc2582d38aea63aaedef8834a56</code>. The GitHub Pages workflow requires a manual dispatch with an <code>expected_sha</code> input matching the checked-out main commit. Source merges alone do not publish a new artifact.</p>
+        <h2>What is verified</h2>
+        <p>The P4 candidate passed <strong>41 unit, 55 Chromium and 22 Firefox/mobile-WebKit</strong> checks at its candidate SHA <code>c93aabc5edfeb19e69735373f3f25734e3d37adf</code>. The separate owner-triggered Pages run #41192989794 passed Build and Deploy for the merged source SHA. A release record documents published route checks and local Browser APIs reorder/save/reload/restore/clear behavior in Chrome.</p>
+        <h2>Human direction and AI assistance</h2>
+        <p>The owner chose scope, constraints, integration and the publication trigger. AI assistance contributed implementation, test creation, code and screenshot review, and documentation. Public GitHub records show exactly what passed; they do not imply all code was typed by the owner or that the Workflow Simulator runs real agents.</p>
+        <h2>Known boundaries</h2>
+        <p>Candidate test counts apply to the candidate source; deploy success applies to the separately identified merged SHA. Reported browser smoke is not an independent physical iPhone/VoiceOver or NVDA audit. Local Lighthouse results are not field Core Web Vitals, and source history alone does not establish business impact, visitors or revenue.</p>
+      </article>
+      <aside class="evidence-aside" aria-label="Verifiable gated release evidence">
+        <p class="eyebrow">SOURCE LEDGER / 2026-10-31</p><h2>Trace the release.</h2>
+        <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/1" target="_blank" rel="noopener noreferrer"><span>01 / SCOPE</span><strong>Original P0 design and constraints ↗</strong></a>
+        <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/17" target="_blank" rel="noopener noreferrer"><span>02 / CODE REVIEW</span><strong>Browser APIs PR #17 ↗</strong></a>
+        <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41190268765" target="_blank" rel="noopener noreferrer"><span>03 / CANDIDATE TESTS</span><strong>41 unit · 55 Chromium · 22 cross-browser ↗</strong></a>
+        <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41192989794" target="_blank" rel="noopener noreferrer"><span>04 / RELEASE</span><strong>Manual Pages Build + Deploy SUCCESS ↗</strong></a>
+        <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/16#issuecomment-6542275339" target="_blank" rel="noopener noreferrer"><span>05 / LIVE SMOKE RECORD</span><strong>Public Pages checks and limitations ↗</strong></a>
+        <a href={base + "labs/browser-apis/"}><span>06 / INTERACTIVE DEMO</span><strong>Try the Browser APIs Lab ↗</strong></a>
+        <p class="fine-print">This is a dated account of a human-gated release, not a connected workflow monitor or guarantee about future deployment state.</p>
+      </aside>
+    </div>
+    <div class="case-return"><a class="button button-primary" href={base + "case-studies/webkit-frame/"}>Read the visual QA case ↗</a></div>
+  </div>
+</SiteLayout>
