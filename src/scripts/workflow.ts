@@ -27,6 +27,16 @@ const stepItems = root?.querySelectorAll<HTMLElement>("[data-workflow-step]");
 
 if (root && next && previous && reset && fail && pass && approve && ciPanel && ownerPanel &&
     heading && actor && explanation && output && revision && status && help && stepItems) {
+  // Narrow DOM references once for nested callbacks under strict TypeScript.
+  const safeNext: HTMLButtonElement = next;
+  const safePrevious: HTMLButtonElement = previous;
+  const safeReset: HTMLButtonElement = reset;
+  const safeFail: HTMLButtonElement = fail;
+  const safePass: HTMLButtonElement = pass;
+  const safeApprove: HTMLButtonElement = approve;
+  const safeCiPanel: HTMLElement = ciPanel;
+  const safeOwnerPanel: HTMLElement = ownerPanel;
+  const safeSteps: NodeListOf<HTMLElement> = stepItems;
   const surface = root;
   const detailHeading = heading;
   const detailActor = actor;
@@ -58,18 +68,18 @@ if (root && next && previous && reset && fail && pass && approve && ciPanel && o
     detailOutput.textContent = copy.output;
     detailRevision.textContent = "REVISION " + state.revision;
     message.textContent = announce(action);
-    stepItems.forEach(item => {
+    safeSteps.forEach(item => {
       if (item.dataset.workflowStep === state.step) item.setAttribute("aria-current", "step");
       else item.removeAttribute("aria-current");
     });
-    previous.disabled = state.step === WORKFLOW_STEPS[0];
-    next.disabled = !canAdvance(state);
-    reset.disabled = false;
-    ciPanel.hidden = state.step !== "ci";
-    ownerPanel.hidden = state.step !== "review";
-    fail.disabled = state.step !== "ci";
-    pass.disabled = state.step !== "ci";
-    approve.disabled = state.step !== "review" || state.ci !== "passed" || state.ownerApproved;
+    safePrevious.disabled = state.step === WORKFLOW_STEPS[0];
+    safeNext.disabled = !canAdvance(state);
+    safeReset.disabled = false;
+    safeCiPanel.hidden = state.step !== "ci";
+    safeOwnerPanel.hidden = state.step !== "review";
+    safeFail.disabled = state.step !== "ci";
+    safePass.disabled = state.step !== "ci";
+    safeApprove.disabled = state.step !== "review" || state.ci !== "passed" || state.ownerApproved;
   }
 
   function dispatch(action: WorkflowAction): void {
@@ -77,12 +87,12 @@ if (root && next && previous && reset && fail && pass && approve && ciPanel && o
     render(action);
   }
 
-  next.addEventListener("click", () => dispatch("next"));
-  previous.addEventListener("click", () => dispatch("previous"));
-  reset.addEventListener("click", () => dispatch("reset"));
-  fail.addEventListener("click", () => dispatch("ci-fail"));
-  pass.addEventListener("click", () => dispatch("ci-pass"));
-  approve.addEventListener("click", () => dispatch("owner-approve"));
+  safeNext.addEventListener("click", () => dispatch("next"));
+  safePrevious.addEventListener("click", () => dispatch("previous"));
+  safeReset.addEventListener("click", () => dispatch("reset"));
+  safeFail.addEventListener("click", () => dispatch("ci-fail"));
+  safePass.addEventListener("click", () => dispatch("ci-pass"));
+  safeApprove.addEventListener("click", () => dispatch("owner-approve"));
   help.hidden = true;
   render("initialize");
 }
