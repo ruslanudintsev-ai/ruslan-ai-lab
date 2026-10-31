@@ -7,6 +7,10 @@ The [recorded P4 live smoke](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/
 An original, English-first engineering workbench: small native-web experiments, inspectable source code, verifiable tests and a transparent, AI-assisted approach. The portfolio intentionally has **no remote AI/model API, no sign-up and no visitor tracking**.
 
 
+## P6 public project index (candidate only)
+
+The **[P6 Draft source change](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/22)** adds a `/projects/` directory of two **public** evidence-backed repositories. This route is a **source-only proposal** and is not part of the last verified Pages release; successful candidate CI or a branch commit is not proof of live publication. No private project source, internal metrics, unverified deployments or new contact/tracking systems are included. Evidence ledger: [P6 source review](docs/P6_PUBLIC_PROJECT_EVIDENCE_2026-10-31.md).
+
 ## Five browser-native labs
 
 | Lab | Route | What is implemented |
