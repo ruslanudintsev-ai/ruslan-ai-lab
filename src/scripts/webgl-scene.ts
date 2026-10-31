@@ -124,8 +124,8 @@ export function createScene(canvas: HTMLCanvasElement, gl: WebGLRenderingContext
         gl.uniformMatrix4fv(projection,false,matrix);
         gl.uniform1f(angleLoc, rotation);
         gl.uniform1f(distance,CAMERAS[settings.camera]);
-        gl.uniform3fv(light,LIGHTS[settings.light]);
-        gl.uniform3fv(color,MATERIALS[settings.material]);
+        gl.uniform3fv(light,new Float32Array(LIGHTS[settings.light]));
+        gl.uniform3fv(color,new Float32Array(MATERIALS[settings.material]));
         gl.bindBuffer(gl.ARRAY_BUFFER,activeBuffer);
         gl.drawArrays(gl.TRIANGLES,0,36);
       },
