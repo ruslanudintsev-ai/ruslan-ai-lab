@@ -1,0 +1,7 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+const base = import.meta.env.BASE_URL;
+---
+<SiteLayout title="Page not found" description="This Ruslan AI Lab page does not exist.">
+  <div class="shell not-found"><p class="eyebrow">404 / NOT FOUND</p><h1>This route has no experiment.</h1><p>The page might have moved, or the lab may still be planned.</p><a class="button button-primary" href={base}>Back to the lab ↗</a></div>
+</SiteLayout>

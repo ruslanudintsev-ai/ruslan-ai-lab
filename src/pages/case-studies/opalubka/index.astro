@@ -1,0 +1,27 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+const base = import.meta.env.BASE_URL;
+---
+<SiteLayout title="Opalubka — engineering case study" description="A sourced, transparent AI-assisted Astro integration case study with GitHub pull requests, test evidence and known limitations.">
+  <div class="shell page-pad case-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={base}>Lab home</a><span aria-hidden="true">/</span> Case study</nav>
+    <header class="inner-hero"><p class="eyebrow">CASE STUDY / 001 · EVIDENCE-BASED</p><h1>Opalubka<span class="heading-accent">.</span></h1><p>A small example of engineering discipline: replace a misleading legacy page with a transparent static demo, test it, review it, and document the release.</p></header>
+    <div class="case-layout">
+      <article class="prose-case">
+        <h2>The challenge</h2><p>An earlier root HTML page contained misleading business-style features and unsupported claims. The integration separated a fictional front-end demo from real service claims, while preserving a documented history of technical decisions.</p>
+        <h2>The engineering approach</h2><p>The project adopted Astro and strict TypeScript, local SVG illustrations, reproducible testing and an MIT notice for owner-controlled source. Review feedback led to improvements in documentation, accessibility and deployment safety.</p>
+        <h2>A real release problem</h2><p>GitHub Pages initially tried to parse raw Astro components as Jekyll YAML, blocking the automatic build. The project switched to a manual, SHA-checked workflow that deploys the compiled static output instead.</p>
+        <h2>Human direction and AI assistance</h2><p>The owner defined goals and constraints, coordinated development, reviewed findings, and authorized integration and release decisions. AI tools helped implement, test, review and document code. This case does not claim that all source code was manually authored by one person.</p>
+        <h2>What the evidence proves — and does not</h2><p>GitHub logs establish the recorded build/deploy result for a specific commit. They do not establish ongoing uptime, current public HTTP availability, real-world visitor conversions or field Core Web Vitals. Manual screen-reader and real-device checks should be recorded separately when performed.</p>
+      </article>
+      <aside class="evidence-aside" aria-label="Verifiable GitHub evidence"><p class="eyebrow">SOURCE LEDGER / 2026-10-30</p><h2>Follow the trace.</h2>
+        <a href="https://github.com/ruslanudintsev-ai/opalubka" target="_blank" rel="noopener noreferrer"><span>01 / SOURCE</span><strong>Opalubka repository ↗</strong></a>
+        <a href="https://github.com/ruslanudintsev-ai/opalubka/pull/6" target="_blank" rel="noopener noreferrer"><span>02 / INTEGRATION</span><strong>Merged Astro PR #6 ↗</strong></a>
+        <a href="https://github.com/ruslanudintsev-ai/opalubka/actions/runs/41094511224" target="_blank" rel="noopener noreferrer"><span>03 / FAILURE EVIDENCE</span><strong>Jekyll build incident ↗</strong></a>
+        <a href="https://github.com/ruslanudintsev-ai/opalubka/actions/runs/41100450242" target="_blank" rel="noopener noreferrer"><span>04 / RELEASE RECORD</span><strong>GitHub Actions build + deploy ↗</strong></a>
+        <p class="fine-print">These are links to source records, not a real-time monitoring dashboard. Opalubka is an independent repository and is not modified by this lab.</p>
+      </aside>
+    </div>
+    <div class="case-return"><a href={base + "labs/css-studio/"} class="button button-primary">Try CSS Studio ↗</a></div>
+  </div>
+</SiteLayout>

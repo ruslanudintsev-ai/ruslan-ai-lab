@@ -1,0 +1,129 @@
+name: Ruslan AI Lab / P1 read-only candidate QA
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lab-p1-qa-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  exact-sha-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    env:
+      DEMO_BASE_PATH: /ruslan-ai-lab/
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      TEST_SITE_URL: http://127.0.0.1:8769/ruslan-ai-lab/
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - name: Verify source pin and future release restrictions
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test ! -e index.html
+          test -f src/pages/labs/css-studio/index.astro
+          if grep -R -E "^[[:space:]]+(pages: write|id-token: write)$|^[[:space:]]+uses:[[:space:]]+actions/deploy-pages@" .github/workflows/; then
+            echo "Unapproved deploy permissions in P1 candidate"; exit 1
+          fi
+          echo "LAB_CANDIDATE_READ_ONLY_PASS"
+      - name: Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install exact locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Inventory locked dependency license metadata (not legal clearance)
+        run: node scripts/audit-licenses.mjs
+      - name: Preserve exact-SHA license metadata for manual review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-p1-license-metadata-${{ env.SOURCE_SHA }}
+          path: quality-results/licenses-report.json
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Typecheck and deterministic unit tests
+        run: |
+          npm run check
+          npm test
+      - name: Build compiled nested static site
+        run: |
+          npm run build
+          node scripts/check-build.mjs
+      - name: Chromium, Firefox and WebKit with OS dependencies
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Serve compiled output under /ruslan-ai-lab/
+        run: |
+          root="$RUNNER_TEMP/ruslan-lab-site"
+          mkdir -p "$root/ruslan-ai-lab"
+          cp -a dist/. "$root/ruslan-ai-lab/"
+          python3 -m http.server 8769 --bind 127.0.0.1 --directory "$root" > /tmp/ruslan-ai-lab-site.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl -fs -o /dev/null "$TEST_SITE_URL"; then break; fi
+            sleep 1
+          done
+          curl -fs -o /dev/null "$TEST_SITE_URL"
+      - name: Real browser interactions, accessibility and five viewport evidence
+        run: npm run test:e2e
+      - name: Firefox desktop and mobile WebKit cross-browser smoke QA
+        run: npx playwright test --config playwright.crossbrowser.config.mjs
+      - name: Confirm Chromium + mobile WebKit screenshots survive both test runs
+        run: |
+          for prefix in home studio; do
+            for width in 320 360 390 768 1440; do
+              test "$(find test-results -type f -name "$prefix-$width.png" | wc -l)" -ge 1 || {
+                echo "Missing evidence screenshot $prefix-$width.png"; exit 1;
+              }
+            done
+          done
+          test "$(find test-results-crossbrowser -type f -name 'webkit-iphone-css-studio.png' | wc -l)" -ge 1
+          echo "BROWSER_EVIDENCE_RETENTION_PASS: 10 Chromium viewports + 1 iPhone WebKit screenshot"
+      - name: Lighthouse mobile lab on compiled local candidate (quality gate)
+        run: |
+          export CHROME_PATH="$(node --input-type=module -e 'import { chromium } from "@playwright/test"; process.stdout.write(chromium.executablePath())')"
+          mkdir -p quality-results
+          npx --no-install lighthouse "$TEST_SITE_URL" \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=quality-results/lighthouse-mobile.json --quiet
+          node scripts/check-lighthouse.mjs quality-results/lighthouse-mobile.json
+      - name: Preserve exact-SHA local Lighthouse report (not field CWV)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-p1-local-lighthouse-${{ env.SOURCE_SHA }}
+          path: quality-results/lighthouse-mobile.json
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Stamp NON-DEPLOYED build evidence
+        if: success()
+        run: |
+          printf 'SOURCE_SHA=%s\nBASE_URL=%s\nDEPLOYED=NO\n' "$SOURCE_SHA" "$DEMO_BASE_PATH" > dist/BUILD_PROVENANCE.txt
+          test -s dist/BUILD_PROVENANCE.txt
+      - name: Archive candidate only (NEVER deploy)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-p1-candidate-${{ env.SOURCE_SHA }}
+          path: dist/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Archive browser screenshots and traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-p1-browser-evidence-${{ env.SOURCE_SHA }}
+          path: |
+            test-results/
+            test-results-crossbrowser/
+          retention-days: 14
+          if-no-files-found: warn
