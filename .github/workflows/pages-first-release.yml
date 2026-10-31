@@ -1,0 +1,120 @@
+name: Ruslan AI Lab / owner-approved Pages first release
+
+# First release runs on the workflow-file merge only. Later releases are manual.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/pages-first-release.yml
+  workflow_dispatch:
+
+concurrency:
+  group: ruslan-ai-lab-pages-release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-check:
+    name: Verify and package exact main SHA
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    env:
+      SOURCE_SHA: ${{ github.sha }}
+      DEMO_BASE_PATH: /ruslan-ai-lab/
+      TEST_SITE_URL: http://127.0.0.1:8769/ruslan-ai-lab/
+    steps:
+      - name: Check out release source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Confirm immutable release SHA and four-lab source
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test ! -e index.html
+          for route in css-studio canvas 3d workflow; do
+            test -s "src/pages/labs/$route/index.astro"
+          done
+          test -s LICENSE
+          echo "LAB_RELEASE_SOURCE_PASS: $SOURCE_SHA"
+      - name: Node.js 24 and locked dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Types and unit tests
+        run: |
+          npm run check
+          npm test
+      - name: Compile project-root base and audit distributed files
+        run: |
+          npm run build
+          node scripts/check-build.mjs
+          node scripts/audit-distribution.mjs
+      - name: Install browsers for release regressions
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Serve the same compiled static directory locally
+        shell: bash
+        run: |
+          root="$RUNNER_TEMP/ruslan-lab-release"
+          mkdir -p "$root/ruslan-ai-lab"
+          cp -a dist/. "$root/ruslan-ai-lab/"
+          python3 -m http.server 8769 --bind 127.0.0.1 --directory "$root" >/tmp/ruslan-lab-release-http.log 2>&1 &
+          ready=0
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --output /dev/null "$TEST_SITE_URL"; then ready=1; break; fi
+            sleep 1
+          done
+          test "$ready" = 1
+      - name: Real browser tests for all four labs
+        run: |
+          npm run test:e2e
+          npx playwright test --config playwright.crossbrowser.config.mjs
+      - name: Record the exact reviewed build and MIT notice
+        shell: bash
+        run: |
+          cp LICENSE dist/LICENSE.txt
+          {
+            echo "RUSLAN_AI_LAB_PUBLIC_PAGES_RELEASE"
+            echo "SOURCE_SHA=$SOURCE_SHA"
+            echo "BASE_URL=/ruslan-ai-lab/"
+            echo "TARGET_ROOT=compiled_dist"
+            echo "MANUAL_IPHONE_VOICEOVER_NVDA_QA=NOT_YET_VERIFIED"
+            echo "OWNER_RELEASE_AUTHORIZED=YES"
+          } > dist/RELEASE_PROVENANCE.txt
+          test -s dist/index.html
+          test -s dist/LICENSE.txt
+          test -s dist/RELEASE_PROVENANCE.txt
+      - name: Upload only compiled dist for GitHub Pages
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/
+
+  deploy:
+    name: Publish verified compiled site to GitHub Pages
+    needs: build-and-check
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Require GitHub Pages source configured as Actions
+        uses: actions/configure-pages@v5
+      - name: Deploy exact build artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
