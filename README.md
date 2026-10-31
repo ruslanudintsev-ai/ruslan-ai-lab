@@ -1,5 +1,7 @@
 # Ruslan AI Lab
 
+**P4 candidate (source-only, Draft [PR #17](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/17)):** a fifth Browser APIs Lab is being reviewed in a separate branch. Reordering works through keyboard/touch-friendly buttons or pointer drag; localStorage persistence happens **only** after an explicit Save. This new lab is **NOT part of the first published Pages SHA** until separately approved, merged, tested and dispatched. The statements below describe the current public first release, not an already-live fifth lab.
+
 **Status (2026-10-31): four working labs in `main`; first GitHub Pages deployment SUCCESS according to [Actions #41188192743](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41188192743), attempt 2, from exact source SHA `75b5d2e224acad07de76db3c6cbbb12f26f060e5`.** GitHub reports the environment URL [Ruslan AI Lab](https://ruslanudintsev-ai.github.io/ruslan-ai-lab/). External live HTTP/asset checks, physical iPhone and manual accessibility QA are **not independently verified**; do not present these as PASS.
 
 An original, English-first engineering workbench: small browser-native experiments, inspectable code, verifiable tests and a transparent account of how the owner and AI-assisted tools collaborate. A first static site has been deployed via the separately approved Pages workflow; **live browser/assistive-technology acceptance remains open**.
