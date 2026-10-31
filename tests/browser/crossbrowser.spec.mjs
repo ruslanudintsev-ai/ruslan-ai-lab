@@ -95,6 +95,17 @@ test("3D Playground has an opt-in GPU path or honest fallback on alternate brows
     await expect(page.locator("[data-3d-canvas]")).toBeVisible();
     await expect(page.getByRole("button",{name:"Play rotation"})).toBeEnabled();
     await expect(state).toHaveAttribute("data-render-state","paused");
+    // A running GPU context isn't enough: WebKit must retain a visible frame
+    // while paused, rather than presenting an all-black canvas.
+    const pixel=await page.locator("[data-3d-canvas]").evaluate(canvas=>{
+      const context=canvas.getContext("webgl");
+      if (!context) return null;
+      const bytes=new Uint8Array(4);
+      context.readPixels(Math.floor(canvas.width/2),Math.floor(canvas.height/2),1,1,context.RGBA,context.UNSIGNED_BYTE,bytes);
+      return [...bytes];
+    });
+    expect(pixel,"enabled WebGL scene must have readable framebuffer pixels").not.toBeNull();
+    expect(Math.max(...pixel.slice(0,3)),"WebGL canvas must not be black while paused").toBeGreaterThan(25);
   }
   if(info.project.name==="webkit-iphone") await page.screenshot({path:info.outputPath("webkit-iphone-3d.png"),fullPage:true});
   expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(
