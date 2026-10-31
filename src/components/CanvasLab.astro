@@ -1,0 +1,48 @@
+---
+import { DEFAULT_SEED } from "../domain/canvas";
+---
+<section class="canvas-lab" aria-label="Particle simulation controls and preview">
+  <div class="canvas-controls">
+    <p class="eyebrow">01 / SIMULATION CONTROLS</p>
+    <h2>Shape the motion.</h2>
+    <p class="soft-copy">A fixed-seed particle system. Nothing runs until you press Play. No server, account or network connection.</p>
+    <div class="field">
+      <label for="particle-count">Particle count</label>
+      <select id="particle-count" data-canvas-count disabled>
+        <option value="12">12 · Light</option>
+        <option value="24" selected>24 · Balanced</option>
+        <option value="36">36 · Detailed</option>
+        <option value="60">60 · Maximum</option>
+      </select>
+    </div>
+    <div class="canvas-actions">
+      <button type="button" class="button button-primary" data-canvas-toggle disabled>Play simulation</button>
+      <button type="button" class="button button-secondary" data-canvas-reset disabled>Reset to seed</button>
+    </div>
+    <p class="fine-print" data-canvas-help>JavaScript and Canvas2D are needed for animation. The static diagram and explanation remain available.</p>
+    <p class="canvas-seed">REPRODUCIBLE SEED / <strong>{DEFAULT_SEED}</strong></p>
+  </div>
+  <div class="canvas-view">
+    <div class="panel-label">
+      <span class="eyebrow">02 / PARTICLE FIELD</span>
+      <span class="panel-status">CANVAS 2D</span>
+    </div>
+    <div class="canvas-stage">
+      <svg data-canvas-static class="canvas-static" viewBox="0 0 720 405" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect width="720" height="405" fill="#e4efea"/>
+        <g stroke="#b8d3c9" stroke-width="1"><path d="M0 101H720M0 202H720M0 303H720M120 0V405M240 0V405M360 0V405M480 0V405M600 0V405"/></g>
+        <g fill="#146b67">
+          <circle cx="85" cy="94" r="9"/><circle cx="176" cy="237" r="6"/><circle cx="264" cy="130" r="8"/>
+          <circle cx="346" cy="307" r="7"/><circle cx="418" cy="83" r="11"/><circle cx="507" cy="208" r="8"/>
+          <circle cx="632" cy="300" r="9"/><circle cx="585" cy="83" r="6"/><circle cx="117" cy="336" r="7"/>
+        </g>
+      </svg>
+      <canvas data-canvas-stage class="canvas-renderer" width="720" height="405" role="img" aria-label="A bounded field of teal particles reflecting from the edges. Particle positions change only when Play is active." hidden></canvas>
+    </div>
+    <p class="canvas-status" role="status" aria-live="polite" data-canvas-status>Static illustration · motion is off.</p>
+    <p class="fine-print">This is a local deterministic simulation, not a live scientific measurement. The same seed, size and particle count produce the same starting field. Animation pauses whenever the tab is hidden.</p>
+  </div>
+</section>
+<script>
+  import "../scripts/canvas";
+</script>
