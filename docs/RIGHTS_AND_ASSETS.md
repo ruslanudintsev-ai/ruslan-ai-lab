@@ -1,34 +1,36 @@
-# P1 candidate — asset/rights boundary
+# Ruslan AI Lab — rights, provenance and asset inventory
 
-**Status:** inventory of the current new project. This is a source audit, **not** legal confirmation of exclusive ownership. Date: 2026-10-30.
+**Review date:** 2026-10-31. **Scope:** source-integrated portfolio with four actual browser labs; not yet published. This is a factual provenance/notice review queue, **not** an independent legal clearance or guarantee of exclusive human authorship.
 
-| Category | Actual tracked assets | Provenance/decision |
+| Category | Actual project paths | Provenance and licensing boundary |
 | --- | --- | --- |
-| Original local visuals | `public/favicon.svg` | New basic geometric vector made for this project; no remote image embeds |
-| CSS-only diagrams | `src/styles/global.css`, `src/pages/index.astro` | Custom layouts/abstract shapes built in-project, no stock photography, external fonts, vendor marks or branded assets |
-| Interactive CSS Studio | `src/domain/studio.ts`, `src/scripts/studio.ts`, `src/components/Studio.astro` | New AI-assisted implementation, reviewed/sourced in current repository |
-| Case study | `src/pages/case-studies/opalubka/index.astro` | Written description linking public, actual GitHub Opalubka source, PR and Actions. **No copying Opalubka code/media** |
-| Build/runtime | Astro, TypeScript, Playwright, axe, transitive npm packages | Third-party distribution licenses belong to their respective package authors. Check exact lockfile and notices before release. |
-| Fonts | System default fonts only | No downloaded/embedded fonts |
-| Audio/video/3D | None | Future proposed experiments are not working or bundled |
+| Identity and original static artwork | `public/favicon.svg`, `src/pages/index.astro`, `src/styles/global.css` | Original geometric project art, editorial layout, grid/diagrams; **no remote images, custom downloadable fonts or stock imagery** |
+| CSS Studio | `src/domain/studio.ts`, `src/scripts/studio.ts`, `src/components/Studio.astro` | New AI-assisted bounded CSS editor and deterministic preview/code generation, local to this repository |
+| Canvas Lab | `src/domain/canvas.ts`, `src/scripts/canvas.ts`, `src/components/CanvasLab.astro` | New pure seeded physics and original small in-repo static SVG particle illustration; Canvas2D only, no external textures or plugins |
+| 3D Playground | `src/domain/playground3d.ts`, `src/scripts/playground3d.ts`, `src/scripts/webgl-scene.ts`, `src/components/ThreeDPlayground.astro` | **Original in-repository WebGL1 geometry, vertex/fragment shader code and SVG cube fallback**; no downloaded 3D model, Three.js, Unity runtime or remote texture |
+| AI Workflow Simulator | `src/domain/workflow.ts`, `src/scripts/workflow.ts`, `src/components/WorkflowSimulator.astro` | New local state machine and semantic stepper; actual source/CI links are **historical evidence**, not live API/AI requests |
+| Case study | `src/pages/case-studies/opalubka/index.astro` | Original narrative referring to separate, public Opalubka repo and specific PR/Actions. **No Opalubka source/media was copied or relicensed** |
+| Built output and build-time tooling | Astro, TypeScript, Playwright, axe-core, Lighthouse and transitive npm packages | Third-party code/licenses remain with their owners; lockfile contains development/testing dependencies **not necessarily shipped** in compiled `dist/`. Check redistributed code and notices separately |
+| Typefaces, video, audio, tracker integrations | System font stack; **no embedded video/audio or remote fonts** | No third-party paid subscription, tracking, credential, contact form or browser network service is introduced by the four labs |
 
-The design and implementation were AI-assisted. **Repository source licensing: MIT**, as recorded in the root [`LICENSE`](../LICENSE), Copyright (c) 2026 Ruslan Udintsev, following the owner's direction to proceed with the proposed MIT option on 2026-10-31. This covers only rights the licensor can grant in this lab's own source and documentation. It **does not relicense** the independent Opalubka project, third-party npm packages, browser engines, fonts, or assets under others' licenses; those retain their respective notices and terms. This ledger documents provenance and known exclusions, not an independent legal opinion or a guarantee of exclusive human copyright in AI-assisted materials.
+## Repository-level license and AI provenance
 
-## Locked dependency metadata review (2026-10-31)
+The standalone project's root [MIT License](../LICENSE), Copyright (c) 2026 Ruslan Udintsev, covers **only rights the licensor can grant** in the lab's own source and documentation. The project has used AI assistance for implementation and documentation; this ledger is not a claim that one human authored every byte or that all AI-assisted content carries exclusive copyright. The license does **not** supersede npm-package licenses, nor any copyright in independent Opalubka source, other repositories, fonts, or external assets.
 
-The locked install currently lists **447 package entries** in `package-lock.json`. Each entry includes a nonempty license field and version in the lock metadata. This count covers **build/test/platform-optional packages too**, not 447 separate browser assets.
+## Dependency license inventory — NOT independent legal review
 
-- `node scripts/audit-licenses.mjs` validates nonempty lockfile version/license metadata, verifies direct manifest pins, and generates `quality-results/licenses-report.json` without network access.
-- GitHub Actions preserves this evidence at the current exact candidate SHA. Read it together with the built `dist/` artifact, **not** as proof all listed packages are shipped to browsers.
-- The initial metadata inventory highlights **36 entries** for extra human attention because their expressions mention LGPL, MPL, FSL or BlueOak. Examples include `@img/sharp-libvips-*` platform variants (LGPL), `lightningcss*` and `axe-core` (MPL), `sentry` (FSL), and `glob` (BlueOak). This is a **review queue**, not a finding of incompatibility or infringement.
-- Review third-party package LICENSE/NOTICE files and obligations where relevant to actual redistribution. The npm lockfile's `license` field is not complete legal evidence, and MIT adoption for this repository does **not** clear third-party obligations.
-- Release acceptance and human-device instructions live in [P1 release readiness](./P1_RELEASE_READINESS_2026-10-31.md).
+`scripts/audit-licenses.mjs` checks pinned dependencies, manifest/lockfile version and license **metadata** and writes `quality-results/licenses-report.json`; the read-only CI archives results for the exact source SHA. The project has **447 locked package entries** (including build, test and optional platform packages), with no empty license metadata in the last verified inventory.
 
-## Reviewer checklist
+A **36-entry notice review queue** was identified by expressions mentioning LGPL, MPL, FSL or BlueOak. Examples include `@img/sharp-libvips-*` platform variants, `lightningcss*`, `axe-core`, `sentry` and `glob`. These are flags for human inspection, **not** established legal incompatibility or proof that such packages are distributed in the browser.
 
-- Ensure generated `dist/` contains only local SVG, compiled CSS/JS and static HTML; no remote script or third-party media.
-- Check no form sends visitor data, no API key, cookie tracking or sensitive file exists in output.
-- Verify package dependency notices and licenses prior to distribution; source check alone cannot establish complete legal title to AI-assisted code.
-- Approve any newly added public assets or trademark references through this ledger before public release.
+Before authorized publication:
+
+- [ ] Compare the **exact final** compiled `dist/` JS/CSS/HTML and any redistributed assets against applicable LICENSE/NOTICE terms.
+- [ ] Check package licenses/notices that actually apply to redistribution; distinguish local build/test tooling and optional platform packages from browser-shipped code.
+- [ ] Inspect client bundles for embedded secrets, unexpected remote requests, user tracking, copied models/media, and references that misrepresent working AI/CI integrations.
+- [ ] Record any third-party asset and rights review if new media or code is introduced after this inventory.
+- [ ] Keep the P3 manual device/assistive-tech gates separately tracked at [Issue #10](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/10).
+
+**Provenance:** [source merge PR #7](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/7), [source merge PR #9](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/9), [four-lab CI run #41182540844](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41182540844). Code may be open and QA-approved without any public hosted release.
 
 **MIT_FOR_LAB_OWN_SOURCE / THIRD_PARTY_RIGHTS_PRESERVED / NO_DEPLOY / NO_BILLING / NO_OPALUBKA_CHANGES.**
