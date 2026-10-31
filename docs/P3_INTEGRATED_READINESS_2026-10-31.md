@@ -1,6 +1,6 @@
 # P3 — integrated four-lab source acceptance and release boundary
 
-**Record date:** 2026-10-31. **State:** ALL FOUR LABS MERGED IN SOURCE; GITHUB PAGES NOT ACTIVATED; HUMAN/RELEASE GATES OPEN. This is not a live-site acceptance certificate.
+**Record date:** 2026-10-31. **Updated after first Pages release:** ALL FOUR LABS MERGED; GitHub Actions reports successful Pages deployment at exact source SHA `75b5d2e224acad07de76db3c6cbbb12f26f060e5` ([run #41188192743, second attempt](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41188192743)). Physical-device, assistive-technology, legal-notice and independent external live HTTP/asset QA remain open. This is **not** a live-site acceptance certificate.
 
 This report supersedes the *current-state interpretation* of the historical [P1 release-readiness document](./P1_RELEASE_READINESS_2026-10-31.md), but it does **not** rewrite the original P1 specification or retroactively assert that manual device testing was performed. The governing roadmap remains [Projects HQ #33](https://github.com/ruslanudintsev-ai/projects-hq/issues/33).
 
@@ -42,13 +42,14 @@ The last PR reconciled all overlapping homepage/nav/CSS/build/QA changes **witho
 - [ ] **Source/asset link verification at release time**, including Opalubka's dated evidence, and first-party static assets. Historical linked CI results are not live GitHub integration.
 - [ ] **Optional product decisions**: Browser APIs extra experiment, dark theme and full RU translation are **not implemented**; keep them explicitly deferred unless owner adds acceptance scope. Competitor positioning research was not independently completed in this source report.
 
-## Publication and rollback — BLOCKED WITHOUT SEPARATE OWNER GO
+## First GitHub Pages release — GitHub deploy SUCCESS; independent live QA OPEN
 
-1. Obtain explicit approval **to publish GitHub Pages**, distinct from source merges or this report.
-2. On that GO, inspect actual GitHub Pages permissions/settings, decide the hosted project URL, `base` configuration, canonical/robots/sitemap as appropriate, and a **manual exact-source-SHA compiled-artifact** release workflow. Do not use raw Astro source as a Jekyll website. No such workflow is implemented or enabled now.
-3. Preserve the previous published artifact (if any) and document a controlled revert/rollback route. Check Actions security permissions only when configuring authorized deployment.
-4. **After publication**, verify real external HTTP/HTTPS, `/ruslan-ai-lab/` navigation, hashed CSS and JS, favicon, static 404, every lab interaction, accessibility, links, mobile responsiveness and deployed source provenance; log real PASS/FAIL. Until then do not mark the site's public availability as working.
+1. **Owner authorization recorded:** owner explicitly permitted first publication before the outstanding physical-device/assistive-technology review. This does **not** mark those checks PASS.
+2. **Released source:** `main@75b5d2e224acad07de76db3c6cbbb12f26f060e5`. [First release workflow](../.github/workflows/pages-first-release.yml) builds compiled `dist/` under `/ruslan-ai-lab/` with locked dependencies, unit/type checks, asset audit, MIT license and SHA provenance. It does not publish raw Astro/Jekyll sources. Future application commits do **not** trigger automatic Pages deployments; an explicit Actions dispatch is required.
+3. **Exact GitHub evidence:** [Actions run #41188192743, attempt 2](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41188192743) has Build **SUCCESS**, Deploy **SUCCESS**. The `actions/deploy-pages@v4` log states `Reported success!` and identifies [the Pages environment URL](https://ruslanudintsev-ai.github.io/ruslan-ai-lab/). Initial attempt failed at Pages configuration while the site was disabled; after the owner enabled Pages, the retry passed.
+4. **Not yet independently checked:** live external HTTP status, CSS/JS/favicon/404 delivery, all four lab browser interactions, actual iPhone Safari, VoiceOver/NVDA, keyboard/contrast, third-party redistribution notices, device screenshots and rollback exercise. The review environment could not resolve/read the live GitHub Pages domain; this is **not evidence of site failure**. Keep these gates open and log actual PASS/FAIL after inspection.
+5. **Future work:** if live defects appear, fix them in targeted reviewable PRs and release a new **exact** SHA only by a separately intentional workflow dispatch. Keep the previous deployed source and artifact available for rollback planning.
 
-**This report documents source QA only. NO GITHUB PAGES DEPLOY / NO DNS / NO BILLING / NO PROFILE EDIT / NO OPALUBKA CHANGES.**
+**Initial Pages deployment confirmed by GitHub Actions; full live-quality acceptance not certified. NO DNS / NO BILLING / NO PROFILE EDIT / NO OPALUBKA CHANGES.**
 
 **Task tracking:** [P3 Issue #10](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/10).
