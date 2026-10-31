@@ -1,5 +1,7 @@
 # Ruslan AI Lab — P1 release-readiness record
 
+> **Historical P1 snapshot.** The earlier P1 CI and open-gate statements below are preserved as dated context and are not the current state of all project labs. As of 2026-10-31 the four-lab source was integrated and tested; consult [P3 integrated readiness](./P3_INTEGRATED_READINESS_2026-10-31.md) for the latest exact-source evidence and still-pending manual device, licensing and publication gates. **GitHub Pages is not active.**
+
 **Review record: 2026-10-31.** [P0 PR #1](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/1) was accepted and merged; [P1 PR #2](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/2) passed automated technical acceptance and is the reviewed source candidate. **This record does not authorize or assert a GitHub Pages deployment.** Read PR metadata for current merge state.
 
 This is a checklist for a human release decision, **not** a release authorization or a declaration that every item passed. It supplements the original [P1 acceptance specification](./P1_MVP_ACCEPTANCE.md), which was authored before implementation and retains historical status text.
