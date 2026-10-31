@@ -1,0 +1,38 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+const base = import.meta.env.BASE_URL;
+---
+<SiteLayout title="A green test was not a visible frame — WebKit case study" description="Source-backed engineering case: a black WebGL frame on simulated mobile WebKit was found by screenshot review, fixed in rendering code, and prevented by a new regression test.">
+  <div class="shell page-pad case-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={base}>Lab home</a><span aria-hidden="true">/</span> WebKit rendering case</nav>
+    <header class="inner-hero">
+      <p class="eyebrow">CASE STUDY / 002 · BROWSER QA · 31 OCT 2026</p>
+      <h1>A green test was not a visible frame<span class="heading-accent">.</span></h1>
+      <p>The 3D Playground reported “enabled” on simulated iPhone WebKit, yet its paused canvas looked black. Independent screenshot review caught what the interaction checks had missed.</p>
+    </header>
+    <div class="case-layout">
+      <article class="prose-case">
+        <h2>What was wrong</h2>
+        <p>The WebGL scene was deliberately opt-in and paused by default to avoid wasteful rendering. The first integrated browser suite passed, but an archived mobile-WebKit screenshot showed a black frame where the shaded cube should have appeared. A successful initialization state was not sufficient proof of a visible result.</p>
+        <h2>The engineering decision</h2>
+        <p>The fix retained the last drawn WebGL frame while playback was paused by setting <code>preserveDrawingBuffer: true</code> for this small, user-enabled renderer. The new Firefox/WebKit regression check reads pixels back from the center of the GPU canvas, requires a non-null framebuffer and rejects an all-black result. In this deliberately bounded scene, that is an appropriate specific guard—not a universal visual testing method.</p>
+        <h2>Verification after the change</h2>
+        <p>The corrected candidate ran <strong>30 Node unit tests, 47 Chromium checks and 18 Firefox/mobile-WebKit checks</strong> successfully at source SHA <code>b18754ed8cd160184c8151973207d7b59151fcbf</code>. A newly downloaded simulated mobile-WebKit screenshot was visually reviewed and showed the shaded cube. The tested source was then integrated in 3D PR #9.</p>
+        <h2>Human direction and AI assistance</h2>
+        <p>The owner established the project goals and release boundary. AI-assisted tools helped build and test the renderer; independent review of the actual browser artifact identified the visual defect and prompted an additional measurable regression check. This is an account of documented work, not a claim that the simulator represents a production AI agent.</p>
+        <h2>Limits and lesson</h2>
+        <p>This was <strong>automated mobile WebKit emulation</strong>, not a physical iPhone Safari session. One pixel probe will not detect every rendering defect, and an archived screenshot may expire according to GitHub's artifact retention settings. What the evidence does show is a concrete example of testing beyond a green status: inspect what a user would actually see, repair the root cause, then preserve the finding in a regression test.</p>
+      </article>
+      <aside class="evidence-aside" aria-label="Verifiable WebKit rendering evidence">
+        <p class="eyebrow">SOURCE LEDGER / 2026-10-31</p><h2>Inspect the fix.</h2>
+        <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/9#issuecomment-6540887861" target="_blank" rel="noopener noreferrer"><span>01 / REVIEW FINDING</span><strong>Visual defect and acceptance record ↗</strong></a>
+        <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/commit/494108cd1a7564bc8dc86fdf5d9ea161dacedc30" target="_blank" rel="noopener noreferrer"><span>02 / FIX COMMIT</span><strong>Preserve the paused GPU frame ↗</strong></a>
+        <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/commit/b18754ed8cd160184c8151973207d7b59151fcbf" target="_blank" rel="noopener noreferrer"><span>03 / TESTED SOURCE</span><strong>Final candidate and regression check ↗</strong></a>
+        <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41182540844" target="_blank" rel="noopener noreferrer"><span>04 / CI EVIDENCE</span><strong>30 unit · 47 Chromium · 18 cross-browser ↗</strong></a>
+        <a href={base + "labs/3d/"}><span>05 / INTERACTIVE DEMO</span><strong>Try the actual 3D Playground ↗</strong></a>
+        <p class="fine-print">All links refer to specific historical source and check records. They do not prove current uptime, physical-device compatibility or complete visual correctness.</p>
+      </aside>
+    </div>
+    <div class="case-return"><a class="button button-primary" href={base + "case-studies/release-gates/"}>Next case: controlled release ↗</a></div>
+  </div>
+</SiteLayout>
