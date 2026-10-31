@@ -98,7 +98,7 @@ if (canvas && staticArt && count && toggle && reset && status && help) {
       const pixelWidth = Math.max(1, Math.round(rect.width * dpr));
       const pixelHeight = Math.max(1, Math.round(rect.height * dpr));
       if (stage.width === pixelWidth && stage.height === pixelHeight) return;
-      stop("Paused · canvas resized. Press Play to continue.");
+      stop(reducedMotion.matches ? "Paused · reduced motion is preferred. Press Play to start explicitly." : "Paused · canvas resized. Press Play to continue.");
       stage.width = pixelWidth;
       stage.height = pixelHeight;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
