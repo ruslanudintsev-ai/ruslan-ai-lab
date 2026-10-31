@@ -22,9 +22,9 @@ test("engineering method is visible, evidence-backed and reachable from nested r
   await expect(method.getByRole("listitem")).toHaveCount(3);
   await expect(method.getByRole("heading", { level: 3 })).toHaveCount(3);
   await expect(method.getByText(/not a connected agent dashboard/i)).toBeVisible();
-  await expect(method.getByRole("link", { name: /P0 design and requirements/i })).toHaveAttribute("href", /ruslan-ai-lab\/pull\/1$/);
-  await expect(method.getByRole("link", { name: /exact-source GitHub Actions/i })).toHaveAttribute("href", /41176807380$/);
-  await expect(method.getByRole("link", { name: /reviewed CSS Studio MVP/i })).toHaveAttribute("href", /ruslan-ai-lab\/pull\/2$/);
+  await expect(method.getByRole("link", { name: /Read the P0 specification/i })).toHaveAttribute("href", /ruslan-ai-lab\/pull\/1$/);
+  await expect(method.getByRole("link", { name: /Inspect a real CI run/i })).toHaveAttribute("href", /41176807380$/);
+  await expect(method.getByRole("link", { name: /Follow the reviewed MVP/i })).toHaveAttribute("href", /ruslan-ai-lab\/pull\/2$/);
 
   await page.goto(locationOf("case-studies/opalubka/"));
   await page.getByRole("link", { name: "Our method" }).click();
