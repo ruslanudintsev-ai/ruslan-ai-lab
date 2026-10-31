@@ -9,6 +9,17 @@ async function optIn(page) {
   await expect(page.locator("[data-3d-canvas]")).toBeVisible();
 }
 
+test("homepage card and shared header navigate to the actual 3D demo",async({page})=>{
+  await page.goto(root);
+  await page.getByRole("link",{name:/Try 3D Playground/}).click();
+  await expect(page).toHaveURL(url);
+  await expect(page.getByRole("heading",{level:1})).toContainText("3D Playground");
+  await page.getByRole("link",{name:"Lab home"}).click();
+  await expect(page).toHaveURL(root);
+  await page.getByRole("link",{name:"3D Playground",exact:true}).click();
+  await expect(page).toHaveURL(url);
+});
+
 test("WebGL is never initialized until deliberate user opt-in",async({page})=>{
   await page.addInitScript(()=>{
     const original=HTMLCanvasElement.prototype.getContext;
