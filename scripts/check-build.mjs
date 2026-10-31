@@ -37,6 +37,7 @@ assert.match(threePage, /data-3d-static/);
 assert.ok(root.includes(base + "favicon.svg"), "favicon must use project BASE_URL");
 assert.ok(root.includes(base + "labs/css-studio/"), "project path missing on lab link");
 assert.ok(root.includes(base + "labs/canvas/"), "project path missing on Canvas lab link");
+assert.ok(root.includes(base + "labs/3d/"), "project path missing on 3D Playground link");
 const astroDir = path.join(dir,"_astro");
 assert.ok(existsSync(astroDir), "Astro assets directory missing");
 const assets = readdirSync(astroDir);
