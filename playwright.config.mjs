@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests/browser",
-  testMatch: ["lab.spec.mjs", "canvas.spec.mjs", "playground3d.spec.mjs", "workflow.spec.mjs"],
+  testMatch: ["lab.spec.mjs", "canvas.spec.mjs", "playground3d.spec.mjs", "workflow.spec.mjs", "browser-apis.spec.mjs"],
   timeout: 30_000,
   expect: { timeout: 8_000 },
   retries: process.env.CI ? 1 : 0,

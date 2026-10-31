@@ -1,0 +1,43 @@
+---
+import "../styles/browser-apis.css";
+import { DEFAULT_BOARD, BOARD_LABELS, BOARD_DESCRIPTIONS } from "../domain/browser-apis";
+---
+<section class="browser-apis-lab" data-browser-apis aria-labelledby="board-title">
+  <div class="browser-apis-head">
+    <div>
+      <p class="eyebrow">01 / BROWSER INTERACTION</p>
+      <h2 id="board-title">Order the work.</h2>
+      <p class="soft-copy">Rearrange three predefined steps. Use Move up/down buttons on any device, or drag a card with a mouse. No personal input.</p>
+    </div>
+    <span class="browser-apis-pill">ON-DEVICE ONLY</span>
+  </div>
+  <ol class="browser-apis-list" aria-label="Engineering steps, in current order" data-board-list>
+    {DEFAULT_BOARD.map((id) => (
+      <li class="browser-apis-card" data-board-id={id} draggable="false">
+        <div class="browser-apis-item-copy">
+          <span class="browser-apis-index" data-position>{String(DEFAULT_BOARD.indexOf(id) + 1).padStart(2, "0")}</span>
+          <div><h3>{BOARD_LABELS[id]}</h3><p>{BOARD_DESCRIPTIONS[id]}</p></div>
+        </div>
+        <div class="browser-apis-move" role="group" aria-label={`Move ${BOARD_LABELS[id]}`}>
+          <button type="button" data-move="up" aria-label={`Move ${BOARD_LABELS[id]} up`} disabled>↑</button>
+          <button type="button" data-move="down" aria-label={`Move ${BOARD_LABELS[id]} down`} disabled>↓</button>
+        </div>
+      </li>
+    ))}
+  </ol>
+  <p class="fine-print browser-apis-help" data-board-help>JavaScript is needed to reorder or save the board. The default steps remain readable without it.</p>
+  <div class="browser-apis-toolbar" role="group" aria-label="Board actions">
+    <button type="button" class="button button-secondary" data-board-reset disabled>Reset board</button>
+    <button type="button" class="button button-primary" data-board-save disabled>Save to this browser</button>
+    <button type="button" class="button button-secondary" data-board-clear disabled>Clear saved copy</button>
+  </div>
+  <p class="browser-apis-status" role="status" aria-live="polite" data-board-status></p>
+  <div class="browser-apis-facts">
+    <div><strong>Drag and Drop API</strong><p>Pointer drag is optional. The Move buttons offer keyboard and touch access to the same actions.</p></div>
+    <div><strong>Web Storage API</strong><p>Only a fixed three-item order is saved, and only when you press Save. It stays in this browser origin; private mode or disabled storage may block it.</p></div>
+    <div><strong>Control and recovery</strong><p>Reset changes the visible board. Clear saved copy deletes saved data but keeps the current visible order. Neither sends a request.</p></div>
+  </div>
+</section>
+<script>
+  import "../scripts/browser-apis";
+</script>

@@ -30,6 +30,7 @@ jobs:
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
           test ! -e index.html
           test -f src/pages/labs/css-studio/index.astro
+          test -f src/pages/labs/browser-apis/index.astro
           # The separately owner-approved Pages release workflow is an explicit exception.
           # Do not weaken the read-only policy for any other workflow.
           release_file=.github/workflows/pages-first-release.yml
@@ -122,8 +123,14 @@ jobs:
             }
           done
           test "$(find test-results-crossbrowser -type f -name 'webkit-iphone-workflow.png' | wc -l)" -ge 1
+          for width in 320 360 390 768 1440; do
+            test "$(find test-results -type f -name "browser-apis-$width.png" | wc -l)" -ge 1 || {
+              echo "Missing Browser APIs screenshot browser-apis-$width.png"; exit 1;
+            }
+          done
+          test "$(find test-results-crossbrowser -type f -name 'webkit-iphone-browser-apis.png' | wc -l)" -ge 1
           test "$(find test-results -type f -name 'webgl-active-390.png' | wc -l)" -ge 1
-          echo "BROWSER_EVIDENCE_RETENTION_PASS: 25 Chromium viewports + 4 iPhone WebKit screenshots + active WebGL proof"
+          echo "BROWSER_EVIDENCE_RETENTION_PASS: 30 Chromium viewports + 5 iPhone WebKit screenshots + active WebGL proof"
       - name: Lighthouse mobile lab on compiled local candidate (quality gate)
         run: |
           export CHROME_PATH="$(node --input-type=module -e 'import { chromium } from "@playwright/test"; process.stdout.write(chromium.executablePath())')"

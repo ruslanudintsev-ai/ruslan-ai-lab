@@ -146,6 +146,37 @@ test("Workflow Simulator stays local and enforces owner approval in alternate en
   );
 });
 
+test("Browser APIs Lab reorders safely and shows truthful storage controls across browsers", async ({ page }, testInfo) => {
+  await page.goto(locationOf("labs/browser-apis/"));
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Browser APIs Lab");
+  const board = page.locator("[data-board-list]");
+  await expect(board).toHaveAttribute("data-order", "inspect,build,verify");
+  await page.getByRole("button", { name: "Move Verify up" }).click();
+  await expect(board).toHaveAttribute("data-order", "inspect,verify,build");
+  await page.getByRole("button", { name: "Save to this browser" }).click();
+  await expect(page.getByRole("status")).toContainText("Order saved");
+  await page.reload();
+  await expect(board).toHaveAttribute("data-order", "inspect,verify,build");
+  await page.getByRole("button", { name: "Clear saved copy" }).click();
+  await expect(page.getByRole("status")).toContainText("Saved copy cleared");
+  if (testInfo.project.name === "webkit-iphone") {
+    await page.screenshot({ path: testInfo.outputPath("webkit-iphone-browser-apis.png"), fullPage: true });
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+    await page.evaluate(() => window.innerWidth + 1)
+  );
+});
+
+test("Browser APIs Lab without JS has readable cards and disabled controls", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  try {
+    const page = await context.newPage();
+    await page.goto(locationOf("labs/browser-apis/"));
+    await expect(page.locator("[data-board-list]").getByRole("listitem")).toHaveCount(3);
+    await expect(page.getByRole("button", { name: "Save to this browser" })).toBeDisabled();
+  } finally { await context.close(); }
+});
+
 test("Workflow Simulator JS-off fallback is genuinely inactive in alternate engines", async ({ browser }) => {
   const ctx = await browser.newContext({ javaScriptEnabled: false });
   try {
