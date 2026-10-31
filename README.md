@@ -38,6 +38,7 @@ The read-only GitHub Actions quality workflow compiles the project under `/rusla
 - [Architecture ADR](docs/P0_ARCHITECTURE_ADR.md): Astro, strict TypeScript, safe deterministic CSS, evidence boundaries
 - [MVP acceptance](docs/P1_MVP_ACCEPTANCE.md): manual and automated gates
 - [Rights/assets provenance](docs/RIGHTS_AND_ASSETS.md): local original design assets and third-party exclusions
+- [P1 release readiness](docs/P1_RELEASE_READINESS_2026-10-31.md): exact-SHA QA baseline, manual-device checks, dependency metadata audit and owner-only release gates
 - [Opalubka](https://github.com/ruslanudintsev-ai/opalubka): **separate repository**, used only as a sourced case study and never modified by this project
 
 **Ownership and AI attribution:** the owner specifies goals/constraints and reviews release decisions; AI-assisted tools may generate implementation code and documentation. Do not claim exclusive authorship of all code or simulate live integrations. The repository's standalone outbound code license **has not yet been selected by its owner**; this public source is not an automatic license grant. Third-party dependencies remain under their own licenses.
