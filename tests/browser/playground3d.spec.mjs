@@ -157,7 +157,7 @@ test("JS-off illustration and explanations remain usable without false active bu
     await expect(page.locator("[data-3d-static]")).toBeVisible();
     await expect(page.getByRole("button",{name:"Enable 3D"})).toBeDisabled();
     await expect(page.getByRole("button",{name:"Play rotation"})).toBeDisabled();
-    await expect(page.getByText(/With JavaScript disabled or WebGL unsupported/)).toBeVisible();
+    await expect(page.getByText(/If JavaScript is disabled or WebGL is unsupported/)).toBeVisible();
   } finally { await context.close(); }
 });
 
