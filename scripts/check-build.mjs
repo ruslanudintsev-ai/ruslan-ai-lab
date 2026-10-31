@@ -13,6 +13,8 @@ const resources = [
   "labs/workflow/index.html",
   "labs/browser-apis/index.html",
   "case-studies/opalubka/index.html",
+  "case-studies/webkit-frame/index.html",
+  "case-studies/release-gates/index.html",
   "favicon.svg"
 ];
 for (const file of resources) {
@@ -25,11 +27,17 @@ const browserApiPage = readFileSync(path.join(dir,"labs/browser-apis/index.html"
 const threePage = readFileSync(path.join(dir,"labs/3d/index.html"),"utf8");
 const canvasPage = readFileSync(path.join(dir,"labs/canvas/index.html"),"utf8");
 const casePage = readFileSync(path.join(dir,"case-studies/opalubka/index.html"),"utf8");
+const webkitCasePage = readFileSync(path.join(dir,"case-studies/webkit-frame/index.html"),"utf8");
+const releaseCasePage = readFileSync(path.join(dir,"case-studies/release-gates/index.html"),"utf8");
 assert.match(root, /Engineering you can/);
 assert.doesNotMatch(root, /Not available yet/, "all four labs should be working in this source candidate");
 assert.match(studio, /CSS Studio/);
 assert.match(studio, /generated-css/);
 assert.match(casePage, /41100450242/);
+assert.match(webkitCasePage, /41182540844/);
+assert.match(webkitCasePage, /494108cd1a7564bc8dc86fdf5d9ea161dacedc30/);
+assert.match(releaseCasePage, /41192989794/);
+assert.match(releaseCasePage, /1c13d0d3f965efc2582d38aea63aaedef8834a56/);
 assert.match(canvasPage, /Canvas Lab/);
 assert.match(canvasPage, /data-canvas-stage/);
 assert.match(canvasPage, /data-canvas-static/);
@@ -45,6 +53,8 @@ assert.match(browserApiPage, /Browser APIs Lab/);
 assert.match(browserApiPage, /data-board-list/);
 assert.match(browserApiPage, /Save to this browser/);
 assert.ok(root.includes(base + "favicon.svg"), "favicon must use project BASE_URL");
+assert.ok(root.includes(base + "case-studies/webkit-frame/"), "WebKit case missing on home");
+assert.ok(root.includes(base + "case-studies/release-gates/"), "release case missing on home");
 assert.ok(root.includes(base + "labs/css-studio/"), "project path missing on lab link");
 assert.ok(root.includes(base + "labs/canvas/"), "project path missing on Canvas lab link");
 assert.ok(root.includes(base + "labs/3d/"), "project path missing on 3D Playground link");
@@ -61,8 +71,8 @@ const hasAstroInlinedStudio = /<script[^>]*type=["']module["'][^>]*>/.test(studi
   && studio.includes("[data-studio-form]")
   && studio.includes("Clipboard unavailable");
 assert.ok(hasCompiledJsAsset || hasAstroInlinedStudio, "Studio client JS missing from compiled output");
-for (const html of [root,studio,casePage,canvasPage,threePage,workflowPage,browserApiPage]) {
+for (const html of [root,studio,casePage,webkitCasePage,releaseCasePage,canvasPage,threePage,workflowPage,browserApiPage]) {
   assert.ok(html.includes(base + "_astro/"), "missing compiled CSS project prefix");
   assert.doesNotMatch(html, /<script[^>]+src=["']https?:\/\//i, "unapproved remote JS");
 }
-console.log("LAB_STATIC_BUILD_PASS: 7 real routes, 404, favicon, prefixed CSS and bundled/local JS, no invented live demos, base=" + base);
+console.log("LAB_STATIC_BUILD_PASS: 9 real routes, 404, favicon, prefixed CSS and bundled/local JS, no invented live demos, base=" + base);

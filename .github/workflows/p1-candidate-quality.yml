@@ -130,7 +130,17 @@ jobs:
           done
           test "$(find test-results-crossbrowser -type f -name 'webkit-iphone-browser-apis.png' | wc -l)" -ge 1
           test "$(find test-results -type f -name 'webgl-active-390.png' | wc -l)" -ge 1
-          echo "BROWSER_EVIDENCE_RETENTION_PASS: 30 Chromium viewports + 5 iPhone WebKit screenshots + active WebGL proof"
+          for slug in webkit-frame release-gates; do
+            for width in 320 360 390 768 1440; do
+              test "$(find test-results -type f -name "p5-$slug-$width.png" | wc -l)" -ge 1 || {
+                echo "Missing P5 case screenshot p5-$slug-$width.png"; exit 1;
+              }
+            done
+            test "$(find test-results-crossbrowser -type f -name "webkit-iphone-p5-$slug.png" | wc -l)" -ge 1 || {
+              echo "Missing mobile WebKit P5 case screenshot for $slug"; exit 1;
+            }
+          done
+          echo "BROWSER_EVIDENCE_RETENTION_PASS: 40 Chromium viewports + 7 iPhone WebKit screenshots + active WebGL proof"
       - name: Lighthouse mobile lab on compiled local candidate (quality gate)
         run: |
           export CHROME_PATH="$(node --input-type=module -e 'import { chromium } from "@playwright/test"; process.stdout.write(chromium.executablePath())')"
