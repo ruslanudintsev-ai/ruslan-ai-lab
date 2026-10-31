@@ -94,6 +94,20 @@ test("hidden tab pauses and never silently resumes upon visibility", async ({ pa
   await expect(page.locator("[data-canvas-stage]")).toHaveAttribute("data-simulation-state", "paused");
 });
 
+test("pagehide cleans up animation and pageshow restores an explicitly paused, usable Canvas", async ({ page }) => {
+  await page.goto(url);
+  const stage = page.locator("[data-canvas-stage]");
+  await page.getByRole("button", { name: "Play simulation" }).click();
+  await expect(stage).toHaveAttribute("data-simulation-state", "running");
+  await page.evaluate(() => window.dispatchEvent(new Event("pagehide")));
+  await expect(stage).toHaveAttribute("data-simulation-state", "paused");
+  await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
+  await expect(page.getByRole("status")).toContainText("page restored");
+  await page.getByRole("button", { name: "Play simulation" }).click();
+  await expect(stage).toHaveAttribute("data-simulation-state", "running");
+  await expect.poll(async () => Number(await stage.getAttribute("data-step-count"))).toBeGreaterThan(2);
+});
+
 test("no JavaScript shows truthful static fallback, not fake working controls", async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   try {
