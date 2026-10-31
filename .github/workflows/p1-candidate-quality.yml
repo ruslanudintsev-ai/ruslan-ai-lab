@@ -91,8 +91,14 @@ jobs:
             }
           done
           test "$(find test-results-crossbrowser -type f -name 'webkit-iphone-css-studio.png' | wc -l)" -ge 1
+          for width in 320 360 390 768 1440; do
+            test "$(find test-results -type f -name "workflow-$width.png" | wc -l)" -ge 1 || {
+              echo "Missing Workflow screenshot workflow-$width.png"; exit 1;
+            }
+          done
           test "$(find test-results-crossbrowser -type f -name 'webkit-iphone-canvas-lab.png' | wc -l)" -ge 1
-          echo "BROWSER_EVIDENCE_RETENTION_PASS: 15 Chromium viewports + 2 iPhone WebKit screenshots"
+          test "$(find test-results-crossbrowser -type f -name 'webkit-iphone-workflow.png' | wc -l)" -ge 1
+          echo "BROWSER_EVIDENCE_RETENTION_PASS: 20 Chromium viewports + 3 iPhone WebKit screenshots"
       - name: Lighthouse mobile lab on compiled local candidate (quality gate)
         run: |
           export CHROME_PATH="$(node --input-type=module -e 'import { chromium } from "@playwright/test"; process.stdout.write(chromium.executablePath())')"

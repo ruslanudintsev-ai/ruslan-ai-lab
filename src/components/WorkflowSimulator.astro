@@ -1,0 +1,54 @@
+---
+import { WORKFLOW_STEPS, WORKFLOW_COPY } from "../domain/workflow";
+const labels: Record<(typeof WORKFLOW_STEPS)[number], string> = {
+  issue: "Issue", agent: "Agent draft", "pull-request": "Pull request",
+  ci: "CI checks", review: "Owner review", release: "Release decision"
+};
+---
+<section class="workflow-simulator" data-workflow data-step="issue" data-ci="pending" data-revision="0" data-approved="false" aria-labelledby="workflow-title">
+  <div class="workflow-top">
+    <div><p class="eyebrow">SIMULATION / NO CONNECTED AGENT</p><h2 id="workflow-title">From issue to decision.</h2></div>
+    <p>Explore a possible engineering workflow. Every state is an educational example, not a live GitHub action, autonomous AI run, or production deployment.</p>
+  </div>
+  <ol class="workflow-steps" aria-label="Simulated workflow steps">
+    {WORKFLOW_STEPS.map((step, i) => (
+      <li data-workflow-step={step} aria-current={i === 0 ? "step" : undefined}>
+        <span class="workflow-step-index">{String(i + 1).padStart(2, "0")}</span><span>{labels[step]}</span>
+      </li>
+    ))}
+  </ol>
+  <div class="workflow-panels">
+    <div class="workflow-detail">
+      <div class="panel-label"><span class="eyebrow">CURRENT STEP / DEMO ONLY</span><span class="panel-status" data-workflow-revision>REVISION 0</span></div>
+      <p class="workflow-actor" data-workflow-actor>{WORKFLOW_COPY.issue.actor}</p>
+      <h3 data-workflow-heading>{WORKFLOW_COPY.issue.title}</h3>
+      <p data-workflow-explanation>{WORKFLOW_COPY.issue.explanation}</p>
+      <div class="workflow-output"><span>SIMULATED OUTPUT</span><strong data-workflow-output>{WORKFLOW_COPY.issue.output}</strong></div>
+      <p class="workflow-notice" role="status" aria-live="polite" data-workflow-status>At Issue · owner defines the task. Nothing has been submitted or published.</p>
+    </div>
+    <div class="workflow-controls">
+      <p class="eyebrow">CONTROL THE WALKTHROUGH</p>
+      <p class="soft-copy">Choose each transition yourself. There is no autoplay and no access to your repositories, accounts or API keys.</p>
+      <div class="workflow-buttons">
+        <button type="button" class="button button-secondary" data-workflow-previous disabled>Previous step</button>
+        <button type="button" class="button button-primary" data-workflow-next disabled>Next step</button>
+        <button type="button" class="button button-secondary" data-workflow-reset disabled>Reset simulation</button>
+      </div>
+      <div class="workflow-decision" data-workflow-ci-panel hidden>
+        <p>Choose a <strong>simulated CI result</strong> (not a real GitHub status).</p>
+        <div class="workflow-buttons">
+          <button type="button" class="button button-secondary" data-workflow-fail disabled>Simulate failed CI</button>
+          <button type="button" class="button button-secondary" data-workflow-pass disabled>Simulate passed CI</button>
+        </div>
+      </div>
+      <div class="workflow-decision" data-workflow-owner-panel hidden>
+        <p>Only a simulated <strong>owner decision</strong> can advance to the release stage.</p>
+        <button type="button" class="button button-secondary" data-workflow-approve disabled>Simulate owner approval</button>
+      </div>
+      <p class="fine-print" data-workflow-help>JavaScript is needed to navigate the interactive demo. The six stages remain visible above as static educational content.</p>
+    </div>
+  </div>
+</section>
+<script>
+  import "../scripts/workflow";
+</script>
