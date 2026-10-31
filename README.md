@@ -1,8 +1,8 @@
 # Ruslan AI Lab
 
-**Status (2026-10-31): four working labs in the `main` source tree; NOT PUBLISHED.** GitHub Pages remains disabled, and the locally tested `/ruslan-ai-lab/` path is a build fixture, not a confirmed public address.
+**Status (2026-10-31): four working labs in `main`; first GitHub Pages deployment SUCCESS according to [Actions #41188192743](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41188192743), attempt 2, from exact source SHA `75b5d2e224acad07de76db3c6cbbb12f26f060e5`.** GitHub reports the environment URL [Ruslan AI Lab](https://ruslanudintsev-ai.github.io/ruslan-ai-lab/). External live HTTP/asset checks, physical iPhone and manual accessibility QA are **not independently verified**; do not present these as PASS.
 
-An original, English-first engineering workbench: small browser-native experiments, inspectable code, verifiable tests and a transparent account of how the owner and AI-assisted tools collaborate. The audience can inspect source here; **there is no hosted interactive site yet**.
+An original, English-first engineering workbench: small browser-native experiments, inspectable code, verifiable tests and a transparent account of how the owner and AI-assisted tools collaborate. A first static site has been deployed via the separately approved Pages workflow; **live browser/assistive-technology acceptance remains open**.
 
 ## Four browser-native labs
 
@@ -52,4 +52,4 @@ The four-lab integrated candidate [Actions #41182540844](https://github.com/rusl
 
 Lab-owned, licensable source is under [MIT](LICENSE). Third-party packages and the separate [Opalubka repository](https://github.com/ruslanudintsev-ai/opalubka) retain their own rights. Development was AI-assisted; do not infer exclusive human authorship, connected background agents, live clients or production performance from this portfolio. System fonts and original SVG/WebGL assets are used; no third-party embedded images, form data capture, remote model APIs, analytics or paid dependencies are required by the labs.
 
-**Release boundary:** a source merge does **not** authorize GitHub Pages, DNS, billing, profile edits or publication. A separate owner GO, manual accessibility/device checks, third-party notice review, exact-SHA deploy/rollback procedure and **actual public HTTP/asset/interaction QA** are outstanding. No Pages activation or deploy workflow was added.
+**Release boundary:** the owner separately authorized the first Pages publication on 2026-10-31. Its exact-SHA release job succeeded in [Actions #41188192743](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41188192743); the [owner-gated release workflow](.github/workflows/pages-first-release.yml) uses explicit dispatch for future source changes, not automatic application-code pushes. **Physical iPhone/VoiceOver/NVDA, manual contrast, third-party notice review, external live HTTP/asset/interaction QA and rollback acceptance are still open** in [Issue #10](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/10). No billing, DNS, profile or Opalubka changes were authorized.
