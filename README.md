@@ -1,6 +1,6 @@
 # Ruslan AI Lab
 
-**Status:** working **P1 source candidate in a Draft PR**, not a published website. A distinct engineering portfolio for interactive, inspectable experiments and verifiable AI-assisted work.
+**Status:** working **P1 MVP source implementation and QA-approved release candidate**. **GitHub Pages is not published**; a passing CI does not make this a live website. A distinct engineering portfolio for interactive, inspectable experiments and verifiable AI-assisted work.
 
 The first implemented experiment is **CSS Studio**: bounded accent/radius/column/gap/motion controls update a local preview and deterministic, selectable CSS. Reset and copy-with-fallback work without a backend. The homepage and case study are rendered as static Astro pages. Canvas/3D/workflow demos are **planned, not available**.
 
@@ -41,6 +41,6 @@ The read-only GitHub Actions quality workflow compiles the project under `/rusla
 - [P1 release readiness](docs/P1_RELEASE_READINESS_2026-10-31.md): exact-SHA QA baseline, manual-device checks, dependency metadata audit and owner-only release gates
 - [Opalubka](https://github.com/ruslanudintsev-ai/opalubka): **separate repository**, used only as a sourced case study and never modified by this project
 
-**Ownership and AI attribution:** the owner specifies goals/constraints and reviews release decisions; AI-assisted tools may generate implementation code and documentation. Do not claim exclusive authorship of all code or simulate live integrations. The repository's standalone outbound code license **has not yet been selected by its owner**; this public source is not an automatic license grant. Third-party dependencies remain under their own licenses.
+**Ownership and AI attribution:** the owner specifies goals/constraints and reviews release decisions; AI-assisted tools may generate implementation code and documentation. Do not claim exclusive authorship of all code or simulate live integrations. The owner's original source in this separate repository is distributed under the [MIT License](LICENSE), to the extent of rights the owner can license. Third-party dependencies remain under their respective licenses, and the independent Opalubka project is not relicensed. This is an AI-assisted source project, not a representation of exclusive human authorship of every element.
 
-**Owner gate:** P1 code is on a Draft PR. NO MERGE / NO DEPLOY / NO DNS / NO PAID SERVICES / NO OPALUBKA CHANGES without separate approval.
+**Release gate:** automated P1 tests run on the exact candidate SHA, and any merge to `main` remains distinct from publication. **NO GITHUB PAGES DEPLOY / NO DNS / NO PAID SERVICES / NO OPALUBKA CHANGES** without separate approval.
