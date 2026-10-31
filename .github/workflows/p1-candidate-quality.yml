@@ -64,6 +64,23 @@ jobs:
           curl -fs -o /dev/null "$TEST_SITE_URL"
       - name: Real browser interactions, accessibility and five viewport evidence
         run: npm run test:e2e
+      - name: Lighthouse mobile lab on compiled local candidate (quality gate)
+        run: |
+          export CHROME_PATH="$(node --input-type=module -e 'import { chromium } from "@playwright/test"; process.stdout.write(chromium.executablePath())')"
+          mkdir -p quality-results
+          npx --no-install lighthouse "$TEST_SITE_URL" \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json --output-path=quality-results/lighthouse-mobile.json --quiet
+          node scripts/check-lighthouse.mjs quality-results/lighthouse-mobile.json
+      - name: Preserve exact-SHA local Lighthouse report (not field CWV)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-p1-local-lighthouse-${{ env.SOURCE_SHA }}
+          path: quality-results/lighthouse-mobile.json
+          retention-days: 14
+          if-no-files-found: warn
       - name: Stamp NON-DEPLOYED build evidence
         if: success()
         run: |
