@@ -89,7 +89,7 @@ if (root && enable && canvas && staticArt && stage && material && light && camer
     try {
       // Source is split and loaded only after the user's explicit activation.
       const { createScene } = await import("./webgl-scene");
-      const context = view.getContext("webgl", { alpha: false, antialias: false, preserveDrawingBuffer: false, powerPreference: "low-power" });
+      const context = view.getContext("webgl", { alpha: false, antialias: false, preserveDrawingBuffer: true, powerPreference: "low-power" });
       if (!context) throw new Error("WebGL is unavailable");
       gl = context;
       scene = createScene(view,context);
