@@ -41,6 +41,16 @@ jobs:
           cache: npm
       - name: Install exact locked dependencies
         run: npm ci --no-audit --no-fund
+      - name: Inventory locked dependency license metadata (not legal clearance)
+        run: node scripts/audit-licenses.mjs
+      - name: Preserve exact-SHA license metadata for manual review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-p1-license-metadata-${{ env.SOURCE_SHA }}
+          path: quality-results/licenses-report.json
+          retention-days: 14
+          if-no-files-found: warn
       - name: Typecheck and deterministic unit tests
         run: |
           npm run check
