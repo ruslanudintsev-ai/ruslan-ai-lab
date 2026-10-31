@@ -80,3 +80,34 @@ test("Canvas Lab without scripts remains a true static fallback across engines",
     await context.close();
   }
 });
+
+test("3D Playground has an opt-in GPU path or honest fallback on alternate browsers",async({page},info)=>{
+  await page.goto(locationOf("labs/3d/"));
+  await expect(page.locator("[data-3d-static]")).toBeVisible();
+  await expect(page.locator("[data-3d-canvas]")).toBeHidden();
+  await page.getByRole("button",{name:"Enable 3D"}).click();
+  const state=page.locator("[data-3d-lab]");
+  await expect.poll(async()=>await page.getByRole("status").textContent()).toMatch(/enabled|unavailable|failed/i);
+  if(await state.getAttribute("data-render-state")==="static"){
+    await expect(page.locator("[data-3d-static]")).toBeVisible();
+    await expect(page.getByRole("button",{name:"Play rotation"})).toBeDisabled();
+  } else {
+    await expect(page.locator("[data-3d-canvas]")).toBeVisible();
+    await expect(page.getByRole("button",{name:"Play rotation"})).toBeEnabled();
+    await expect(state).toHaveAttribute("data-render-state","paused");
+  }
+  if(info.project.name==="webkit-iphone") await page.screenshot({path:info.outputPath("webkit-iphone-3d.png"),fullPage:true});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+    await page.evaluate(()=>window.innerWidth+1)
+  );
+});
+
+test("3D static fallback is available with JavaScript disabled in alternate browsers",async({browser})=>{
+  const context=await browser.newContext({javaScriptEnabled:false});
+  try{
+    const page=await context.newPage();await page.goto(locationOf("labs/3d/"));
+    await expect(page.locator("[data-3d-static]")).toBeVisible();
+    await expect(page.getByRole("button",{name:"Enable 3D"})).toBeDisabled();
+    await expect(page.getByRole("button",{name:"Play rotation"})).toBeDisabled();
+  } finally {await context.close();}
+});
