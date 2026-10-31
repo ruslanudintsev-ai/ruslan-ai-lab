@@ -59,6 +59,16 @@ jobs:
         run: |
           npm run build
           node scripts/check-build.mjs
+      - name: Audit compiled browser resources and dependency boundary (read-only)
+        run: node scripts/audit-distribution.mjs
+      - name: Preserve exact-SHA browser distribution inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-p3-distributed-assets-${{ env.SOURCE_SHA }}
+          path: quality-results/browser-distribution.json
+          retention-days: 14
+          if-no-files-found: warn
       - name: Chromium, Firefox and WebKit with OS dependencies
         run: npx playwright install --with-deps chromium firefox webkit
       - name: Serve compiled output under /ruslan-ai-lab/
