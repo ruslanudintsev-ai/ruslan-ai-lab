@@ -13,15 +13,17 @@ const camera = root?.querySelector<HTMLSelectElement>("[data-3d-camera]");
 const toggle = root?.querySelector<HTMLButtonElement>("[data-3d-toggle]");
 const reset = root?.querySelector<HTMLButtonElement>("[data-3d-reset]");
 const status = root?.querySelector<HTMLElement>("[data-3d-status]");
+const help = root?.querySelector<HTMLElement>("[data-3d-help]");
 
-if (root && enable && canvas && staticArt && stage && material && light && camera && toggle && reset && status) {
+if (root && enable && canvas && staticArt && stage && material && light && camera && toggle && reset && status && help) {
   const surface = root, activate = enable, view = canvas, fallback = staticArt, frame = stage;
   const materialSelect = material, lightSelect = light, cameraSelect = camera;
-  const playButton = toggle, resetButton = reset, message = status;
+  const playButton = toggle, resetButton = reset, message = status, helpText = help;
+  const initialAngle = Math.PI / 5;
   let scene: Scene3D | null = null;
   let gl: WebGLRenderingContext | null = null;
   let settings: Settings3D = { ...DEFAULT_3D };
-  let rotation = 0, playing = false, scheduled: number | null = null, lastDraw: number | null = null;
+  let rotation = initialAngle, playing = false, scheduled: number | null = null, lastDraw: number | null = null;
   let enabling = false, offscreen = false;
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const observeResize = new ResizeObserver(() => {
@@ -72,6 +74,7 @@ if (root && enable && canvas && staticArt && stage && material && light && camer
     gl = null;
     view.hidden = true;
     fallback.removeAttribute("hidden");
+    helpText.hidden = false;
     materialSelect.disabled = true; lightSelect.disabled = true; cameraSelect.disabled = true;
     playButton.disabled = true; resetButton.disabled = true;
     activate.disabled = false;
@@ -95,6 +98,7 @@ if (root && enable && canvas && staticArt && stage && material && light && camer
       view.dataset.frameCount = "0";
       view.hidden = false;
       fallback.setAttribute("hidden","");
+      helpText.hidden = true;
       materialSelect.disabled = false; lightSelect.disabled = false; cameraSelect.disabled = false;
       playButton.disabled = false; resetButton.disabled = false;
       activate.textContent = "3D enabled";
@@ -117,7 +121,7 @@ if (root && enable && canvas && staticArt && stage && material && light && camer
     materialSelect.value = settings.material;
     lightSelect.value = settings.light;
     cameraSelect.value = settings.camera;
-    rotation = 0; view.dataset.frameCount = "0";
+    rotation = initialAngle; view.dataset.frameCount = "0";
     scene.draw(settings,rotation);
   }
   activate.disabled = false;
