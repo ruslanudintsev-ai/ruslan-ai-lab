@@ -1,0 +1,46 @@
+---
+---
+<section class="three-d-lab" data-3d-lab data-render-state="static" aria-label="Opt-in three-dimensional materials playground">
+  <div class="three-d-controls">
+    <p class="eyebrow">01 / GPU DEMO, YOUR CHOICE</p>
+    <h2>Light. Material. Perspective.</h2>
+    <p class="soft-copy">This is a local, originally coded WebGL scene. Nothing initializes on the GPU until you select <strong>Enable 3D</strong>.</p>
+    <button class="button button-primary" type="button" data-3d-enable disabled>Enable 3D</button>
+    <div class="field">
+      <label for="three-material">Material color</label>
+      <select id="three-material" data-3d-material disabled><option value="teal">Deep teal</option><option value="amber">Copper amber</option><option value="slate">Slate blue</option></select>
+    </div>
+    <div class="field">
+      <label for="three-light">Light direction</label>
+      <select id="three-light" data-3d-light disabled><option value="front">Front</option><option value="left">Left</option><option value="right">Right</option></select>
+    </div>
+    <div class="field">
+      <label for="three-camera">Camera distance</label>
+      <select id="three-camera" data-3d-camera disabled><option value="wide">Wide</option><option value="near">Near</option><option value="far">Far</option></select>
+    </div>
+    <div class="three-d-actions">
+      <button type="button" class="button button-secondary" data-3d-toggle disabled>Play rotation</button>
+      <button type="button" class="button button-secondary" data-3d-reset disabled>Reset scene</button>
+    </div>
+    <p class="fine-print">Animation starts paused, is limited to 30 frames per second and stops when the tab or scene becomes hidden. Reset restores default settings. No external 3D library, server or tracking.</p>
+  </div>
+  <div class="three-d-view">
+    <div class="panel-label"><span class="eyebrow">02 / INSPECTABLE GEOMETRY</span><span class="panel-status">OPT-IN WEBGL1</span></div>
+    <div class="three-d-stage" data-3d-stage>
+      <svg class="three-d-fallback" data-3d-static viewBox="0 0 720 405" role="img" aria-label="Static illustration of a shaded three-dimensional cube on a light green grid" xmlns="http://www.w3.org/2000/svg">
+        <rect width="720" height="405" fill="#e4efea"/>
+        <g stroke="#bfd5ca" stroke-width="1"><path d="M0 101H720M0 202H720M0 303H720M120 0V405M240 0V405M360 0V405M480 0V405M600 0V405"/></g>
+        <polygon points="360,70 499,138 360,217 221,138" fill="#4e928d"/>
+        <polygon points="221,138 360,217 360,357 221,279" fill="#146b67"/>
+        <polygon points="360,217 499,138 499,279 360,357" fill="#0a4b49"/>
+      </svg>
+      <canvas data-3d-canvas width="720" height="405" role="img" aria-label="A locally shaded rotating cube. Change native controls to change color, lighting and camera." hidden></canvas>
+    </div>
+    <p class="three-d-status" role="status" aria-live="polite" data-3d-status>Static preview. WebGL has not been enabled.</p>
+    <p class="fine-print" data-3d-help>With JavaScript disabled or WebGL unsupported, this original static SVG remains visible. All graphics controls stay disabled. A supported browser can enable the GPU scene explicitly.</p>
+    <p class="fine-print">This demonstration is not a live AI service, scientific measurement or GPU benchmark. Your choices remain in this page only.</p>
+  </div>
+</section>
+<script>
+  import "../scripts/playground3d";
+</script>
