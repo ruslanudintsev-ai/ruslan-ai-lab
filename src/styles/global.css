@@ -89,6 +89,7 @@ button:disabled { cursor: not-allowed; }
 .planned-section h2 { margin-bottom: 36px; }
 .planned-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
 .planned-card { border: 1px solid #cfdbd5; border-radius: 12px; padding: 27px; background: #f9faf7; display: flex; flex-direction: column; min-height: 220px; }
+.planned-card .text-link { align-self: flex-start; margin-top: auto; }
 .planned-card h3 { margin: 21px 0 8px; font-size: 1.45rem; letter-spacing: -.035em; }
 .planned-card p { color: #53636b; line-height: 1.65; margin: 0 0 22px; }
 .planned-state { margin-top: auto; font-size: .78rem; font-weight: 700; color: #576965; }
