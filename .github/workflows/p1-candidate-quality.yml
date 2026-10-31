@@ -49,8 +49,8 @@ jobs:
         run: |
           npm run build
           node scripts/check-build.mjs
-      - name: Chromium and OS dependencies
-        run: npx playwright install --with-deps chromium
+      - name: Chromium, Firefox and WebKit with OS dependencies
+        run: npx playwright install --with-deps chromium firefox webkit
       - name: Serve compiled output under /ruslan-ai-lab/
         run: |
           root="$RUNNER_TEMP/ruslan-lab-site"
@@ -64,6 +64,8 @@ jobs:
           curl -fs -o /dev/null "$TEST_SITE_URL"
       - name: Real browser interactions, accessibility and five viewport evidence
         run: npm run test:e2e
+      - name: Firefox desktop and mobile WebKit cross-browser smoke QA
+        run: npx playwright test --config playwright.crossbrowser.config.mjs
       - name: Lighthouse mobile lab on compiled local candidate (quality gate)
         run: |
           export CHROME_PATH="$(node --input-type=module -e 'import { chromium } from "@playwright/test"; process.stdout.write(chromium.executablePath())')"

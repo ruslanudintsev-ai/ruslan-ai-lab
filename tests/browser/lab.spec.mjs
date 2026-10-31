@@ -158,3 +158,29 @@ test("site load makes no remote third-party requests", async ({ page }) => {
   }
   expect(requests).toEqual([]);
 });
+
+test("copy button puts exactly displayed generated CSS onto actual clipboard", async ({ page }) => {
+  await page.context().grantPermissions(["clipboard-read", "clipboard-write"], { origin: new URL(root).origin });
+  await page.goto(locationOf("labs/css-studio/"));
+  await page.getByLabel("Accent color").selectOption("#B44C38");
+  const displayed = await page.locator("[data-studio-code]").inputValue();
+  await page.getByRole("button", { name: /Copy generated CSS/ }).click();
+  await expect(page.getByRole("status")).toContainText("CSS copied to clipboard.");
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(displayed);
+});
+
+test("system prefers reduced motion takes precedence over CSS Studio animation choice", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(locationOf("labs/css-studio/"));
+  await page.getByLabel("Animation").selectOption("subtle");
+  await expect(page.locator("[data-studio-code]")).toHaveValue(/prefers-reduced-motion: reduce/);
+  const effective = await page.locator(".demo-preview__tile").first().evaluate(el => {
+    const computed = getComputedStyle(el);
+    return {
+      reduced: matchMedia("(prefers-reduced-motion: reduce)").matches,
+      duration: computed.transitionDuration
+    };
+  });
+  expect(effective.reduced).toBe(true);
+  expect(effective.duration.split(",").every(time => Number.parseFloat(time) <= 0.001)).toBe(true);
+});
