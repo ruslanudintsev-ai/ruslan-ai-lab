@@ -7,13 +7,14 @@ const stylesheet = readFileSync(new URL("../../src/styles/global.css", import.me
 function declaredHex(selector, property) {
   const rule = stylesheet.split("}").find(part => part.trimStart().startsWith(selector + " {"));
   assert.ok(rule, `Missing CSS rule for ${selector}`);
-  const match = rule.match(new RegExp(`(?:^|[;{])\\s*${property}\\s*:\\s*(#[0-9a-fA-F]{6})\\s*(?:;|$)`));
+  const match = rule.match(new RegExp(`(?:^|[;{])\\s*${property}\\s*:\\s*(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\\s*(?:;|$)`));
   assert.ok(match, `Missing hex ${property} on ${selector}`);
   return match[1];
 }
 
 function luminance(hex) {
-  const rgb = hex.slice(1).match(/../g).map(byte => {
+  const expanded = hex.length === 4 ? "#" + [...hex.slice(1)].map(digit => digit + digit).join("") : hex;
+  const rgb = expanded.slice(1).match(/../g).map(byte => {
     const channel = Number.parseInt(byte, 16) / 255;
     return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
   });
