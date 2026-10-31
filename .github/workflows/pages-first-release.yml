@@ -23,7 +23,8 @@ concurrency:
 
 jobs:
   build:
-    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'release(P3): owner-approved first Pages publish'
+    if: >-
+      github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'release(P3): owner-approved first Pages publish'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
