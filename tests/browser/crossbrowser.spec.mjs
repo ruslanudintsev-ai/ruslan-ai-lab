@@ -111,3 +111,39 @@ test("3D static fallback is available with JavaScript disabled in alternate brow
     await expect(page.getByRole("button",{name:"Play rotation"})).toBeDisabled();
   } finally {await context.close();}
 });
+
+test("Workflow Simulator stays local and enforces owner approval in alternate engines", async ({ page }, testInfo) => {
+  await page.goto(locationOf("labs/workflow/"));
+  const surface = page.locator("[data-workflow]");
+  const next = page.getByRole("button", { name: "Next step" });
+  await expect(surface).toHaveAttribute("data-step", "issue");
+  for (let i = 0; i < 3; i++) await next.click();
+  await expect(surface).toHaveAttribute("data-step", "ci");
+  await expect(next).toBeDisabled();
+  await page.getByRole("button", { name: "Simulate passed CI" }).click();
+  await next.click();
+  await expect(surface).toHaveAttribute("data-step", "review");
+  await expect(next).toBeDisabled();
+  await page.getByRole("button", { name: "Simulate owner approval" }).click();
+  await next.click();
+  await expect(surface).toHaveAttribute("data-step", "release");
+  if (testInfo.project.name === "webkit-iphone") {
+    await page.screenshot({ path: testInfo.outputPath("webkit-iphone-workflow.png"), fullPage: true });
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+    await page.evaluate(() => window.innerWidth + 1)
+  );
+});
+
+test("Workflow Simulator JS-off fallback is genuinely inactive in alternate engines", async ({ browser }) => {
+  const ctx = await browser.newContext({ javaScriptEnabled: false });
+  try {
+    const page = await ctx.newPage();
+    await page.goto(locationOf("labs/workflow/"));
+    await expect(page.getByText(/JavaScript is needed to navigate/)).toBeVisible();
+    await expect(page.getByRole("button", { name: "Next step" })).toBeDisabled();
+    await expect(page.getByRole("list", { name: "Simulated workflow steps" }).getByRole("listitem")).toHaveCount(6);
+  } finally {
+    await ctx.close();
+  }
+});
