@@ -141,6 +141,14 @@ if (canvas && staticArt && count && toggle && reset && status && help) {
       disposed = true;
       stop("Paused · page unloaded.");
       observer.disconnect();
-    }, { once: true });
+    });
+    // A page restored from the back-forward cache must not retain a dead UI.
+    window.addEventListener("pageshow", () => {
+      if (!disposed) return;
+      disposed = false;
+      observer.observe(stage);
+      fitCanvas();
+      stop("Paused · page restored. Press Play to continue.");
+    });
   }
 }
