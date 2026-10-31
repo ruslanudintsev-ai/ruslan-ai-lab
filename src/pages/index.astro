@@ -39,7 +39,38 @@ const base = import.meta.env.BASE_URL;
       <div class="feature-head"><div><p class="eyebrow">ENGINEERING CASE STUDIES</p><h2 id="evidence-heading">The work behind<br />the work.</h2></div><p>What changed, why it changed, what the tests show — and what still needs independent verification.</p></div>
       <article class="case-row"><div class="case-symbol" aria-hidden="true">O<span>1</span></div><div><p class="eyebrow">CASE 001 / ASTRO INTEGRATION</p><h3>Opalubka</h3><p>A separate static demo that moved from a legacy HTML concept toward tested Astro. Includes review history, licensing decisions, and a real GitHub Pages build issue.</p></div><a class="case-open" href={base + "case-studies/opalubka/"} >Read Opalubka case ↗</a></article>
     </section>
-    <div class="section-separator"><span>003 / THE ROADMAP</span><span>NOT LIVE FEATURES</span></div>
+    <div class="section-separator"><span>003 / ENGINEERING METHOD</span><span>DECISIONS BEFORE DEMOS.</span></div>
+    <section class="method-section" id="method" aria-labelledby="method-heading">
+      <div class="feature-head">
+        <div>
+          <p class="eyebrow">A TRANSPARENT AI-ASSISTED PROCESS</p>
+          <h2 id="method-heading">How the work gets verified.</h2>
+        </div>
+        <p>The owner sets goals, constraints and release decisions. AI tools can help implement, test and review. Public records show what was checked, not who typed every line.</p>
+      </div>
+      <ol class="method-grid">
+        <li class="method-card">
+          <span class="method-index" aria-hidden="true">01 / SCOPE</span>
+          <h3>Define the boundary.</h3>
+          <p>Start with a real problem, acceptance criteria and explicit limits. Decide what should not be built or published yet.</p>
+          <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/1" target="_blank" rel="noopener noreferrer" aria-label="Inspect the P0 design and requirements pull request (opens in a new tab)">Read the P0 specification <span aria-hidden="true">↗</span></a>
+        </li>
+        <li class="method-card">
+          <span class="method-index" aria-hidden="true">02 / IMPLEMENT</span>
+          <h3>Build and test.</h3>
+          <p>Use small, reproducible changes and deterministic tests. Automated checks report a specific source revision, not permanent quality.</p>
+          <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41176807380" target="_blank" rel="noopener noreferrer" aria-label="Inspect the exact-source GitHub Actions test run (opens in a new tab)">Inspect a real CI run <span aria-hidden="true">↗</span></a>
+        </li>
+        <li class="method-card">
+          <span class="method-index" aria-hidden="true">03 / REVIEW</span>
+          <h3>Accept with evidence.</h3>
+          <p>Compare code, screenshots and known limitations. The owner decides on integration and release separately from automated test results.</p>
+          <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/2" target="_blank" rel="noopener noreferrer" aria-label="Inspect the reviewed CSS Studio MVP pull request (opens in a new tab)">Follow the reviewed MVP <span aria-hidden="true">↗</span></a>
+        </li>
+      </ol>
+      <p class="method-disclaimer">These are links to historical GitHub records, not a connected agent dashboard. This lab does not run an AI agent or monitor repository activity in real time.</p>
+    </section>
+    <div class="section-separator"><span>004 / THE ROADMAP</span><span>NOT LIVE FEATURES</span></div>
     <section class="planned-section" aria-labelledby="next-heading"><h2 id="next-heading">Next on the workbench.</h2><div class="planned-grid">
       <article class="planned-card"><span class="planned-index">02 / PLANNED</span><h3>Canvas Lab</h3><p>Deterministic animation and small browser-native physics experiments.</p><span class="planned-state">Not available yet</span></article>
       <article class="planned-card"><span class="planned-index">03 / PLANNED</span><h3>3D Playground</h3><p>Optional WebGL experiments with a reliable lightweight fallback.</p><span class="planned-state">Not available yet</span></article>
