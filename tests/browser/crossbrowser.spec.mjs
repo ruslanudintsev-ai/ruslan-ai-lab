@@ -47,3 +47,36 @@ test("no-JS candidate remains transparent and controls stay disabled", async ({ 
     await ctx.close();
   }
 });
+
+test("Canvas Lab renders and respects explicit Play, Pause, Reset in alternate browsers", async ({ page }, testInfo) => {
+  await page.goto(locationOf("labs/canvas/"));
+  const stage = page.locator("[data-canvas-stage]");
+  await expect(stage).toBeVisible();
+  await expect(stage).toHaveAttribute("data-simulation-state", "paused");
+  await page.getByRole("button", { name: "Play simulation" }).click();
+  await expect(stage).toHaveAttribute("data-simulation-state", "running");
+  await expect.poll(async () => Number(await stage.getAttribute("data-step-count"))).toBeGreaterThan(2);
+  await page.getByRole("button", { name: "Pause simulation" }).click();
+  await expect(stage).toHaveAttribute("data-simulation-state", "paused");
+  await page.getByRole("button", { name: "Reset to seed" }).click();
+  await expect(stage).toHaveAttribute("data-step-count", "0");
+  if (testInfo.project.name === "webkit-iphone") {
+    await page.screenshot({ path: testInfo.outputPath("webkit-iphone-canvas-lab.png"), fullPage: true });
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+    await page.evaluate(() => window.innerWidth + 1)
+  );
+});
+
+test("Canvas Lab without scripts remains a true static fallback across engines", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  try {
+    const page = await context.newPage();
+    await page.goto(locationOf("labs/canvas/"));
+    await expect(page.locator("[data-canvas-static]")).toBeVisible();
+    await expect(page.locator("[data-canvas-stage]")).toBeHidden();
+    await expect(page.getByRole("button", { name: "Play simulation" })).toBeDisabled();
+  } finally {
+    await context.close();
+  }
+});
