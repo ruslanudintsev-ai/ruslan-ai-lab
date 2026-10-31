@@ -206,3 +206,31 @@ button:disabled { cursor: not-allowed; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* P2 Canvas Lab: small, responsive, Canvas2D-first with a static SVG fallback. */
+.canvas-lab { display: grid; grid-template-columns: minmax(220px, .7fr) minmax(0, 1.3fr); border: 1px solid #cfdbd5; border-radius: 16px; overflow: hidden; background: #fff; }
+.canvas-controls { min-width: 0; background: #f9fbf7; padding: clamp(24px, 3vw, 38px); border-right: 1px solid #d6dfdc; }
+.canvas-controls h2 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); line-height: 1.15; letter-spacing: -.045em; margin: 0 0 14px; }
+.canvas-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.canvas-actions .button { min-width: min(100%, 160px); flex: 1; }
+.canvas-actions .button:disabled { opacity: .64; }
+.canvas-controls .fine-print { margin-top: 16px; }
+.canvas-seed { color: #42675d; margin: 24px 0 0; font: 700 .7rem/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .03em; }
+.canvas-seed strong { color: #18232a; }
+.canvas-view { min-width: 0; padding: clamp(20px, 3vw, 36px); }
+.canvas-view .panel-label { margin-bottom: 16px; }
+.canvas-view .panel-label .eyebrow { margin: 0; }
+.canvas-stage { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #e4efea; border: 1px solid #b9d2c8; border-radius: 10px; }
+.canvas-stage canvas, .canvas-stage svg { display: block; width: 100%; height: 100%; }
+.canvas-stage [hidden] { display: none; }
+.canvas-status { margin: 18px 0 12px; font-size: .88rem; font-weight: 700; line-height: 1.5; color: #365e56; min-height: 1.5em; }
+.canvas-view .fine-print { font-size: .83rem; }
+@media (max-width: 800px) {
+  .canvas-lab { grid-template-columns: 1fr; }
+  .canvas-controls { border-right: 0; border-bottom: 1px solid #d6dfdc; }
+}
+@media (max-width: 380px) {
+  .canvas-controls, .canvas-view { padding: 18px; }
+  .canvas-actions { flex-direction: column; }
+  .canvas-actions .button { width: 100%; }
+}
