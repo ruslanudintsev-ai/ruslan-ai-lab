@@ -320,3 +320,23 @@ button:disabled { cursor: not-allowed; }
   .three-d-actions { flex-direction:column; }
   .three-d-actions .button { width:100%; }
 }
+
+
+/* P5 evidence-first case layout. Reuse the existing source ledger; no external assets. */
+.evidence-section .case-row + .case-row { margin-top: 16px; }
+.evidence-section .case-row > div:nth-child(2) { min-width: 0; }
+.case-row h3 { overflow-wrap: anywhere; }
+.prose-case code { font: 600 .83em/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; background: #eaf2ed; border-radius: 5px; padding: 2px 5px; }
+.professional-summary { margin: -12px 0 28px; padding: 24px 28px; border-left: 3px solid #146b67; background: #edf4ef; }
+.professional-summary p:not(.eyebrow) { margin: 0 0 12px; line-height: 1.7; color: #314d50; max-width: 790px; }
+.professional-summary a { color: #146b67; font-weight: 750; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 1050px) and (min-width: 681px) {
+  .evidence-section .case-row { grid-template-columns: 95px minmax(0, 1fr); gap: 17px 22px; padding: 22px; }
+  .evidence-section .case-symbol { width: 90px; height: 90px; }
+  .evidence-section .case-open { grid-column: 2; justify-self: start; }
+}
+@media (max-width: 680px) {
+  .professional-summary { padding: 22px 18px; }
+  .evidence-section .case-row h3 { font-size: clamp(1.28rem, 6vw, 1.8rem); }
+  .evidence-section .case-row { gap: 14px; }
+}
