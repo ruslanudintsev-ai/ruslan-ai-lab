@@ -146,6 +146,39 @@ test("Canvas Lab is responsive and accessibility scan passes at all key widths",
   expect(results.violations).toEqual([]);
 });
 
+test("Canvas Lab Play, Pause and Reset work with keyboard only", async ({ page }) => {
+  await page.goto(url);
+  const count = page.getByLabel("Particle count");
+  const stage = page.locator("[data-canvas-stage]");
+  await count.focus();
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("button", { name: "Play simulation" })).toBeFocused();
+  await page.keyboard.press("Space");
+  await expect(stage).toHaveAttribute("data-simulation-state", "running");
+  await page.keyboard.press("Space");
+  await expect(stage).toHaveAttribute("data-simulation-state", "paused");
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("button", { name: "Reset to seed" })).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(stage).toHaveAttribute("data-step-count", "0");
+});
+
+test("Canvas backing pixels are capped at two times CSS size on high-DPR devices", async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, "devicePixelRatio", { configurable: true, get: () => 5 });
+  });
+  await page.goto(url);
+  const stage = page.locator("[data-canvas-stage]");
+  await expect(stage).toBeVisible();
+  const resolution = await stage.evaluate(el => {
+    const rect = el.getBoundingClientRect();
+    return { width: el.width, height: el.height, cssWidth: rect.width, cssHeight: rect.height };
+  });
+  expect(resolution.width / resolution.cssWidth).toBeLessThanOrEqual(2.05);
+  expect(resolution.height / resolution.cssHeight).toBeLessThanOrEqual(2.05);
+  expect(resolution.width / resolution.cssWidth).toBeGreaterThanOrEqual(1.8);
+});
+
 test("Canvas Lab has no third-party network requests", async ({ page }) => {
   const remote = [];
   page.on("request", request => {
