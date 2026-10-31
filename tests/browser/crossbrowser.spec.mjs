@@ -189,3 +189,16 @@ test("Workflow Simulator JS-off fallback is genuinely inactive in alternate engi
     await ctx.close();
   }
 });
+
+
+test("P5 evidence case pages remain readable and source-backed on Firefox and mobile WebKit",async({page},testInfo)=>{
+  for(const [slug,heading] of [["webkit-frame",/A green test was not a visible frame/],["release-gates",/From specification to a controlled release/]]){
+    await page.goto(locationOf("case-studies/"+slug+"/"));
+    await expect(page.getByRole("heading",{level:1})).toContainText(heading);
+    await expect(page.locator(".evidence-aside a").first()).toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(()=>window.innerWidth+1));
+    if(testInfo.project.name==="webkit-iphone"){
+      await page.screenshot({path:testInfo.outputPath("webkit-iphone-p5-"+slug+".png"),fullPage:true});
+    }
+  }
+});
