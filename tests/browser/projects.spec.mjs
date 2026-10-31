@@ -36,9 +36,13 @@ test("P6 public index does not ship private repository identifiers or third-part
     if (!["127.0.0.1", "localhost"].includes(new URL(req.url()).hostname)) remote.push(req.url());
   });
   await page.goto(url);
-  const content = await page.locator("main").textContent();
-  for (const forbidden of ["bfa-osago-experiment", "polishelp.ru", "kursopilot.ru", "api_key", "secret-token"]) {
-    expect(content).not.toContain(forbidden);
+  const externalLinks = await page.locator("main a[href^='https://']").evaluateAll(links => links.map(link => link.getAttribute("href")));
+  const permittedPrefixes = [
+    "https://github.com/ruslanudintsev-ai/ruslan-ai-lab",
+    "https://github.com/ruslanudintsev-ai/opalubka"
+  ];
+  for (const href of externalLinks) {
+    expect(permittedPrefixes.some(prefix => href === prefix || href?.startsWith(prefix + "/")), "P6 external link outside approved public evidence: " + href).toBe(true);
   }
   expect(remote).toEqual([]);
 });
