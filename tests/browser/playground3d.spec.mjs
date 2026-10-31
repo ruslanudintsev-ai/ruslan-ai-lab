@@ -64,6 +64,22 @@ test("WebGL scene controls can opt in, play, pause and reset without external AP
   await expect(scene).toHaveAttribute("data-render-state","paused");
 });
 
+test("real WebGL program draws after opt-in and retains an active 390px screenshot",async({page},info)=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto(url);
+  await optIn(page);
+  await page.getByLabel("Material color").selectOption("slate");
+  const result=await page.locator("[data-3d-canvas]").evaluate(canvas=>{
+    const gl=canvas.getContext("webgl");
+    return { supported:!!gl,program:gl?!!gl.getParameter(gl.CURRENT_PROGRAM):false,width:canvas.width,height:canvas.height,error:gl?gl.getError():-1 };
+  });
+  expect(result.supported).toBe(true);
+  expect(result.program).toBe(true);
+  expect(result.error).toBe(0);
+  expect(result.width).toBeGreaterThan(10);
+  await page.screenshot({path:info.outputPath("webgl-active-390.png"),fullPage:true});
+});
+
 test("keyboard alone controls the opt-in and bounded material options",async({page})=>{
   await page.goto(url);
   const enable=page.getByRole("button",{name:"Enable 3D"});
