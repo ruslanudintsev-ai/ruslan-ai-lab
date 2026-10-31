@@ -16,6 +16,23 @@ test("homepage has real functional lab, truthful planned cards and source links"
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("CSS Studio.");
 });
 
+test("engineering method is visible, evidence-backed and reachable from nested routes", async ({ page }) => {
+  await page.goto(root);
+  const method = page.getByRole("region", { name: "How the work gets verified." });
+  await expect(method).toBeVisible();
+  await expect(method.getByRole("listitem")).toHaveCount(3);
+  await expect(method.getByRole("heading", { level: 3 })).toHaveCount(3);
+  await expect(method.getByText(/not a connected agent dashboard/i)).toBeVisible();
+  await expect(method.getByRole("link", { name: /Read the P0 specification/i })).toHaveAttribute("href", /ruslan-ai-lab\/pull\/1$/);
+  await expect(method.getByRole("link", { name: /Inspect a real CI run/i })).toHaveAttribute("href", /41176807380$/);
+  await expect(method.getByRole("link", { name: /Follow the reviewed MVP/i })).toHaveAttribute("href", /ruslan-ai-lab\/pull\/2$/);
+
+  await page.goto(locationOf("case-studies/opalubka/"));
+  await page.getByRole("link", { name: "Our method" }).click();
+  await expect(page).toHaveURL(new URL("#method", root).toString());
+  await expect(page.locator("#method")).toBeInViewport();
+});
+
 test("bounded token controls update preview and displayed CSS; reset restores defaults", async ({ page }) => {
   await page.goto(locationOf("labs/css-studio/"));
   const accent = page.getByLabel("Accent color");
