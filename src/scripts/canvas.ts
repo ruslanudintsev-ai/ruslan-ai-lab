@@ -109,7 +109,7 @@ if (canvas && staticArt && count && toggle && reset && status && help) {
     }
 
     stage.hidden = false;
-    staticPreview.hidden = true;
+    staticPreview.setAttribute("hidden", "");
     countSelect.disabled = false;
     playButton.disabled = false;
     resetButton.disabled = false;
