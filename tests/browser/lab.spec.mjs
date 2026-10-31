@@ -8,9 +8,10 @@ test("homepage has real functional lab, truthful planned cards and source links"
   await page.goto(root);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Engineering you can");
   await expect(page.getByRole("link", { name: /Try CSS Studio/i })).toBeVisible();
-  await expect(page.getByText("Not available yet")).toHaveCount(1);
+  await expect(page.getByText("Not available yet")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /Try Canvas Lab/ })).toHaveAttribute("href", "/ruslan-ai-lab/labs/canvas/");
   await expect(page.getByRole("link", { name: /Try 3D Playground/ })).toHaveAttribute("href", "/ruslan-ai-lab/labs/3d/");
+  await expect(page.getByRole("link", { name: /Try Workflow Simulator/ })).toHaveAttribute("href", "/ruslan-ai-lab/labs/workflow/");
   await expect(page.getByRole("link", { name: /Read Opalubka case/i })).toHaveAttribute("href", /case-studies\/opalubka\//);
   await page.getByRole("link", { name: /Try CSS Studio/i }).click();
   await expect(page).toHaveURL(locationOf("labs/css-studio/"));
