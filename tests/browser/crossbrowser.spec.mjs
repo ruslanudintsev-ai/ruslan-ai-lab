@@ -2,13 +2,16 @@ import { test, expect } from "@playwright/test";
 const root = process.env.TEST_SITE_URL || "http://127.0.0.1:8769/ruslan-ai-lab/";
 const locationOf = path => new URL(path, root).toString();
 
-test("home page's real lab and case links resolve under nested project path", async ({ page }) => {
+test("home page's real lab and case links resolve under nested project path", async ({ page }, testInfo) => {
   await page.goto(root);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Engineering you can");
   await page.getByRole("link", { name: /Try CSS Studio/ }).click();
   await expect(page).toHaveURL(locationOf("labs/css-studio/"));
   await expect(page.getByRole("heading", { level: 1 })).toContainText("CSS Studio");
   await expect(page.locator("[data-studio-code]")).toHaveValue(/--studio-accent: #146B67;/);
+  if (testInfo.project.name === "webkit-iphone") {
+    await page.screenshot({ path: testInfo.outputPath("webkit-iphone-css-studio.png"), fullPage: true });
+  }
 });
 
 test("all five bounded controls and Reset work in the alternate browser", async ({ page }) => {

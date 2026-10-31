@@ -66,6 +66,17 @@ jobs:
         run: npm run test:e2e
       - name: Firefox desktop and mobile WebKit cross-browser smoke QA
         run: npx playwright test --config playwright.crossbrowser.config.mjs
+      - name: Confirm Chromium + mobile WebKit screenshots survive both test runs
+        run: |
+          for prefix in home studio; do
+            for width in 320 360 390 768 1440; do
+              test "$(find test-results -type f -name "$prefix-$width.png" | wc -l)" -ge 1 || {
+                echo "Missing evidence screenshot $prefix-$width.png"; exit 1;
+              }
+            done
+          done
+          test "$(find test-results-crossbrowser -type f -name 'webkit-iphone-css-studio.png' | wc -l)" -ge 1
+          echo "BROWSER_EVIDENCE_RETENTION_PASS: 10 Chromium viewports + 1 iPhone WebKit screenshot"
       - name: Lighthouse mobile lab on compiled local candidate (quality gate)
         run: |
           export CHROME_PATH="$(node --input-type=module -e 'import { chromium } from "@playwright/test"; process.stdout.write(chromium.executablePath())')"
@@ -101,6 +112,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lab-p1-browser-evidence-${{ env.SOURCE_SHA }}
-          path: test-results/
+          path: |
+            test-results/
+            test-results-crossbrowser/
           retention-days: 14
           if-no-files-found: warn
