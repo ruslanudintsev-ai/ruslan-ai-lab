@@ -30,10 +30,18 @@ jobs:
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
           test ! -e index.html
           test -f src/pages/labs/css-studio/index.astro
-          if grep -R -E "^[[:space:]]+(pages: write|id-token: write)$|^[[:space:]]+uses:[[:space:]]+actions/deploy-pages@" .github/workflows/; then
-            echo "Unapproved deploy permissions in P1 candidate"; exit 1
+          # The separately owner-approved Pages release workflow is an explicit exception.
+          # Do not weaken the read-only policy for any other workflow.
+          release_file=.github/workflows/pages-first-release.yml
+          test -f "$release_file"
+          grep -Fq "      - '.github/workflows/pages-first-release.yml'" "$release_file"
+          grep -Fq '  workflow_dispatch:' "$release_file"
+          grep -Fq '      expected_sha:' "$release_file"
+          unauthorized="$(grep -R -E -l "^[[:space:]]+(pages: write|id-token: write)$|^[[:space:]]+uses:[[:space:]]+actions/deploy-pages@" .github/workflows/ | grep -Fvx "$release_file" || true)"
+          if [ -n "$unauthorized" ]; then
+            echo "Unapproved deploy permissions in other workflows: $unauthorized"; exit 1
           fi
-          echo "LAB_CANDIDATE_READ_ONLY_PASS"
+          echo "LAB_CANDIDATE_READ_ONLY_PASS: only named owner-gated Pages workflow may deploy"
       - name: Node 24
         uses: actions/setup-node@v4
         with:
