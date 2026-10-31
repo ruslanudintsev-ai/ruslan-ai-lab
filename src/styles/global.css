@@ -56,7 +56,17 @@ button:disabled { cursor: not-allowed; }
 .diagram-bottom { align-items: center; flex-wrap: wrap; font-size: .63rem; }
 .diagram-bottom span { font-size: 1rem; color: #146b67; }
 .section-separator { border-top: 1px solid #d6dfdc; display: flex; justify-content: space-between; gap: 15px; padding-top: 13px; color: #5c6c70; font: 700 .7rem ui-monospace, monospace; letter-spacing: .04em; }
-.home-feature, .evidence-section, .planned-section { padding-block: 50px 110px; }
+.home-feature, .evidence-section, .method-section { padding-block: 50px 110px; scroll-margin-top: 24px; }
+.method-section .feature-head h2 { max-width: 750px; }
+.method-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+.method-card { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; padding: clamp(22px, 3vw, 32px); background: #fff; border: 1px solid #cfdbd5; border-radius: 12px; }
+.method-index { color: #42675d; font: 700 .72rem/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .06em; }
+.method-card h3 { margin: 24px 0 14px; font-size: clamp(1.35rem, 2vw, 1.7rem); line-height: 1.22; letter-spacing: -.035em; }
+.method-card p { margin: 0 0 26px; color: #53636b; line-height: 1.7; }
+.method-card a { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; padding: 8px 0; color: #146b67; font-size: .86rem; font-weight: 750; border-bottom: 2px solid #146b67; }
+.method-card a:hover { color: #0b514f; }
+.method-disclaimer { max-width: 760px; margin: 20px 0 0; color: #53636b; line-height: 1.65; font-size: .84rem; }
+.planned-section { padding-block: 50px 110px; }
 .feature-head { display: grid; grid-template-columns: 1fr minmax(250px, 380px); gap: 32px; align-items: end; margin-bottom: 44px; }
 .feature-head h2, .planned-section h2, .below-studio h2 { margin: 0; font-size: clamp(2.2rem, 4vw, 4rem); letter-spacing: -.055em; line-height: 1.08; }
 .feature-head p:not(.eyebrow) { margin: 0; color: #53636b; line-height: 1.75; max-width: 385px; }
@@ -176,6 +186,9 @@ button:disabled { cursor: not-allowed; }
   .diagram-bottom, .diagram-top { font-size: .56rem; }
   .section-separator { font-size: .61rem; }
   .home-feature, .evidence-section { padding-block: 35px 70px; }
+  .method-section { padding-block: 35px 70px; }
+  .method-grid { grid-template-columns: 1fr; }
+  .method-card { padding: 23px; }
   .planned-section { padding-block: 35px 80px; }
   .feature-head { margin-bottom: 28px; }
   .feature-grid { grid-template-columns: 1fr; }
