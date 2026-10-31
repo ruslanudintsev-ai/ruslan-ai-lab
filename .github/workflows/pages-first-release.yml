@@ -1,0 +1,98 @@
+name: Ruslan AI Lab / first owner-approved GitHub Pages release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/pages-first-release.yml'
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: 'Exact approved main commit SHA for a manual rerun'
+        required: true
+        type: string
+
+# Automated push trigger applies only to the original workflow-file change.
+# Later source edits do NOT deploy automatically; future releases need an explicit dispatch.
+permissions:
+  contents: read
+
+concurrency:
+  group: ruslan-ai-lab-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'release(P3): owner-approved first Pages publish'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SOURCE_SHA: ${{ github.sha }}
+      DEMO_BASE_PATH: /ruslan-ai-lab/
+    steps:
+      - name: Check out the exact approved main revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify exact source and explicit release boundary
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test "${{ github.ref }}" = refs/heads/main
+          if [ "${{ github.event_name }}" = workflow_dispatch ]; then
+            test "$SOURCE_SHA" = "${{ inputs.expected_sha }}" || { echo 'RELEASE_SHA_MISMATCH'; exit 1; }
+          fi
+          test ! -e index.html
+          test -f src/pages/labs/css-studio/index.astro
+          test -f src/pages/labs/canvas/index.astro
+          test -f src/pages/labs/3d/index.astro
+          test -f src/pages/labs/workflow/index.astro
+          echo "LAB_PAGES_EXACT_SOURCE_PASS: $SOURCE_SHA"
+      - name: Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install pinned dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Strict TypeScript and unit regressions
+        run: |
+          npm run check
+          npm test
+      - name: Build only compiled static Astro output
+        run: |
+          npm run build
+          node scripts/check-build.mjs
+          node scripts/audit-distribution.mjs
+          test -s dist/index.html
+          test -s dist/404.html
+          test -s dist/favicon.svg
+          test -s dist/labs/css-studio/index.html
+          test -s dist/labs/canvas/index.html
+          test -s dist/labs/3d/index.html
+          test -s dist/labs/workflow/index.html
+          cp LICENSE dist/LICENSE.txt
+          printf 'SOURCE_SHA=%s\nBASE_PATH=/ruslan-ai-lab/\nOWNER_APPROVAL=2026-10-31\nHUMAN_DEVICE_QA=PENDING_POST_RELEASE\n' "$SOURCE_SHA" > dist/RELEASE_PROVENANCE.txt
+          echo "LAB_PAGES_READY_TO_UPLOAD: $SOURCE_SHA"
+      - name: Set up GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload compiled artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy approved compiled site
+        id: deployment
+        uses: actions/deploy-pages@v4
