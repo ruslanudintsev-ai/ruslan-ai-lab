@@ -109,6 +109,52 @@ test("static content stays honest when scripts are disabled", async ({ browser }
   const page = await context.newPage();
   await page.goto(locationOf("labs/css-studio/"));
   await expect(page.getByText(/JavaScript is needed for the live preview/)).toBeVisible();
+  await expect(page.getByLabel("Accent color")).toBeDisabled();
+  await expect(page.getByLabel("Grid columns")).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Reset tokens" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: /Copy generated CSS/ })).toBeDisabled();
   await expect(page.locator("[data-studio-code]")).toContainText("--studio-accent: #146B67;");
   await context.close();
+});
+
+test("progressive enhancement makes controls genuinely usable after hydration", async ({ page }) => {
+  await page.goto(locationOf("labs/css-studio/"));
+  await expect(page.getByLabel("Accent color")).toBeEnabled();
+  await expect(page.getByLabel("Grid columns")).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Reset tokens" })).toBeEnabled();
+  await expect(page.getByRole("button", { name: /Copy generated CSS/ })).toBeEnabled();
+  await expect(page.locator("[data-studio-help]")).toBeHidden();
+});
+
+test("three-column 320px scenario remains contained and readable without horizontal overflow", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.goto(locationOf("labs/css-studio/"));
+  await page.getByLabel("Grid columns").selectOption("3");
+  await page.getByLabel("Grid gap").selectOption("32");
+  await page.getByLabel("Corner radius").selectOption("24");
+  await expect(page.locator("[data-studio-code]")).toHaveValue(/--studio-columns: 3;/);
+  const measurements = await page.evaluate(() => ({
+    width: window.innerWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    tileCount: document.querySelectorAll(".demo-preview__tile").length,
+    overflowTiles: Array.from(document.querySelectorAll(".demo-preview__tile")).filter(tile =>
+      tile.scrollWidth > tile.clientWidth + 1
+    ).length
+  }));
+  expect(measurements.tileCount).toBe(3);
+  expect(measurements.scrollWidth).toBeLessThanOrEqual(measurements.width + 1);
+  expect(measurements.overflowTiles).toBe(0);
+});
+
+test("site load makes no remote third-party requests", async ({ page }) => {
+  const requests = [];
+  page.on("request", request => {
+    const url = new URL(request.url());
+    if (!["127.0.0.1","localhost"].includes(url.hostname)) requests.push(request.url());
+  });
+  for (const route of ["", "labs/css-studio/", "case-studies/opalubka/"]) {
+    await page.goto(locationOf(route));
+    await expect(page.locator("main")).toBeVisible();
+  }
+  expect(requests).toEqual([]);
 });

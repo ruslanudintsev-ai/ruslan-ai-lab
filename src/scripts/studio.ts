@@ -66,6 +66,9 @@ if (form && preview && code && reset && copy && status && help) {
       status.textContent = "Clipboard unavailable. CSS is selected: use your device's Copy command.";
     }
   });
-  help.hidden = true;
   render(DEFAULT_STATE);
+  for (const element of Object.values(controls)) element.disabled = false;
+  reset.disabled = false;
+  copy.disabled = false;
+  help.hidden = true;
 }

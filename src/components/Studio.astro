@@ -8,7 +8,7 @@ import { DEFAULT_STATE, generateCss } from "../domain/studio";
     <p class="soft-copy">Adjust a few safe CSS values. The preview and generated code stay in sync.</p>
     <div class="field">
       <label for="accent">Accent color</label>
-      <select id="accent" name="accent">
+      <select id="accent" name="accent" disabled>
         <option value="#146B67" selected>Deep teal</option>
         <option value="#8054B2">Iris</option>
         <option value="#B44C38">Terracotta</option>
@@ -16,7 +16,7 @@ import { DEFAULT_STATE, generateCss } from "../domain/studio";
     </div>
     <div class="field">
       <label for="radiusPx">Corner radius</label>
-      <select id="radiusPx" name="radiusPx">
+      <select id="radiusPx" name="radiusPx" disabled>
         <option value="0">0 px · Sharp</option>
         <option value="8">8 px · Subtle</option>
         <option value="16" selected>16 px · Rounded</option>
@@ -25,7 +25,7 @@ import { DEFAULT_STATE, generateCss } from "../domain/studio";
     </div>
     <div class="field">
       <label for="columns">Grid columns</label>
-      <select id="columns" name="columns">
+      <select id="columns" name="columns" disabled>
         <option value="1">1 column</option>
         <option value="2" selected>2 columns</option>
         <option value="3">3 columns</option>
@@ -33,7 +33,7 @@ import { DEFAULT_STATE, generateCss } from "../domain/studio";
     </div>
     <div class="field">
       <label for="gapPx">Grid gap</label>
-      <select id="gapPx" name="gapPx">
+      <select id="gapPx" name="gapPx" disabled>
         <option value="8">8 px</option>
         <option value="16" selected>16 px</option>
         <option value="24">24 px</option>
@@ -42,12 +42,12 @@ import { DEFAULT_STATE, generateCss } from "../domain/studio";
     </div>
     <div class="field">
       <label for="motion">Animation</label>
-      <select id="motion" name="motion">
+      <select id="motion" name="motion" disabled>
         <option value="none" selected>Off</option>
         <option value="subtle">Subtle (respects reduced motion)</option>
       </select>
     </div>
-    <button class="button button-secondary reset-button" type="button" data-reset>Reset tokens</button>
+    <button class="button button-secondary reset-button" type="button" data-reset disabled>Reset tokens</button>
     <p class="fine-print" data-studio-help>JavaScript is needed for the live preview. The default CSS remains readable below.</p>
   </form>
   <div class="studio-output">
@@ -65,7 +65,7 @@ import { DEFAULT_STATE, generateCss } from "../domain/studio";
       <div class="panel-label"><span class="eyebrow">03 / GENERATED CSS</span><span class="panel-status">PLAIN TEXT</span></div>
       <label for="generated-css" class="visually-hidden">Generated CSS, selectable text</label>
       <textarea id="generated-css" class="code-area" data-studio-code readonly rows="17" spellcheck="false">{generateCss(DEFAULT_STATE)}</textarea>
-      <div class="code-actions"><button class="button button-primary" type="button" data-copy>Copy generated CSS <span aria-hidden="true">↗</span></button><p class="fine-print" role="status" aria-live="polite" data-copy-status></p></div>
+      <div class="code-actions"><button class="button button-primary" type="button" data-copy disabled>Copy generated CSS <span aria-hidden="true">↗</span></button><p class="fine-print" role="status" aria-live="polite" data-copy-status></p></div>
     </div>
   </div>
 </section>
