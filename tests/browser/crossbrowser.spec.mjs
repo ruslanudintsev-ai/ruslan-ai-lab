@@ -81,6 +81,48 @@ test("Canvas Lab without scripts remains a true static fallback across engines",
   }
 });
 
+test("3D Playground has an opt-in GPU path or honest fallback on alternate browsers",async({page},info)=>{
+  await page.goto(locationOf("labs/3d/"));
+  await expect(page.locator("[data-3d-static]")).toBeVisible();
+  await expect(page.locator("[data-3d-canvas]")).toBeHidden();
+  await page.getByRole("button",{name:"Enable 3D"}).click();
+  const state=page.locator("[data-3d-lab]");
+  await expect.poll(async()=>await page.getByRole("status").textContent()).toMatch(/enabled|unavailable|failed/i);
+  if(await state.getAttribute("data-render-state")==="static"){
+    await expect(page.locator("[data-3d-static]")).toBeVisible();
+    await expect(page.getByRole("button",{name:"Play rotation"})).toBeDisabled();
+  } else {
+    await expect(page.locator("[data-3d-canvas]")).toBeVisible();
+    await expect(page.getByRole("button",{name:"Play rotation"})).toBeEnabled();
+    await expect(state).toHaveAttribute("data-render-state","paused");
+    // A running GPU context isn't enough: WebKit must retain a visible frame
+    // while paused, rather than presenting an all-black canvas.
+    const pixel=await page.locator("[data-3d-canvas]").evaluate(canvas=>{
+      const context=canvas.getContext("webgl");
+      if (!context) return null;
+      const bytes=new Uint8Array(4);
+      context.readPixels(Math.floor(canvas.width/2),Math.floor(canvas.height/2),1,1,context.RGBA,context.UNSIGNED_BYTE,bytes);
+      return [...bytes];
+    });
+    expect(pixel,"enabled WebGL scene must have readable framebuffer pixels").not.toBeNull();
+    expect(Math.max(...pixel.slice(0,3)),"WebGL canvas must not be black while paused").toBeGreaterThan(25);
+  }
+  if(info.project.name==="webkit-iphone") await page.screenshot({path:info.outputPath("webkit-iphone-3d.png"),fullPage:true});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+    await page.evaluate(()=>window.innerWidth+1)
+  );
+});
+
+test("3D static fallback is available with JavaScript disabled in alternate browsers",async({browser})=>{
+  const context=await browser.newContext({javaScriptEnabled:false});
+  try{
+    const page=await context.newPage();await page.goto(locationOf("labs/3d/"));
+    await expect(page.locator("[data-3d-static]")).toBeVisible();
+    await expect(page.getByRole("button",{name:"Enable 3D"})).toBeDisabled();
+    await expect(page.getByRole("button",{name:"Play rotation"})).toBeDisabled();
+  } finally {await context.close();}
+});
+
 test("Workflow Simulator stays local and enforces owner approval in alternate engines", async ({ page }, testInfo) => {
   await page.goto(locationOf("labs/workflow/"));
   const surface = page.locator("[data-workflow]");

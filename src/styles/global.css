@@ -293,3 +293,30 @@ button:disabled { cursor: not-allowed; }
   .workflow-buttons { flex-direction: column; }
   .workflow-buttons .button { flex-basis: auto; width: 100%; }
 }
+
+/* P2 3D Playground: static-by-default, opt-in GPU experiment. */
+.three-d-lab { display:grid; grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr); background:#fff; border:1px solid #cfdbd5; border-radius:16px; overflow:hidden; }
+.three-d-controls, .three-d-view { min-width:0; padding:clamp(22px,3vw,38px); }
+.three-d-controls { background:#f9fbf7; border-right:1px solid #d6dfdc; }
+.three-d-controls h2 { margin:0 0 16px; font-size:clamp(1.5rem,2.4vw,2.25rem); line-height:1.16; letter-spacing:-.045em; }
+.three-d-controls > .button { margin:6px 0 20px; }
+.three-d-controls .soft-copy { margin:0 0 18px; }
+.three-d-actions { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0; }
+.three-d-actions .button { flex:1 1 135px; }
+.three-d-controls .button:disabled { opacity:.6; cursor:not-allowed; }
+.three-d-view .panel-label { margin-bottom:18px; }
+.three-d-view .panel-label .eyebrow { margin:0; }
+.three-d-stage { width:100%; aspect-ratio:16/9; background:#e4efea; overflow:hidden; border:1px solid #b9d2c8; border-radius:10px; }
+.three-d-stage canvas, .three-d-stage svg { display:block; width:100%; height:100%; }
+.three-d-stage [hidden] { display:none; }
+.three-d-status { min-height:2.5em; padding-left:12px; border-left:3px solid #146b67; margin:18px 0 10px; color:#28534e; font-size:.89rem; line-height:1.6; font-weight:700; }
+.three-d-view .fine-print { margin-top:12px; font-size:.81rem; }
+@media(max-width:800px) {
+  .three-d-lab { grid-template-columns:1fr; }
+  .three-d-controls { border-right:0; border-bottom:1px solid #d6dfdc; }
+}
+@media(max-width:380px) {
+  .three-d-controls, .three-d-view { padding:18px; }
+  .three-d-actions { flex-direction:column; }
+  .three-d-actions .button { width:100%; }
+}
