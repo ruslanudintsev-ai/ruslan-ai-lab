@@ -1,6 +1,6 @@
 # Ruslan AI Lab — manual Pages release and rollback runbook
 
-**Prepared:** 2026-11-02. **Status:** documented procedure only; **rollback has not been executed or tested against a live failed deployment**. This document is part of a source-only P6 Draft PR. It does not authorize merging, changing workflows, or publishing.
+**Prepared:** 2026-11-02. **Status:** documented procedure only; **rollback has not been executed or tested against a live failed deployment**. This procedure is now included in P6 published source; it does **not** authorize any future source merge, workflow change or release. Actual recovery/rollback remains untested.
 
 ## 1. Verified anchors (do not confuse source with deployment)
 
@@ -8,8 +8,8 @@
 | --- | --- | --- |
 | First four-lab Pages | [GitHub Actions #41188192743](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41188192743), source SHA `75b5d2e224acad07de76db3c6cbbb12f26f060e5` | Historical successful publication |
 | P4, five-lab Pages | [Actions #41192989794](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41192989794), source SHA `1c13d0d3f965efc2582d38aea63aaedef8834a56` | Historical successful publication |
-| P5 cases | [manual Actions #41422579256](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41422579256), SHA `b1f3be88537e0444971b2f4620744fb2f74745c3`, [acceptance Issue #18](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/18) | **Latest verified live deployment (2026-11-02)** |
-| P6 public directory | [Draft PR #25](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/25), [exact-head candidate CI #41214597247](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41214597247) | **Draft source only** |
+| P5 cases | [manual Actions #41422579256](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41422579256), SHA `b1f3be88537e0444971b2f4620744fb2f74745c3`, [acceptance Issue #18](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/18) | Historical verified live deployment (2026-11-02) |
+| P6 public directory | [PR #25](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/25), [read-only CI #41423475759](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41423475759), [manual Pages #41423985872](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41423985872) at `a8071b36be54416f30b6970ec4a758d8b749f9b4` | **Latest verified deployment**; HTTP 200 `/projects/`, provenance exact SHA |
 
 A successful candidate PR workflow is **never** a Pages deployment. Pages workflow `.github/workflows/pages-first-release.yml` needs a manual `workflow_dispatch` on **main** with the exact `expected_sha`; it checks out that SHA, runs its build/static checks and publishes `dist/`. Ordinary source merges do not deploy.
 

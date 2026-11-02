@@ -7,9 +7,9 @@ The [recorded P4 live smoke](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/
 An original, English-first engineering workbench: small native-web experiments, inspectable source code, verifiable tests and a transparent, AI-assisted approach. The portfolio intentionally has **no remote AI/model API, no sign-up and no visitor tracking**.
 
 
-## P6 public project index (candidate only)
+## P6 public project index (published 2026-11-02)
 
-The **[P6 Draft source change](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/22)** adds a `/projects/` directory of two **public** evidence-backed repositories. This route is a **source-only proposal** and is not part of the last verified Pages release; successful candidate CI or a branch commit is not proof of live publication. No private project source, internal metrics, unverified deployments or new contact/tracking systems are included. Evidence ledger: [P6 source review](docs/P6_PUBLIC_PROJECT_EVIDENCE_2026-10-31.md). Historical rights inventory reconciled to the latest lab and case status in [rights and assets](docs/RIGHTS_AND_ASSETS.md); the reviewed, **unexecuted** [exact-SHA release/rollback runbook](docs/P6_RELEASE_ROLLBACK_RUNBOOK_2026-11-02.md) documents how to verify each publication and respond to a bad release.
+**P6 is now published:** [PR #25](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/25) merged and [manual GitHub Pages release #41423985872](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41423985872) completed **Build+Deploy SUCCESS** at exact deployed SHA `a8071b36be54416f30b6970ec4a758d8b749f9b4`. The `/projects/` directory lists only two public repositories and is live at [Public projects](https://ruslanudintsev-ai.github.io/ruslan-ai-lab/projects/); its homepage/navigation paths, compiled assets and release-provenance SHA were checked directly over HTTP. The [evidence ledger](docs/P6_PUBLIC_PROJECT_EVIDENCE_2026-10-31.md) and [rights inventory](docs/RIGHTS_AND_ASSETS.md) preserve review limits; the [release/rollback runbook](docs/P6_RELEASE_ROLLBACK_RUNBOOK_2026-11-02.md) is documented but rollback has **not** been exercised. This docs-only update to `main` does **not** represent a new GitHub Pages deploy.
 
 ## Five browser-native labs
 
@@ -54,7 +54,7 @@ DEMO_BASE_PATH=/ruslan-ai-lab/ node scripts/check-build.mjs
 - [Rights and assets ledger](docs/RIGHTS_AND_ASSETS.md) — original visuals, shaders, external package rights
 - [P4 published browser lab & live smoke](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/16) — completed
 - [Independent post-release evidence checklist](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/15) — physical device/AT, third-party notices and rollback records
-- [P5 portfolio evidence and positioning plan](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/18) — proposed next product/value phase
+- [P5 published engineering case studies](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/18) — completed release and HTTP smoke
 
 P4 [candidate CI #41190268765](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41190268765) passed **41/41 Node unit, 55/55 Chromium and 22/22 Firefox/simulated-mobile-WebKit tests** at candidate SHA `c93aabc5edfeb19e69735373f3f25734e3d37adf`; local simulated Lighthouse Mobile was **100/100/100/100**. GitHub Pages [run #41192989794](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41192989794) separately confirms build and publication at merged source SHA `1c13d0d3f965efc2582d38aea63aaedef8834a56`. These are specific GitHub records, **not** uptime, field Core Web Vitals or independent accessibility certification.
 

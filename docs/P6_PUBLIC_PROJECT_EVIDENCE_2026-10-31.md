@@ -1,6 +1,6 @@
 # P6 — Public project directory: evidence and privacy gate
 
-**Review date:** 2026-10-31. **Stage:** SOURCE-ONLY candidate in Draft PR; **not deployed**. See [roadmap #21](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/21) and [P6 acceptance #22](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/22).
+**Initial review date:** 2026-10-31. **Published:** 2026-11-02 after exact-head QA [#41423475759](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41423475759) and [manual Pages #41423985872](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41423985872) at deployed SHA `a8071b36be54416f30b6970ec4a758d8b749f9b4`. Direct HTTP checks confirmed `/projects/` 200, provenance matches and nonexistent route 404. See [roadmap #21](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/21) and [P6 acceptance #22](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/22).
 
 ## Publication policy
 
@@ -22,7 +22,7 @@ Any further case from a private project requires explicit owner selection and ap
 3. Distinguish source, tests and deployment in copy; each public link must go to actual GitHub history or a local working case.
 4. Accessible keyboard, no-JavaScript readability, axe WCAG A/AA, 320/360/390/768/1440 responsive screenshots, simulated mobile WebKit/Firefox and no third-party resource requests.
 5. The `README` must not claim this P6 Draft route is currently available on the published site.
-6. Code remains **Draft / NOT MERGED / NOT DEPLOYED** until review; successful CI is not owner approval.
+6. The implementation was accepted and published as [PR #25](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/25); a passing CI run alone was not treated as publication. Subsequent changes still require separate source review and manual exact-SHA release.
 
 ## Disclosure discipline
 
