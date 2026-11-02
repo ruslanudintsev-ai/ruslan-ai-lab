@@ -74,7 +74,8 @@ jobs:
           test -s dist/labs/3d/index.html
           test -s dist/labs/workflow/index.html
           cp LICENSE dist/LICENSE.txt
-          printf 'SOURCE_SHA=%s\nBASE_PATH=/ruslan-ai-lab/\nOWNER_APPROVAL=2026-10-31\nHUMAN_DEVICE_QA=PENDING_POST_RELEASE\n' "$SOURCE_SHA" > dist/RELEASE_PROVENANCE.txt
+          # Run metadata, not a stale fixed approval date. Human GO is recorded separately.
+          printf 'SOURCE_SHA=%s\nBASE_PATH=/ruslan-ai-lab/\nRELEASE_EVENT=%s\nRELEASE_RUN_ID=%s\nRELEASED_AT_UTC=%s\nHUMAN_DEVICE_QA=PENDING_POST_RELEASE\n' "$SOURCE_SHA" "${{ github.event_name }}" "${{ github.run_id }}" "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" > dist/RELEASE_PROVENANCE.txt
           echo "LAB_PAGES_READY_TO_UPLOAD: $SOURCE_SHA"
       - name: Set up GitHub Pages
         uses: actions/configure-pages@v5
