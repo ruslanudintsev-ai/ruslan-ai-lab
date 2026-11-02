@@ -1,6 +1,17 @@
 # Ruslan AI Lab — rights, provenance and asset inventory
 
-**Review date:** 2026-10-31. **Scope:** source-integrated portfolio with four actual browser labs; not yet published. This is a factual provenance/notice review queue, **not** an independent legal clearance or guarantee of exclusive human authorship.
+**Original inventory:** 2026-10-31 (four-lab source snapshot). **Current release status checked:** 2026-11-02. This file retains the historical four-lab review and adds a dated status reconciliation; it is **not** an independent legal clearance or claim of exclusive human authorship.
+
+## Current status and changed scope (2026-11-02)
+
+- **P4 IS published:** Five native-browser labs were deployed by [manual Pages run #41192989794](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41192989794) at exact release source SHA `1c13d0d3f965efc2582d38aea63aaedef8834a56`. A dated [public smoke record](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/16#issuecomment-6542275339) exists. Browser smoke is **not** VoiceOver/NVDA, physical-device or legal redistribution certification.
+- **P4 Browser APIs Lab** now exists at `src/domain/browser-apis.ts`, `src/scripts/browser-apis.ts`, `src/components/BrowserApisLab.astro`, `src/pages/labs/browser-apis/index.astro`: local-only ordered cards, explicit opt-in browser storage, no backend or remote AI API.
+- **P5 IS published:** public original-source case pages `src/pages/case-studies/webkit-frame/index.astro` and `src/pages/case-studies/release-gates/index.astro` were published in [manual Pages run #41422579256](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41422579256) at exact source SHA `b1f3be88537e0444971b2f4620744fb2f74745c3`; independently checked HTTP 200 and page content, provenance and bundled CSS. Subsequent source-only PR #26 merge at `63ad5dfc1438ac6130818f314035ce262f369443` is **not** itself a new Pages deploy.
+- **P6 candidate is Draft only (after P5 release):** `src/pages/projects/index.astro` lists only the already-public `ruslan-ai-lab` and educational `opalubka` repositories; it does not import their code. [Draft PR #25](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/25) is not merged or published.
+- **Latest P6 license metadata inventory** in [Actions #41214597247](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41214597247): **447 lockfile entries, 0 missing license/version, 0 manifest mismatches**, with **36 entries flagged for manual review**. Compiled candidate inventory found **18 shipped static files, 11 HTML pages and zero static asset policy errors**. **Neither test provides independent legal clearance or proves which third-party licenses obligate a public NOTICE**.
+- **Manual post-release verification remains open:** [Issue #15](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/15) covers screen reader, physical device, manual contrast, redistribution notices, external live HTTP and rollback evidence. The first four-lab inventory below must not be mistaken for the complete latest source inventory.
+
+### Historical four-lab inventory (retained for traceability)
 
 | Category | Actual project paths | Provenance and licensing boundary |
 | --- | --- | --- |
@@ -33,4 +44,4 @@ Before authorized publication:
 
 **Provenance:** [source merge PR #7](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/7), [source merge PR #9](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/9), [four-lab CI run #41182540844](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41182540844). Code may be open and QA-approved without any public hosted release.
 
-**MIT_FOR_LAB_OWN_SOURCE / THIRD_PARTY_RIGHTS_PRESERVED / NO_DEPLOY / NO_BILLING / NO_OPALUBKA_CHANGES.**
+**Historical four-lab marker (2026-10-31):** `MIT_FOR_LAB_OWN_SOURCE / THIRD_PARTY_RIGHTS_PRESERVED / NO_DEPLOY / NO_BILLING / NO_OPALUBKA_CHANGES` **at the time of that original source-only review.** It is not the current P4 Pages status.

@@ -31,6 +31,7 @@ jobs:
           test ! -e index.html
           test -f src/pages/labs/css-studio/index.astro
           test -f src/pages/labs/browser-apis/index.astro
+          test -f src/pages/projects/index.astro
           # The separately owner-approved Pages release workflow is an explicit exception.
           # Do not weaken the read-only policy for any other workflow.
           release_file=.github/workflows/pages-first-release.yml
@@ -140,7 +141,13 @@ jobs:
               echo "Missing mobile WebKit P5 case screenshot for $slug"; exit 1;
             }
           done
-          echo "BROWSER_EVIDENCE_RETENTION_PASS: 40 Chromium viewports + 7 iPhone WebKit screenshots + active WebGL proof"
+          for width in 320 360 390 768 1440; do
+            test "$(find test-results -type f -name "p6-projects-$width.png" | wc -l)" -ge 1 || {
+              echo "Missing P6 projects screenshot p6-projects-$width.png"; exit 1;
+            }
+          done
+          test "$(find test-results-crossbrowser -type f -name 'webkit-iphone-p6-projects.png' | wc -l)" -ge 1
+          echo "BROWSER_EVIDENCE_RETENTION_PASS: 45 Chromium viewports + 8 iPhone WebKit screenshots + active WebGL proof"
       - name: Lighthouse mobile lab on compiled local candidate (quality gate)
         run: |
           export CHROME_PATH="$(node --input-type=module -e 'import { chromium } from "@playwright/test"; process.stdout.write(chromium.executablePath())')"
