@@ -7,8 +7,8 @@
 | Stage | Evidence | Status at review |
 | --- | --- | --- |
 | First four-lab Pages | [GitHub Actions #41188192743](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41188192743), source SHA `75b5d2e224acad07de76db3c6cbbb12f26f060e5` | Historical successful publication |
-| P4, five-lab Pages | [Actions #41192989794](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41192989794), source SHA `1c13d0d3f965efc2582d38aea63aaedef8834a56` | **Last verified deployment** |
-| P5 cases | `main@b1f3be88537e0444971b2f4620744fb2f74745c3`, [source PR #20](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/20), [candidate CI #41194838672](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41194838672) | **Source merged, not verified deployed** |
+| P4, five-lab Pages | [Actions #41192989794](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41192989794), source SHA `1c13d0d3f965efc2582d38aea63aaedef8834a56` | Historical successful publication |
+| P5 cases | [manual Actions #41422579256](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41422579256), SHA `b1f3be88537e0444971b2f4620744fb2f74745c3`, [acceptance Issue #18](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/18) | **Latest verified live deployment (2026-11-02)** |
 | P6 public directory | [Draft PR #25](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/25), [exact-head candidate CI #41214597247](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41214597247) | **Draft source only** |
 
 A successful candidate PR workflow is **never** a Pages deployment. Pages workflow `.github/workflows/pages-first-release.yml` needs a manual `workflow_dispatch` on **main** with the exact `expected_sha`; it checks out that SHA, runs its build/static checks and publishes `dist/`. Ordinary source merges do not deploy.
@@ -21,7 +21,7 @@ A successful candidate PR workflow is **never** a Pages deployment. Pages workfl
 4. In **Actions → Ruslan AI Lab / first owner-approved GitHub Pages release → Run workflow**, select `main`, enter the current exact 40-character SHA in `expected_sha`. Absent authorization or a mismatch: **stop**. CI enforces `RELEASE_SHA_MISMATCH` against GitHub's checked-out `github.sha`.
 5. Do not change the protected manual `workflow_dispatch` condition or try to deploy a Draft branch to bypass an approval.
 
-**Known provenance limitation:** the existing Pages workflow hardcodes `OWNER_APPROVAL=2026-10-31` in `RELEASE_PROVENANCE.txt`. On a later release, this field describes the **historical approval date baked into the workflow**, **not** the approval date for that later run. Record the actual owner decision and run timestamp in the issue; do not cite that static field as fresh owner authorization. Propose a separately reviewed, minimally scoped workflow correction before relying on per-release approval-date provenance.
+**Historical P5 provenance limitation:** the P5 Pages artifact stamped `OWNER_APPROVAL=2026-10-31`, a historically fixed date **not** an approval timestamp for its 2026-11-02 release. The verified source-only [PR #26](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/26) was subsequently merged as `main@63ad5dfc1438ac6130818f314035ce262f369443`, replacing this field for future releases with actual `RELEASE_EVENT`, `RELEASE_RUN_ID` and `RELEASED_AT_UTC`. These fields report workflow execution only: **never interpret them as human approval**. Owner direction and run acceptance still require a separate record.
 
 ## 3. Post-deployment verification
 

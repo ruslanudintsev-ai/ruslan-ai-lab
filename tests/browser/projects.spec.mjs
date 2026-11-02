@@ -22,6 +22,8 @@ test("P6 distinguishes public source, CI and verified site publication, without 
   await expect(cards.last().getByRole("heading", { level: 3 })).toHaveText("Opalubka / LAB");
   await expect(cards.first().getByRole("link", { name: /P4 release evidence/ }))
     .toHaveAttribute("href", "https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41192989794");
+  await expect(cards.first().getByRole("link", { name: /P5 release evidence/ }))
+    .toHaveAttribute("href", "https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41422579256");
   await expect(cards.last()).toContainText("No independently verified public site release");
   await expect(cards.last()).toContainText("not an operating equipment-rental company");
   await expect(cards.last().getByRole("link", { name: /Astro implementation PR/ }))

@@ -12,7 +12,7 @@ Any further case from a private project requires explicit owner selection and ap
 
 | Entry | Public source | Evidence | What cannot be asserted |
 | --- | --- | --- | --- |
-| Ruslan AI Lab | [public repo](https://github.com/ruslanudintsev-ai/ruslan-ai-lab) | Five functioning native-browser experiments, [PR #17](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/pull/17), [P4 owner-dispatched Pages #41192989794](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41192989794) at SHA `1c13d0d3f965efc2582d38aea63aaedef8834a56` | Subsequent `main` commits do not prove a new Pages release; local Lighthouse is not field Core Web Vitals |
+| Ruslan AI Lab | [public repo](https://github.com/ruslanudintsev-ai/ruslan-ai-lab) | Five functioning native-browser experiments, [historical P4 Pages #41192989794](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41192989794), and [P5 case-study Pages #41422579256](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41422579256) published at SHA `b1f3be88537e0444971b2f4620744fb2f74745c3` | PR #26's later source-only merge is not another Pages release; local Lighthouse is not field Core Web Vitals |
 | Opalubka / LAB | [public repo](https://github.com/ruslanudintsev-ai/opalubka), [public README](https://github.com/ruslanudintsev-ai/opalubka/blob/main/README.md) | Educational Astro/TypeScript static website demo, [Astro PR #5](https://github.com/ruslanudintsev-ai/opalubka/pull/5), transparent README privacy/release limits | No independently verified live Pages deployment stated; never imply a real rental company, prices, transactions or customers |
 
 ## Acceptance for this candidate
