@@ -9,7 +9,7 @@ An original, English-first engineering workbench: small native-web experiments, 
 
 ## P6 public project index (candidate only)
 
-The **[P6 Draft source change](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/22)** adds a `/projects/` directory of two **public** evidence-backed repositories. This route is a **source-only proposal** and is not part of the last verified Pages release; successful candidate CI or a branch commit is not proof of live publication. No private project source, internal metrics, unverified deployments or new contact/tracking systems are included. Evidence ledger: [P6 source review](docs/P6_PUBLIC_PROJECT_EVIDENCE_2026-10-31.md).
+The **[P6 Draft source change](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/22)** adds a `/projects/` directory of two **public** evidence-backed repositories. This route is a **source-only proposal** and is not part of the last verified Pages release; successful candidate CI or a branch commit is not proof of live publication. No private project source, internal metrics, unverified deployments or new contact/tracking systems are included. Evidence ledger: [P6 source review](docs/P6_PUBLIC_PROJECT_EVIDENCE_2026-10-31.md). Historical rights inventory reconciled to the latest lab and case status in [rights and assets](docs/RIGHTS_AND_ASSETS.md); the reviewed, **unexecuted** [exact-SHA release/rollback runbook](docs/P6_RELEASE_ROLLBACK_RUNBOOK_2026-11-02.md) documents how to verify each publication and respond to a bad release.
 
 ## Five browser-native labs
 
