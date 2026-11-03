@@ -17,6 +17,7 @@ const resources = [
   "case-studies/release-gates/index.html",
   "projects/index.html",
   "tools/seo-inspector/index.html",
+  "tools/release-inspector/index.html",
   "favicon.svg"
 ];
 for (const file of resources) {
@@ -33,6 +34,7 @@ const webkitCasePage = readFileSync(path.join(dir,"case-studies/webkit-frame/ind
 const releaseCasePage = readFileSync(path.join(dir,"case-studies/release-gates/index.html"),"utf8");
 const projectsPage = readFileSync(path.join(dir,"projects/index.html"),"utf8");
 const seoInspectorPage = readFileSync(path.join(dir,"tools/seo-inspector/index.html"),"utf8");
+const releaseInspectorPage = readFileSync(path.join(dir,"tools/release-inspector/index.html"),"utf8");
 assert.match(root, /Engineering you can/);
 assert.doesNotMatch(root, /Not available yet/, "all four labs should be working in this source candidate");
 assert.match(studio, /CSS Studio/);
@@ -46,6 +48,8 @@ assert.match(projectsPage, /ruslan-ai-lab\/actions\/runs\/41192989794/);
 assert.match(projectsPage, /No independently verified public site release/);
 assert.match(seoInspectorPage, /SEO Inspector/);
 assert.match(seoInspectorPage, /data-seo-form/);
+assert.match(releaseInspectorPage, /Release Inspector/);
+assert.match(releaseInspectorPage, /data-release-form/);
 assert.match(releaseCasePage, /1c13d0d3f965efc2582d38aea63aaedef8834a56/);
 assert.match(canvasPage, /Canvas Lab/);
 assert.match(canvasPage, /data-canvas-stage/);
@@ -66,6 +70,7 @@ assert.ok(root.includes(base + "case-studies/webkit-frame/"), "WebKit case missi
 assert.ok(root.includes(base + "case-studies/release-gates/"), "release case missing on home");
 assert.ok(root.includes(base + "projects/"), "public project index missing on home");
 assert.ok(root.includes(base + "tools/seo-inspector/"), "SEO Inspector link missing on home");
+assert.ok(root.includes(base + "tools/release-inspector/"), "Release Inspector link missing on home");
 assert.ok(root.includes(base + "labs/css-studio/"), "project path missing on lab link");
 assert.ok(root.includes(base + "labs/canvas/"), "project path missing on Canvas lab link");
 assert.ok(root.includes(base + "labs/3d/"), "project path missing on 3D Playground link");
@@ -82,8 +87,8 @@ const hasAstroInlinedStudio = /<script[^>]*type=["']module["'][^>]*>/.test(studi
   && studio.includes("[data-studio-form]")
   && studio.includes("Clipboard unavailable");
 assert.ok(hasCompiledJsAsset || hasAstroInlinedStudio, "Studio client JS missing from compiled output");
-for (const html of [root,studio,casePage,webkitCasePage,releaseCasePage,projectsPage,seoInspectorPage,canvasPage,threePage,workflowPage,browserApiPage]) {
+for (const html of [root,studio,casePage,webkitCasePage,releaseCasePage,projectsPage,seoInspectorPage,releaseInspectorPage,canvasPage,threePage,workflowPage,browserApiPage]) {
   assert.ok(html.includes(base + "_astro/"), "missing compiled CSS project prefix");
   assert.doesNotMatch(html, /<script[^>]+src=["']https?:\/\//i, "unapproved remote JS");
 }
-console.log("LAB_STATIC_BUILD_PASS: 11 real routes, 404, favicon, prefixed CSS and bundled/local JS, no invented live demos, base=" + base);
+console.log("LAB_STATIC_BUILD_PASS: 12 real routes, 404, favicon, prefixed CSS and bundled/local JS, no invented live demos, base=" + base);
