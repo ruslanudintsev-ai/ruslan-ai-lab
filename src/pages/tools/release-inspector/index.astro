@@ -1,0 +1,72 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+const base = import.meta.env.BASE_URL;
+---
+<SiteLayout title="Release Inspector — static build preflight" description="Choose a compiled static site folder and check its internal links, assets, robots, sitemap and HTML titles locally before deployment. No upload, account or remote API.">
+  <div class="shell page-pad">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={base}>Lab home</a><span aria-hidden="true">/</span> Release Inspector</nav>
+    <header class="inner-hero">
+      <p class="eyebrow"><span class="status-led" aria-hidden="true"></span> TOOL 002 / STATIC BUILD PREFLIGHT</p>
+      <h1>Release Inspector<span class="heading-accent">.</span></h1>
+      <p>Select a compiled static site folder and check that its internal links and assets actually exist before publishing. No remote crawler, account, API or backend.</p>
+    </header>
+    <section class="release-panel" aria-labelledby="release-panel-title">
+      <p class="eyebrow">01 / LOCAL BUILD</p>
+      <h2 id="release-panel-title">Inspect your build folder.</h2>
+      <p class="release-intro">Choose the folder that contains <code>index.html</code> (for example, an Astro <code>dist/</code> folder). Files stay on your device. The browser may require folder-access permission.</p>
+      <form data-release-form>
+        <div class="release-fields">
+          <div><label for="release-dir">Static build directory</label><input id="release-dir" data-release-dir type="file" multiple aria-describedby="release-help"/></div>
+          <div><label for="release-base">Public URL base path</label><input id="release-base" data-release-base type="text" inputmode="url" value="/" placeholder="/ or /my-project/" aria-describedby="release-base-help"/></div>
+        </div>
+        <p id="release-help" class="release-hint">Select a folder, not individual HTML files. Limited to 400 files and 8 MB of text read. Unsupported browsers may not support directory selection.</p>
+        <p id="release-base-help" class="release-hint">Use <code>/</code> for a root site, or a prefix such as <code>/ruslan-ai-lab/</code> for GitHub Pages project sites.</p>
+        <div class="release-actions"><button type="submit" class="button button-primary" data-release-run disabled>Inspect build</button><button type="button" class="button button-secondary" data-release-clear>Clear</button></div>
+      </form>
+      <p role="status" aria-live="polite" data-release-status class="release-status">Ready. Choose a local static build directory.</p>
+      <section data-release-results class="release-results" hidden aria-labelledby="release-results-title">
+        <div class="release-head"><div><p class="eyebrow">02 / VERIFIABLE FINDINGS</p><h2 id="release-results-title">Preflight report.</h2><p data-release-summary></p></div><button type="button" class="button button-secondary" data-release-copy>Copy report</button></div>
+        <ul data-release-findings class="release-findings"></ul>
+        <label for="release-copy-text" data-release-copy-label hidden>Clipboard unavailable — select and copy this report</label>
+        <textarea id="release-copy-text" data-release-copy-fallback readonly rows="8" hidden></textarea>
+      </section>
+      <noscript><p>JavaScript is required to inspect selected files. There is no server-side upload or analysis.</p></noscript>
+    </section>
+    <section class="below-studio" aria-labelledby="release-boundary">
+      <div><p class="eyebrow">LIMITS / NO FALSE CONFIDENCE</p><h2 id="release-boundary">Local files, not live uptime.</h2></div>
+      <div>
+        <p>This preflight reads only selected HTML, robots.txt and sitemap.xml. It checks file presence and basic internal href/src references, not whether an external link works, whether JavaScript executes, or whether an HTTP server returns the right redirect, cache headers or security headers.</p>
+        <p>Generated pages often depend on a deployment prefix, redirects or CDN routes; review warnings against your hosting configuration. Sitemap presence is a recommendation, not a universal hard requirement. This is not a replacement for a real post-deploy smoke test.</p>
+        <a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab" target="_blank" rel="noopener noreferrer" class="text-link">Review implementation source ↗</a>
+      </div>
+    </section>
+  </div>
+</SiteLayout>
+<style>
+  .release-panel { background: #fff; border: 1px solid #cbd9d2; border-radius: 14px; padding: clamp(19px, 4vw, 42px); margin-bottom: 64px; }
+  .release-panel h2 { font-size: clamp(1.6rem, 3vw, 2.35rem); line-height: 1.15; letter-spacing: -.04em; margin: 0 0 12px; }
+  .release-intro { max-width: 760px; line-height: 1.7; color: #4c6064; margin-bottom: 24px; }
+  .release-fields { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 28px; }
+  .release-fields label, [data-release-copy-label] { display: block; font-weight: 750; color: #263d3d; font-size: .9rem; margin-bottom: 9px; }
+  .release-fields input { border: 1px solid #aebeb6; border-radius: 8px; padding: 13px; width: 100%; max-width: 100%; font: inherit; background: #fafcf9; min-height: 50px; }
+  .release-fields input[type=file] { font-size: .85rem; }
+  .release-hint { font-size: .81rem; color: #51666b; line-height: 1.65; margin: 12px 0; }
+  .release-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 21px; }
+  .release-status { margin: 20px 0 0; min-height: 30px; color: #315d54; line-height: 1.6; }
+  .release-results { border-top: 1px solid #d6e1db; padding-top: 28px; margin-top: 24px; }
+  [hidden] { display: none !important; }
+  .release-head { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; margin-bottom: 22px; }
+  .release-head p:not(.eyebrow) { color: #4b5e65; margin: 0; }
+  .release-findings { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+  .release-findings li { border: 1px solid #d4ded8; background: #f9fbf8; border-radius: 9px; padding: 15px 18px; overflow-wrap: anywhere; }
+  .release-findings [data-level=error] { border-left: 5px solid #b23f36; }
+  .release-findings [data-level=warning] { border-left: 5px solid #ad751f; }
+  .release-findings [data-level=ok] { border-left: 5px solid #146b67; }
+  .release-findings strong { font-size: .92rem; }
+  .release-findings span { font: 750 .7rem ui-monospace, monospace; color: #45625f; margin-right: 10px; }
+  .release-findings p { margin: 7px 0 0; color: #495d61; line-height: 1.6; font-size: .88rem; }
+  [data-release-copy-fallback] { width: 100%; border: 1px solid #aebeb6; border-radius: 9px; padding: 12px; margin-top: 12px; font: .85rem/1.5 ui-monospace, monospace; resize: vertical; }
+  @media (max-width: 690px) { .release-fields { grid-template-columns: 1fr; gap: 17px; } }
+  @media (max-width: 390px) { .release-actions .button { flex: 1 1 130px; } }
+</style>
+<script>import "../../../scripts/release-inspector";</script>
