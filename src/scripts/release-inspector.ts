@@ -119,7 +119,7 @@ export async function inspectFolder(files: File[], base: string): Promise<Findin
       for (const loc of locs) {
         const value = loc.textContent?.trim() ?? "";
         let pathname = "";
-        try { pathname = new URL(value, "https://local.invalid").pathname; } catch { continue; }
+        try { pathname = new URL(value, location.href).pathname; } catch { continue; }
         const target = resourcePath(pathname, "sitemap.xml", base);
         if (target !== null && !hasTarget(target, paths)) {
           missingSitemap++;
