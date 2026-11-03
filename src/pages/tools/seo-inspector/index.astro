@@ -20,7 +20,7 @@ const base = import.meta.env.BASE_URL;
         <textarea id="seo-html" data-seo-input rows="11" maxlength="1000000" spellcheck="false" autocomplete="off" placeholder="Paste the full HTML source here, starting with &lt;!doctype html&gt; …"></textarea>
         <div class="inspector-controls">
           <div class="file-choice"><label for="seo-file">Or choose an HTML file (max 1 MB)</label><input data-seo-file id="seo-file" type="file" accept=".html,.htm,text/html" /></div>
-          <div class="inspector-buttons"><button class="button button-primary" type="submit">Analyze HTML</button><button class="button button-secondary" type="button" data-seo-clear>Clear</button></div>
+          <div class="inspector-buttons"><button class="button button-primary" type="submit" data-seo-submit disabled>Analyze HTML</button><button class="button button-secondary" type="button" data-seo-clear>Clear</button></div>
         </div>
       </form>
       <p class="inspector-status" data-seo-status role="status" aria-live="polite">Ready. Paste your HTML or choose a local file.</p>
