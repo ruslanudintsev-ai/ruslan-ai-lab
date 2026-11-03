@@ -1,0 +1,74 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+const base = import.meta.env.BASE_URL;
+---
+<SiteLayout title="SEO Inspector — local HTML audit" description="Inspect an HTML file for common technical SEO signals locally in your browser. No URL crawling, server upload, account, tracking or external API.">
+  <div class="shell page-pad">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={base}>Lab home</a><span aria-hidden="true">/</span> SEO Inspector</nav>
+    <header class="inner-hero">
+      <p class="eyebrow"><span class="status-led" aria-hidden="true"></span> TOOL 001 / BROWSER-ONLY HTML AUDIT</p>
+      <h1>SEO Inspector<span class="heading-accent">.</span></h1>
+      <p>Paste HTML or choose a local file to inspect common on-page signals. See actionable findings, without a fake SEO score or promises about rankings.</p>
+    </header>
+    <section class="inspector-panel" aria-labelledby="inspector-title">
+      <div class="inspector-head">
+        <div><p class="eyebrow">01 / SOURCE</p><h2 id="inspector-title">Inspect one HTML document.</h2></div>
+        <p>Runs in your browser. The source is not uploaded, stored or sent to an API. External URLs are not fetched.</p>
+      </div>
+      <form data-seo-form>
+        <label class="source-label" for="seo-html">HTML source</label>
+        <textarea id="seo-html" data-seo-input rows="11" maxlength="1000000" spellcheck="false" autocomplete="off" placeholder="Paste the full HTML source here, starting with &lt;!doctype html&gt; …"></textarea>
+        <div class="inspector-controls">
+          <div class="file-choice"><label for="seo-file">Or choose an HTML file (max 1 MB)</label><input data-seo-file id="seo-file" type="file" accept=".html,.htm,text/html" /></div>
+          <div class="inspector-buttons"><button class="button button-primary" type="submit">Analyze HTML</button><button class="button button-secondary" type="button" data-seo-clear>Clear</button></div>
+        </div>
+      </form>
+      <p class="inspector-status" data-seo-status role="status" aria-live="polite">Ready. Paste your HTML or choose a local file.</p>
+      <section class="inspector-results" data-seo-output hidden aria-labelledby="results-title">
+        <div class="results-head"><div><p class="eyebrow">02 / FINDINGS</p><h2 id="results-title">What the source says.</h2><p data-seo-summary></p></div><button class="button button-secondary" data-seo-copy type="button">Copy report</button></div>
+        <ul data-seo-findings class="finding-list"></ul>
+        <label class="source-label" for="seo-copy-fallback" data-seo-fallback-label hidden>Clipboard unavailable — select and copy the text below</label>
+        <textarea id="seo-copy-fallback" data-seo-fallback rows="7" readonly hidden></textarea>
+      </section>
+      <noscript><p class="inspector-status">Enable JavaScript to run the local analysis. No source is submitted to a server.</p></noscript>
+    </section>
+    <section class="below-studio" aria-labelledby="seo-limits">
+      <div><p class="eyebrow">SCOPE / LIMITATIONS</p><h2 id="seo-limits">A source check, not a crawler.</h2></div>
+      <div>
+        <p>This tool checks source markup for a title, description, canonical, robots directives, language, headings, image alternative text, basic link labels and JSON-LD syntax. It does not render JavaScript-generated content, fetch linked resources, inspect HTTP headers or test Google's indexing.</p>
+        <p>Some checks are suggestions rather than hard SEO rules. Missing structured data or a particular title length does not automatically mean a page ranks poorly. HTML fragment parsing can repair malformed markup.</p>
+        <a class="text-link" href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab" target="_blank" rel="noopener noreferrer">Inspect open-source implementation ↗</a>
+      </div>
+    </section>
+  </div>
+</SiteLayout>
+<style>
+  .inspector-panel { border: 1px solid #cddbd4; border-radius: 15px; background: #fff; padding: clamp(20px, 4vw, 40px); margin-bottom: 64px; }
+  .inspector-head, .results-head { display: flex; justify-content: space-between; align-items: start; gap: 24px; flex-wrap: wrap; }
+  .inspector-head { margin-bottom: 27px; }
+  .inspector-head h2, .results-head h2 { font-size: clamp(1.6rem, 3vw, 2.35rem); line-height: 1.15; letter-spacing: -.045em; margin: 0 0 12px; }
+  .inspector-head > p { max-width: 370px; color: #50636a; line-height: 1.7; margin: 0; }
+  .source-label, .file-choice label { display: block; margin-bottom: 9px; font-weight: 750; font-size: .9rem; color: #263d3d; }
+  textarea[data-seo-input], textarea[data-seo-fallback] { display: block; width: 100%; border: 1px solid #aebeb6; border-radius: 9px; padding: 16px; background: #fafcf9; color: #17292c; font: .87rem/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; resize: vertical; }
+  textarea:focus-visible, input:focus-visible { outline: 3px solid #146b67; outline-offset: 3px; }
+  .inspector-controls { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px; margin-top: 20px; }
+  .file-choice { min-width: 0; max-width: 100%; }
+  .file-choice input { font: inherit; max-width: 100%; font-size: .85rem; }
+  .inspector-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  .inspector-status { padding: 14px 0 0; min-height: 36px; color: #375f55; font-size: .9rem; }
+  .inspector-results { border-top: 1px solid #d5e1db; margin-top: 24px; padding-top: 26px; }
+  .inspector-results[hidden], .inspector-results [hidden] { display: none; }
+  .results-head { align-items: center; margin-bottom: 22px; }
+  .results-head p:not(.eyebrow) { margin: 0; color: #52676b; }
+  .finding-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .finding-list li { border: 1px solid #d4ded8; border-radius: 10px; padding: 15px 18px; background: #f9fbf8; overflow-wrap: anywhere; }
+  .finding-list strong { display: inline-block; margin-right: 10px; }
+  .finding-list p { margin: 7px 0 0; line-height: 1.6; color: #45585e; }
+  .finding-list .finding-label { font: 700 .67rem ui-monospace, monospace; letter-spacing: .07em; }
+  .finding-list [data-level="error"] { border-left: 5px solid #b23f36; }
+  .finding-list [data-level="warning"] { border-left: 5px solid #ab771c; }
+  .finding-list [data-level="ok"] { border-left: 5px solid #146b67; }
+  textarea[data-seo-fallback] { margin-top: 10px; }
+  @media (max-width: 530px) { .inspector-buttons, .inspector-buttons .button { width: 100%; } .inspector-buttons .button { flex: 1 1 120px; } }
+</style>
+<script>import "../../../scripts/seo-inspector";</script>
