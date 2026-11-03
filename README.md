@@ -1,11 +1,32 @@
 # Ruslan AI Lab
 
-**P5 release published and verified (2026-11-02).** The [Ruslan AI Lab site](https://ruslanudintsev-ai.github.io/ruslan-ai-lab/) has five interactive labs and three source-backed case pages. Owner-directed [GitHub Pages Build + Deploy #41422579256](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41422579256) completed **SUCCESS** on exact deployed SHA `b1f3be88537e0444971b2f4620744fb2f74745c3`; post-release HTTP smoke checked the two new case routes, provenance, homepage, labs, compiled CSS and expected 404s. The earlier accepted P4 release was [#41192989794](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41192989794) at SHA `1c13d0d3f965efc2582d38aea63aaedef8834a56`. **Later source merges—including the run-metadata correction PR #26—do not automatically deploy.**
+**Latest independently HTTP-verified site release: P10 (2026-11-03).** [Ruslan AI Lab](https://ruslanudintsev-ai.github.io/ruslan-ai-lab/) now has **five browser labs, two practical local tools, three engineering case studies and a two-repository public project directory**. The owner-directed [manual GitHub Pages release #41613055918](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41613055918) completed **Build+Deploy SUCCESS** at exact deployed SHA `08b1b0df28267dd4a6f2a413d7750784bb263b31`. Independent public HTTP checks found both new tool routes and the provenance file at HTTP 200 with the SHA matching. This does **not** establish physical-device accessibility, real user adoption or live-site uptime. Earlier P5 and P6 releases remain historical records; later source-only merges do not automatically publish Pages.
 
 The [recorded P4 live smoke](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/16#issuecomment-6542275339) covers public routes/assets, Browser APIs reorder, explicit browser-only save/restore/clear, and 320/390px layouts. The owner has separately confirmed acceptance. This record is not a claim that the current assistant independently performed physical Safari, VoiceOver, NVDA or third-party license checks.
 
 An original, English-first engineering workbench: small native-web experiments, inspectable source code, verifiable tests and a transparent, AI-assisted approach. The portfolio intentionally has **no remote AI/model API, no sign-up and no visitor tracking**.
 
+
+## Two browser-only practical tools (published 2026-11-03)
+
+| Tool | Public route | What it does |
+| --- | --- | --- |
+| [SEO Inspector](https://ruslanudintsev-ai.github.io/ruslan-ai-lab/tools/seo-inspector/) | `/tools/seo-inspector/` | Inspect pasted HTML or a selected local HTML file for basic on-page SEO signals, with caveats and a copyable report. |
+| [Release Inspector](https://ruslanudintsev-ai.github.io/ruslan-ai-lab/tools/release-inspector/) | `/tools/release-inspector/` | Inspect a manually selected static-build folder for missing internal href/src targets, HTML titles, robots/sitemap presence and local sitemap paths; project BASE supported. |
+
+Both tools work locally in the browser without remote analysis, account, API or analytics. They do **not** crawl or test live HTTP deployments. Release Inspector's browser picker is bounded (400 files, 8 MB inspected text and 1 MB per text file). The P9 [release #41611269333](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41611269333) and P10 [release #41613055918](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/actions/runs/41613055918) have source-verified publication records.
+
+## Reusable CI preflight (P11 source utility)
+
+The repo also contains a **standalone, dependency-free Node.js preflight** for compiled static sites. It is not a remote crawler or a copy of the browser UI. It is intended to find obvious missing build resources *before* deployment:
+
+```bash
+node scripts/release-preflight.mjs --dir dist --base /ruslan-ai-lab/
+```
+
+To use it in another static site repo, copy `scripts/release-preflight.mjs`, change `--dir` to your built output folder and `--base` to your actual public URL prefix (`/` for most root-domain sites). Run the command **after the build** in GitHub Actions or another CI. Exit code **0** means no missing referenced targets were detected; **1** means missing or invalid local references, and **2** means invalid arguments/input. Findings include exact source file paths; robots.txt, sitemap.xml and duplicated titles are advisories, not forced errors.
+
+**Scope:** It heuristically checks HTML `href`/`src` and built-file existence. It does not fetch URLs, execute frontend JS, process CSS dependencies, apply `<base href>`, model server rewrites or verify HTTP 200s; review its output against your hosting rules. The existing build check dogfoods this script in CI. No changes to paid integrations or the production deployment workflow are needed.
 
 ## P6 public project index (published 2026-11-02)
 
@@ -62,4 +83,4 @@ P4 [candidate CI #41190268765](https://github.com/ruslanudintsev-ai/ruslan-ai-la
 
 Lab-owned, licensable source is under [MIT](LICENSE). Third-party packages and the separate [Opalubka repository](https://github.com/ruslanudintsev-ai/opalubka) retain their own rights. Development was AI-assisted; do not infer exclusive human authorship, connected background agents, live clients or production performance from this portfolio. System fonts and original SVG/WebGL assets are used; no third-party embedded images, form data capture, remote model APIs, analytics or paid dependencies are required by the labs.
 
-**Release boundary:** GitHub Pages is **published**, but remains **manually** gated by the [exact-SHA owner release workflow](.github/workflows/pages-first-release.yml). The P5 published version and its HTTP smoke are recorded in [P5 Issue #18](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/18); historical P4 evidence remains in [Issue #16](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/16). Later source or documentation merges do not auto-publish and must not be called live without a new exact-SHA run. Remaining **independent** physical-device/VoiceOver/NVDA, manual contrast, scoped third-party LICENSE/NOTICE and rollback evidence is tracked in [post-release Issue #15](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/15); do not turn unrecorded independent QA into PASS. No DNS, billing or unrelated repository changes from this README update.
+**Release boundary:** The currently published P10 site remains manually gated by the [exact-SHA owner release workflow](.github/workflows/pages-first-release.yml). The P5 published version and its HTTP smoke are recorded in [P5 Issue #18](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/18); historical P4 evidence remains in [Issue #16](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/16). Later source or documentation merges do not auto-publish and must not be called live without a new exact-SHA run. Remaining **independent** physical-device/VoiceOver/NVDA, manual contrast, scoped third-party LICENSE/NOTICE and rollback evidence is tracked in [post-release Issue #15](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/issues/15); do not turn unrecorded independent QA into PASS. No DNS, billing or unrelated repository changes from this README update.

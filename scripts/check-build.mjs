@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
+import { inspectStaticBuild } from "./release-preflight.mjs";
 
 const dir = path.resolve("dist");
 const base = process.env.DEMO_BASE_PATH || "/";
@@ -91,4 +92,7 @@ for (const html of [root,studio,casePage,webkitCasePage,releaseCasePage,projects
   assert.ok(html.includes(base + "_astro/"), "missing compiled CSS project prefix");
   assert.doesNotMatch(html, /<script[^>]+src=["']https?:\/\//i, "unapproved remote JS");
 }
+const preflight = inspectStaticBuild({ dir, base });
+assert.deepEqual(preflight.errors, [], "Release preflight found missing internal build targets");
+console.log("LAB_RELEASE_PREFLIGHT_PASS: " + preflight.pages + " pages, " + preflight.references + " internal references, " + preflight.warnings.length + " advisories");
 console.log("LAB_STATIC_BUILD_PASS: 12 real routes, 404, favicon, prefixed CSS and bundled/local JS, no invented live demos, base=" + base);
