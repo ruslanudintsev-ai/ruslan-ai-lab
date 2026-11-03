@@ -85,6 +85,7 @@ const list = document.querySelector<HTMLUListElement>("[data-seo-findings]");
 const summary = document.querySelector<HTMLElement>("[data-seo-summary]");
 const copyButton = document.querySelector<HTMLButtonElement>("[data-seo-copy]");
 const clearButton = document.querySelector<HTMLButtonElement>("[data-seo-clear]");
+const submitButton = document.querySelector<HTMLButtonElement>("[data-seo-submit]");
 const fallback = document.querySelector<HTMLTextAreaElement>("[data-seo-fallback]");
 const fallbackLabel = document.querySelector<HTMLElement>("[data-seo-fallback-label]");
 let report = "";
@@ -96,7 +97,8 @@ function hideResults(): void {
   if (fallbackLabel) fallbackLabel.hidden = true;
   report = "";
 }
-if (form && input && fileInput && results && list && summary && copyButton && clearButton && fallback && fallbackLabel) {
+if (form && input && fileInput && results && list && summary && copyButton && clearButton && submitButton && fallback && fallbackLabel) {
+  submitButton.disabled = false;
   fileInput.addEventListener("change", async () => {
     hideResults();
     const file = fileInput.files?.[0];
