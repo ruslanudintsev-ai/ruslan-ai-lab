@@ -61,7 +61,7 @@ test("hostile markup neither runs nor triggers outbound resource loads", async (
   await expect(page.locator("[data-seo-output]")).toBeVisible();
   expect(await page.evaluate(() => window.__injected)).toBeUndefined();
   expect(remote).toEqual([]);
-  await expect(page.locator("[data-seo-results] script")).toHaveCount(0);
+  await expect(page.locator("[data-seo-output] img, [data-seo-output] script")).toHaveCount(0);
 });
 
 test("mobile layout, accessible controls and no-JS explanation", async ({ page, browser }) => {
@@ -75,5 +75,6 @@ test("mobile layout, accessible controls and no-JS explanation", async ({ page, 
     const noJs = await context.newPage();
     await noJs.goto(url);
     await expect(noJs.getByText(/Enable JavaScript to run the local analysis/)).toBeVisible();
+    await expect(noJs.getByRole("button", { name: "Analyze HTML" })).toBeDisabled();
   } finally { await context.close(); }
 });
