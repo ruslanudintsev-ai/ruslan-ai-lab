@@ -55,7 +55,7 @@ function resolveLocal(value, from, base) {
   if (normalized === ".." || normalized.startsWith("../") || normalized.startsWith("/")) {
     return { error: "path escapes selected build directory" };
   }
-  return { target: normalized === "." ? "" : normalized };
+  return { target: normalized === "." || normalized === "./" ? "" : normalized };
 }
 
 function targetExists(target, files) {
