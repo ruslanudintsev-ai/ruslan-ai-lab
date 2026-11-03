@@ -129,7 +129,7 @@ export async function inspectFolder(files: File[], base: string): Promise<Findin
       addFinding(findings, missingSitemap ? "warning" : "ok", "Sitemap paths inspected", locs.length + " loc elements; " + missingSitemap + " missing local targets. Hosting redirects are not tested.");
     }
   }
-  addFinding(findings, missingCount ? "error" : "ok", "Internal asset and link inventory", pageCount + " HTML pages; " + internalCount + " checked internal href/src references; " + missingCount + " missing.");
+  addFinding(findings, missingCount ? "warning" : "ok", "Internal asset and link inventory", pageCount + " HTML pages; " + internalCount + " checked internal href/src references; " + missingCount + " missing.");
   addFinding(findings, "ok", "Local inspection scope", index.size + " selected build files; no network requests, uploads, rendering or server checks.");
   if (findings.length >= MAX_FINDINGS) findings.push({ level: "warning", title: "Finding output truncated", detail: "Too many individual findings. Fix visible errors and inspect again; results are not complete." });
   return findings;
