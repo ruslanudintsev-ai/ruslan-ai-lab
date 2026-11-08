@@ -68,8 +68,9 @@ export function inspectDistribution({ distDir, base = "/ruslan-ai-lab/", sourceS
         if (tag === "a" && isRemote(a.href ?? "")) {
           try {
             const host = new URL(a.href).hostname;
-            if (host !== "github.com") fail(rel, "unexpected external click destination: " + host);
-            externalGitHubAnchorOccurrences++;
+            // Only the exact HTTPS WF-HUB homepage is an approved non-GitHub click destination.
+            if (host !== "github.com" && a.href !== "https://wf-hub.ru/") fail(rel, "unexpected external click destination: " + host);
+            if (host === "github.com") externalGitHubAnchorOccurrences++;
           } catch { fail(rel, "invalid external anchor: " + a.href); }
         }
         if (tag === "form" && a.action) fail(rel, "form action detected: " + a.action);
