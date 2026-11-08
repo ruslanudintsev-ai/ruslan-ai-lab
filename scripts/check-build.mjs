@@ -70,6 +70,9 @@ assert.ok(root.includes(base + "favicon.svg"), "favicon must use project BASE_UR
 assert.ok(root.includes(base + "case-studies/webkit-frame/"), "WebKit case missing on home");
 assert.ok(root.includes(base + "case-studies/release-gates/"), "release case missing on home");
 assert.ok(root.includes(base + "projects/"), "public project index missing on home");
+for (const [pageName, html] of [["home", root], ["projects", projectsPage]]) {
+  assert.ok(html.includes('href="https://wf-hub.ru/"'), `WF-HUB backlink missing on ${pageName}`);
+}
 assert.ok(root.includes(base + "tools/seo-inspector/"), "SEO Inspector link missing on home");
 assert.ok(root.includes(base + "tools/release-inspector/"), "Release Inspector link missing on home");
 assert.ok(root.includes(base + "labs/css-studio/"), "project path missing on lab link");
