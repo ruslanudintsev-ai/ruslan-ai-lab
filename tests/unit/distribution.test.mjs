@@ -29,6 +29,14 @@ test("local static imports and GitHub anchors pass with repeatable SHA-256 manif
   assert.match(report.files[0].sha256, /^[0-9a-f]{64}$/);
 }));
 
+test("exact HTTPS WF-HUB homepage is allowed, but other hosts and variants stay blocked", () => fixture(({ write, audit }) => {
+  write("index.html", '<a href="https://github.com/ruslanudintsev-ai/ruslan-ai-lab">Source</a><a href="https://wf-hub.ru/">WF-HUB</a>');
+  assert.deepEqual(audit().errors, []);
+  assert.equal(audit().counts.externalGitHubAnchorOccurrences, 1);
+  write("index.html", '<a href="http://wf-hub.ru/">Unsecured</a><a href="https://wf-hub.ru/hidden/">Other path</a><a href="https://evil.example.org/">Unknown</a>');
+  assert.equal(audit().errors.length, 3);
+}));
+
 test("external scripts and styles fail even if hidden in static HTML", () => fixture(({ write, audit }) => {
   write("index.html", '<link rel="stylesheet" href="https://fonts.example.org/font.css"><script src="https://cdn.example.org/app.js"></script>');
   const errors = audit().errors;
