@@ -6,6 +6,15 @@ The [recorded P4 live smoke](https://github.com/ruslanudintsev-ai/ruslan-ai-lab/
 
 An original, English-first engineering workbench: small native-web experiments, inspectable source code, verifiable tests and a transparent, AI-assisted approach. The portfolio intentionally has **no remote AI/model API, no sign-up and no visitor tracking**.
 
+## Related project — WF-HUB
+
+- **Live Warface guides:** [wf-hub.ru](https://wf-hub.ru/).
+- **Separate private repository:** [ruslanudintsev-ai/wf-hub.ru](https://github.com/ruslanudintsev-ai/wf-hub.ru) (GitHub access required; not a public source listing).
+- **This repository:** [ruslan-ai-lab](https://github.com/ruslanudintsev-ai/ruslan-ai-lab), with an independently gated build and release flow.
+- **Planned password-gated hostname:** `https://lab.wf-hub.ru/`. Do not call it deployed until authenticated HTTPS and static-route checks pass; the existing GitHub Pages URL is a separate public access path until explicitly disabled.
+
+The projects are **linked, not merged**: separate code, permissions, pipelines, deployments and rollback. The AI Lab footer returns to the public WF-HUB site. A reciprocal *public site* link from WF-HUB must wait for a verified password-protected Lab launch; documentation can link the repositories now. Deployment and security acceptance steps: [WF-HUB integration runbook](docs/WF_HUB_SUBDOMAIN_ROLLOUT.md).
+
 
 ## Two browser-only practical tools (published 2026-11-03)
 
